@@ -7,7 +7,7 @@ Here is my submission for the FINN build challenge.
 
 - Prototype (open on a phone): [DEPLOYED LINK]
 - Repository: [GITHUB LINK]
-- AI build history: [CLAUDE SHARE LINK]
+
 
 **What I built**
 
@@ -53,4 +53,4 @@ Intraday data, accounts and real push delivery, news and broker notes, and portf
 
 Thank you for your time.
 
-[NAME]
+Shrasti Dwivedi
