@@ -1,0 +1,230 @@
+{
+  "_meta": {
+    "captured_at": "2026-11-03T18:00:00+05:30",
+    "source": "screener.in company pages (Quarterly Results table + Announcements feed), captured during the build session",
+    "units": "Rs crore",
+    "notes": "Dates without a year in the feed are 2026. result_date marked approx=true is inferred from the earliest results-related filing in the feed."
+  },
+  "companies": [
+    {"ticker": "RELIANCE", "name": "Reliance Industries", "sector": "Conglomerate", "weight": 9.0, "price": 1308, "mcap": 1771283, "pe": 21.6, "kind": "industrial",
+     "result_date": "2026-10-30",
+     "quarters": [
+       {"q": "Sep 2025", "sales": 254623, "ebitda": 45885, "other_income": 4482, "interest": 6827, "dep": 14416, "pbt": 29124, "tax_pct": 24, "pat": 22092},
+       {"q": "Dec 2025", "sales": 264905, "ebitda": 46018, "other_income": 4914, "interest": 6613, "dep": 14622, "pbt": 29697, "tax_pct": 25, "pat": 22290},
+       {"q": "Mar 2026", "sales": 294059, "ebitda": 44141, "other_income": 4447, "interest": 6585, "dep": 14808, "pbt": 27195, "tax_pct": 24, "pat": 20589},
+       {"q": "Jun 2026", "sales": 309468, "ebitda": 47517, "other_income": 6550, "interest": 8337, "dep": 15100, "pbt": 30630, "tax_pct": 25, "pat": 23196},
+       {"q": "Sep 2026", "sales": 330601, "ebitda": 56616, "other_income": 5793, "interest": 8481, "dep": 15315, "pbt": 38613, "tax_pct": 24, "pat": 29550}],
+     "announcements": [
+       {"date": "2026-11-01", "title": "Earnings call transcript – Q2 & H1 FY27", "detail": "Transcript of the call on unaudited results for the quarter ended 30 Sep 2026."},
+       {"date": "2026-10-31", "title": "Outcome of analyst/investor meet", "detail": "Audio recording of the 30 Oct analyst meet on Q2 FY27 results posted on the website."},
+       {"date": "2026-10-30", "title": "Investor presentation – Q2 FY27 results", "detail": "Presentation on consolidated and standalone results for the quarter and half year."},
+       {"date": "2026-10-30", "title": "Press release – record Q2 FY27 profit", "detail": "Record quarterly profit; notes Jio Platforms completed its IPO on 28 Oct 2026."},
+       {"date": "2026-10-30", "title": "Unaudited financial results – quarter ended 30 Sep 2026", "detail": "Board approved Q2/H1 FY27 results, authorised NCDs of up to Rs 15,000 cr, and noted the Jio Platforms listing via a Rs 30,188 cr IPO."}]},
+
+    {"ticker": "HDFCBANK", "name": "HDFC Bank", "sector": "Private bank", "weight": 9.0, "price": 726, "mcap": 1120422, "pe": 14.0, "kind": "lender",
+     "result_date": null,
+     "quarters": [
+       {"q": "Sep 2025", "sales": 86994, "pbt": 26659, "tax_pct": 24, "pat": 20364},
+       {"q": "Dec 2025", "sales": 87067, "pbt": 26961, "tax_pct": 23, "pat": 20691},
+       {"q": "Mar 2026", "sales": 87182, "pbt": 27672, "tax_pct": 24, "pat": 21074},
+       {"q": "Jun 2026", "sales": 90575, "pbt": 27193, "tax_pct": 25, "pat": 20383},
+       {"q": "Sep 2026", "sales": 95132, "pbt": 28663, "tax_pct": 25, "pat": 21537}],
+     "announcements": [
+       {"date": "2026-10-31", "title": "Change in senior management – Group Head, Business Banking superannuates", "detail": "Sanjay D'Souza retires on 31 Oct 2026 and ceases to be Group Head, Business Banking."},
+       {"date": "2026-10-30", "title": "Allotment of shares under ESOP/RSU", "detail": "46,75,598 equity shares allotted on exercise of ESOPs/RSUs."},
+       {"date": "2026-10-27", "title": "Change in Managing Director & CEO", "detail": "Sashidhar Jagdishan steps down on 26 Oct 2026; Anup Bagchi takes over as MD & CEO from 27 Oct 2026.",
+        "person": {"name": "Anup Bagchi", "role": "MD & CEO", "outgoing": "Sashidhar Jagdishan"}},
+       {"date": "2026-10-24", "title": "Grant of stock options under ESOS", "detail": "13,02,379 options granted at Rs 692.80 under ESOS Plan H-2024."},
+       {"date": "2026-10-23", "title": "Analyst/investor meet – outcome", "detail": "Q2 FY27 earnings call transcript released."}]},
+
+    {"ticker": "TCS", "name": "Tata Consultancy Services", "sector": "IT services", "weight": 8.0, "price": 2499, "mcap": 906588, "pe": 16.3, "kind": "industrial",
+     "result_date": "2026-10-08", "result_date_approx": true,
+     "quarters": [
+       {"q": "Sep 2025", "sales": 54531, "ebitda": 15668, "other_income": 918, "interest": 203, "dep": 1139, "pbt": 15244, "tax_pct": 22, "pat": 11828},
+       {"q": "Dec 2025", "sales": 55567, "ebitda": 15694, "other_income": -1168, "interest": 512, "dep": 1102, "pbt": 12912, "tax_pct": 21, "pat": 10190},
+       {"q": "Mar 2026", "sales": 58052, "ebitda": 16130, "other_income": 3516, "interest": 238, "dep": 944, "pbt": 18464, "tax_pct": 21, "pat": 14526},
+       {"q": "Jun 2026", "sales": 59553, "ebitda": 16133, "other_income": 2738, "interest": 247, "dep": 915, "pbt": 17709, "tax_pct": 23, "pat": 13642},
+       {"q": "Sep 2026", "sales": 60441, "ebitda": 16395, "other_income": 3049, "interest": 206, "dep": 962, "pbt": 18276, "tax_pct": 23, "pat": 14104}],
+     "announcements": [
+       {"date": "2026-10-19", "title": "Press release – TCS BaNCS for Treasury enters Sri Lanka", "detail": "Treasury platform goes live at Indian Bank's Colombo branch."},
+       {"date": "2026-10-16", "title": "Analyst/investor meet – intimation", "detail": "Non-deal roadshow in the USA, 22–27 Oct 2026."},
+       {"date": "2026-10-15", "title": "Update on acquisition – BBY Services India LLP", "detail": "Acquisition of BBY Services India LLP completed."},
+       {"date": "2026-10-15", "title": "Press release – Industrial Intelligence Foundry launch", "detail": "New industrial-AI offering; company cites 25% faster new product introduction."},
+       {"date": "2026-10-14", "title": "Earnings call transcript", "detail": "Transcript for the quarter and six months ended 30 Sep 2026."}]},
+
+    {"ticker": "BAJFINANCE", "name": "Bajaj Finance", "sector": "NBFC", "weight": 7.0, "price": 959, "mcap": 597318, "pe": 27.3, "kind": "lender",
+     "result_date": "2026-10-19",
+     "quarters": [
+       {"q": "Sep 2025", "sales": 19990, "pbt": 6608, "tax_pct": 25, "pat": 4948, "gnpa": 1.24},
+       {"q": "Dec 2025", "sales": 21013, "pbt": 5431, "tax_pct": 25, "pat": 4066, "gnpa": 1.21},
+       {"q": "Mar 2026", "sales": 21606, "pbt": 7410, "tax_pct": 25, "pat": 5553, "gnpa": 1.01},
+       {"q": "Jun 2026", "sales": 23165, "pbt": 8149, "tax_pct": 25, "pat": 6081, "gnpa": 0.96},
+       {"q": "Sep 2026", "sales": 24546, "pbt": 8537, "tax_pct": 25, "pat": 6367, "gnpa": 1.06}],
+     "announcements": [
+       {"date": "2026-11-02", "title": "Outcome of EGM – preferential warrants and QIP", "detail": "Shareholders met on 2 Nov 2026 on resolutions enabling preferential warrants and a QIP."},
+       {"date": "2026-10-30", "title": "Allotment of secured NCDs", "detail": "2,06,950 secured NCDs allotted, aggregating Rs 2,069.5 cr."},
+       {"date": "2026-10-26", "title": "Analyst/investor meet – intimation", "detail": "Intimation of analyst/investor meeting."},
+       {"date": "2026-10-23", "title": "Analyst/investor meet – outcome", "detail": "Q2 FY27 earnings call transcript uploaded."},
+       {"date": "2026-10-21", "title": "Allotment of secured NCDs", "detail": "2,12,000 secured NCDs (Rs 2,120 cr) maturing 21 Oct 2031."}]},
+
+    {"ticker": "LT", "name": "Larsen & Toubro", "sector": "Engineering & construction", "weight": 7.0, "price": 3940, "mcap": 544022, "pe": 28.8, "kind": "industrial",
+     "result_date": "2026-10-27", "result_date_approx": true,
+     "quarters": [
+       {"q": "Sep 2025", "sales": 67984, "ebitda": 8513, "other_income": 1384, "interest": 2470, "dep": 1092, "pbt": 6336, "tax_pct": 26, "pat": 4678},
+       {"q": "Dec 2025", "sales": 71450, "ebitda": 9190, "other_income": -350, "interest": 2399, "dep": 1072, "pbt": 5370, "tax_pct": 29, "pat": 3825},
+       {"q": "Mar 2026", "sales": 82762, "ebitda": 10419, "other_income": 1647, "interest": 2488, "dep": 1168, "pbt": 8410, "tax_pct": 25, "pat": 6133},
+       {"q": "Jun 2026", "sales": 67942, "ebitda": 8149, "other_income": 2377, "interest": 2571, "dep": 1032, "pbt": 6922, "tax_pct": 28, "pat": 4988},
+       {"q": "Sep 2026", "sales": 78750, "ebitda": 8814, "other_income": 2306, "interest": 2442, "dep": 1037, "pbt": 7641, "tax_pct": 23, "pat": 5949}],
+     "announcements": [
+       {"date": "2026-11-02", "title": "Earnings call transcript", "detail": "Transcript filed under Regulation 30."},
+       {"date": "2026-11-02", "title": "Bagging of orders – buildings & factories", "detail": "Residential and commercial building orders in Mumbai, Bengaluru and Hyderabad."},
+       {"date": "2026-10-31", "title": "Vyoma.AI business transfer / L&T Network Services stake sale – timeline extended", "detail": "Completion of the transaction involving a wholly owned subsidiary pushed to 31 Mar 2027."},
+       {"date": "2026-10-28", "title": "Newspaper publication of results", "detail": "Results advertisement published."},
+       {"date": "2026-10-27", "title": "Analyst/investor meet – outcome", "detail": "Q2/H1 FY27 earnings call audio posted on 27 Oct 2026."}]},
+
+    {"ticker": "SUNPHARMA", "name": "Sun Pharmaceutical", "sector": "Pharma", "weight": 6.0, "price": 1783, "mcap": 427777, "pe": 34.8, "kind": "industrial",
+     "result_date": "2026-10-30", "result_date_approx": true,
+     "quarters": [
+       {"q": "Sep 2025", "sales": 14478, "ebitda": 4527, "other_income": 470, "interest": 100, "dep": 730, "pbt": 4168, "tax_pct": 25, "pat": 3125},
+       {"q": "Dec 2025", "sales": 15521, "ebitda": 4948, "other_income": 89, "interest": 78, "dep": 732, "pbt": 4227, "tax_pct": 20, "pat": 3381},
+       {"q": "Mar 2026", "sales": 14612, "ebitda": 3954, "other_income": 458, "interest": 86, "dep": 775, "pbt": 3551, "tax_pct": 23, "pat": 2710},
+       {"q": "Jun 2026", "sales": 15300, "ebitda": 4418, "other_income": 520, "interest": 100, "dep": 739, "pbt": 4099, "tax_pct": 29, "pat": 2901},
+       {"q": "Sep 2026", "sales": 16199, "ebitda": 4744, "other_income": -752, "interest": 75, "dep": 758, "pbt": 3159, "tax_pct": 37, "pat": 1995}],
+     "announcements": [
+       {"date": "2026-11-02", "title": "Clarification on news item – Regulation 30(11)", "detail": "Company says a press report about a halt at its Assam plant relates to August 2026 developments and is not a new event."},
+       {"date": "2026-11-02", "title": "Clarification sought by exchange", "detail": "Exchange sought clarification on a news item published on 30 Oct 2026."},
+       {"date": "2026-10-31", "title": "Results of postal ballot", "detail": "Shareholders approved ESOP 2026 scheme, borrowing limits and related resolutions."},
+       {"date": "2026-10-31", "title": "Newspaper publication of results", "detail": "Unaudited results for the quarter and half year ended 30 Sep 2026 published."},
+       {"date": "2026-10-30", "title": "Q2 FY27 investor call – audio recording", "detail": "Audio of the Q2 FY27 earnings call posted."}]},
+
+    {"ticker": "MARUTI", "name": "Maruti Suzuki", "sector": "Autos", "weight": 6.0, "price": 11869, "mcap": 373548, "pe": 27.8, "kind": "industrial",
+     "result_date": "2026-10-27", "result_date_approx": true,
+     "quarters": [
+       {"q": "Sep 2025", "sales": 42344, "ebitda": 5086, "other_income": 1014, "interest": 57, "dep": 1703, "pbt": 4339, "tax_pct": 23, "pat": 3349},
+       {"q": "Dec 2025", "sales": 49904, "ebitda": 5573, "other_income": 1140, "interest": 62, "dep": 1735, "pbt": 4917, "tax_pct": 21, "pat": 3879},
+       {"q": "Mar 2026", "sales": 52462, "ebitda": 6158, "other_income": 581, "interest": 73, "dep": 1748, "pbt": 4918, "tax_pct": 26, "pat": 3659},
+       {"q": "Jun 2026", "sales": 52470, "ebitda": 4313, "other_income": 1972, "interest": 64, "dep": 1780, "pbt": 4441, "tax_pct": 22, "pat": 3447},
+       {"q": "Sep 2026", "sales": 53356, "ebitda": 4764, "other_income": 483, "interest": 68, "dep": 1960, "pbt": 3219, "tax_pct": 23, "pat": 2466}],
+     "announcements": [
+       {"date": "2026-11-02", "title": "Earnings call transcript", "detail": "Transcript of the earnings call filed."},
+       {"date": "2026-11-01", "title": "Production volume – October 2026", "detail": "October production 2,60,003 units vs 1,92,139 a year earlier."},
+       {"date": "2026-11-01", "title": "Press release – October 2026 sales", "detail": "October sales of 2,76,120 units, the company's highest-ever month."},
+       {"date": "2026-10-29", "title": "Press release – EV exports and Hansalpur capacity", "detail": "Cumulative EV exports cross 50,000; Hansalpur plant capacity reaches 1 million vehicles a year."},
+       {"date": "2026-10-28", "title": "Newspaper publication", "detail": "Newspaper publication filed."}]},
+
+    {"ticker": "TITAN", "name": "Titan Company", "sector": "Jewellery & lifestyle", "weight": 6.0, "price": 4485, "mcap": 398159, "pe": 74.2, "kind": "industrial",
+     "result_date": null, "upcoming_result": "2026-11-05",
+     "quarters": [
+       {"q": "Jun 2025", "sales": 14564, "ebitda": 1632, "other_income": 107, "interest": 216, "dep": 143, "pbt": 1380, "tax_pct": 25, "pat": 1030},
+       {"q": "Sep 2025", "sales": 16534, "ebitda": 1620, "other_income": 109, "interest": 222, "dep": 146, "pbt": 1361, "tax_pct": 26, "pat": 1006},
+       {"q": "Dec 2025", "sales": 22522, "ebitda": 2336, "other_income": 29, "interest": 243, "dep": 151, "pbt": 1971, "tax_pct": 25, "pat": 1470},
+       {"q": "Mar 2026", "sales": 23934, "ebitda": 1715, "other_income": 201, "interest": 274, "dep": 156, "pbt": 1486, "tax_pct": 24, "pat": 1124},
+       {"q": "Jun 2026", "sales": 18101, "ebitda": 2564, "other_income": 141, "interest": 267, "dep": 157, "pbt": 2281, "tax_pct": 26, "pat": 1699}],
+     "announcements": [
+       {"date": "2026-11-02", "title": "Board meeting – private placement of NCDs", "detail": "Board to consider issuing rated, listed, unsecured NCDs on private placement on 5 Nov 2026."},
+       {"date": "2026-10-28", "title": "Newspaper publication – loss of share certificate", "detail": "Advertisement regarding a lost share certificate."},
+       {"date": "2026-10-28", "title": "Incorporation of wholly owned subsidiary in Canada", "detail": "Titan Company Canada Inc. incorporated on 27 Oct 2026 with CAD 5,000 capital."},
+       {"date": "2026-10-23", "title": "Analyst/investor meet – earnings call intimation", "detail": "Earnings call for Q2 and H1 FY27 scheduled."},
+       {"date": "2026-10-20", "title": "Board meeting intimation – Q2 FY27 results", "detail": "Board meets on 5 Nov 2026 to approve results for the quarter ended 30 Sep 2026."}]},
+
+    {"ticker": "ASIANPAINT", "name": "Asian Paints", "sector": "Paints", "weight": 5.0, "price": 2344, "mcap": 224865, "pe": 45.4, "kind": "industrial",
+     "result_date": "2026-10-29",
+     "quarters": [
+       {"q": "Sep 2025", "sales": 8531, "ebitda": 1503, "other_income": 237, "interest": 44, "dep": 305, "pbt": 1392, "tax_pct": 27, "pat": 1018},
+       {"q": "Dec 2025", "sales": 8867, "ebitda": 1781, "other_income": 69, "interest": 48, "dep": 313, "pbt": 1489, "tax_pct": 28, "pat": 1074},
+       {"q": "Mar 2026", "sales": 9247, "ebitda": 1787, "other_income": 197, "interest": 59, "dep": 310, "pbt": 1614, "tax_pct": 27, "pat": 1185},
+       {"q": "Jun 2026", "sales": 10542, "ebitda": 2169, "other_income": 279, "interest": 48, "dep": 304, "pbt": 2096, "tax_pct": 26, "pat": 1559},
+       {"q": "Sep 2026", "sales": 9977, "ebitda": 1557, "other_income": 290, "interest": 55, "dep": 314, "pbt": 1478, "tax_pct": 27, "pat": 1085}],
+     "announcements": [
+       {"date": "2026-10-29", "title": "Audio recording of investor conference call", "detail": "Q2/H1 FY27 call audio uploaded; transcript to follow."},
+       {"date": "2026-10-29", "title": "Investor presentation – Q2 FY27", "detail": "Presentation on Q2 and H1 FY27 performance."},
+       {"date": "2026-10-29", "title": "Financial results & interim dividend", "detail": "Q2 FY27 results approved; interim dividend of Rs 5.75 per share; VAE production started at Dahej."},
+       {"date": "2026-10-29", "title": "Dividend – date of payment", "detail": "Dividend payment date disclosed; VAE facility commercial production from 17 Sep 2026."},
+       {"date": "2026-10-29", "title": "Press release – Q2 FY27", "detail": "Covers Q2 FY27 results, interim dividend and VAE start-up."}]},
+
+    {"ticker": "TRENT", "name": "Trent", "sector": "Retail", "weight": 5.0, "price": 3036, "mcap": 162150, "pe": 84.6, "kind": "industrial",
+     "result_date": "2026-10-29",
+     "quarters": [
+       {"q": "Sep 2025", "sales": 4818, "ebitda": 816, "other_income": 28, "interest": 42, "dep": 325, "pbt": 477, "tax_pct": 22, "pat": 373},
+       {"q": "Dec 2025", "sales": 5345, "ebitda": 1081, "other_income": 5, "interest": 43, "dep": 367, "pbt": 676, "tax_pct": 25, "pat": 510},
+       {"q": "Mar 2026", "sales": 5028, "ebitda": 911, "other_income": 28, "interest": 44, "dep": 377, "pbt": 519, "tax_pct": 20, "pat": 413},
+       {"q": "Jun 2026", "sales": 5755, "ebitda": 1119, "other_income": 30, "interest": 47, "dep": 410, "pbt": 692, "tax_pct": 25, "pat": 518},
+       {"q": "Sep 2026", "sales": 5873, "ebitda": 1057, "other_income": 26, "interest": 44, "dep": 420, "pbt": 619, "tax_pct": 24, "pat": 468}],
+     "announcements": [
+       {"date": "2026-11-02", "title": "Newspaper publication of Q2/H1 results", "detail": "Results advertisement published."},
+       {"date": "2026-10-29", "title": "Investor presentation – Q2/H1 FY27", "detail": "Presentation on standalone and consolidated results."},
+       {"date": "2026-10-29", "title": "Retirement of Chairman; new Chairman appointed", "detail": "Noel N. Tata retires as Chairman after 11 Nov 2026; Bahram Vakil takes over from 12 Nov, with two director appointments.",
+        "person": {"name": "Bahram Vakil", "role": "Chairman", "outgoing": "Noel N. Tata"}},
+       {"date": "2026-10-29", "title": "Change in directorate", "detail": "Chairman transition effective 11 Nov 2026."},
+       {"date": "2026-10-29", "title": "Press release – Q2 FY27 results", "detail": "Revenue up 23%, PAT up 9%; 1,000th Zudio store opened."}]},
+
+    {"ticker": "POLYCAB", "name": "Polycab India", "sector": "Cables & electricals", "weight": 6.0, "price": 7920, "mcap": 119161, "pe": 37.8, "kind": "industrial",
+     "result_date": "2026-10-15", "result_date_approx": true,
+     "quarters": [
+       {"q": "Sep 2025", "sales": 6477, "ebitda": 1021, "other_income": 45, "interest": 48, "dep": 97, "pbt": 921, "tax_pct": 25, "pat": 693},
+       {"q": "Dec 2025", "sales": 7636, "ebitda": 966, "other_income": 50, "interest": 69, "dep": 106, "pbt": 842, "tax_pct": 25, "pat": 630},
+       {"q": "Mar 2026", "sales": 8864, "ebitda": 1161, "other_income": 60, "interest": 75, "dep": 98, "pbt": 1049, "tax_pct": 25, "pat": 786},
+       {"q": "Jun 2026", "sales": 8210, "ebitda": 1136, "other_income": 105, "interest": 80, "dep": 103, "pbt": 1058, "tax_pct": 25, "pat": 797},
+       {"q": "Sep 2026", "sales": 9899, "ebitda": 1422, "other_income": 88, "interest": 94, "dep": 111, "pbt": 1306, "tax_pct": 24, "pat": 990}],
+     "announcements": [
+       {"date": "2026-10-30", "title": "Insolvency (CIRP) matter – NCLAT allows Polycab's appeal", "detail": "NCLAT allowed the company's appeal and set aside the NCLT Ahmedabad order."},
+       {"date": "2026-10-28", "title": "Analyst/investor meet – William Blair & Company", "detail": "Virtual meeting with William Blair & Company on 3 Nov 2026."},
+       {"date": "2026-10-28", "title": "Insolvency (CIRP) matter – NCLAT interim order", "detail": "NCLAT order dated 27 Oct 2026 in the pending insolvency matter; final order awaited."},
+       {"date": "2026-10-27", "title": "Analyst/investor meet – intimation", "detail": "Intimation under Regulation 30."},
+       {"date": "2026-10-23", "title": "Analyst/investor meet schedule", "detail": "Meetings scheduled from 28 Oct to 1 Dec 2026."}]},
+
+    {"ticker": "PERSISTENT", "name": "Persistent Systems", "sector": "IT services", "weight": 5.0, "price": 6097, "mcap": 101459, "pe": 54.2, "kind": "industrial",
+     "result_date": "2026-10-15",
+     "quarters": [
+       {"q": "Sep 2025", "sales": 3581, "ebitda": 683, "other_income": 52, "interest": 18, "dep": 100, "pbt": 617, "tax_pct": 24, "pat": 471},
+       {"q": "Dec 2025", "sales": 3778, "ebitda": 733, "other_income": -49, "interest": 19, "dep": 101, "pbt": 565, "tax_pct": 22, "pat": 439},
+       {"q": "Mar 2026", "sales": 4056, "ebitda": 768, "other_income": 33, "interest": 19, "dep": 109, "pbt": 674, "tax_pct": 21, "pat": 529},
+       {"q": "Jun 2026", "sales": 4303, "ebitda": 697, "other_income": 71, "interest": 29, "dep": 115, "pbt": 623, "tax_pct": 22, "pat": 483},
+       {"q": "Sep 2026", "sales": 4664, "ebitda": 633, "other_income": 24, "interest": 38, "dep": 167, "pbt": 454, "tax_pct": 23, "pat": 352}],
+     "announcements": [
+       {"date": "2026-10-26", "title": "QIP – allotment of equity shares", "detail": "76,83,981 shares allotted at Rs 5,550 in a QIP, raising about Rs 4,265 cr."},
+       {"date": "2026-10-26", "title": "QIP – closure and issue price approved", "detail": "Board approved closure of the QIP and allocation at Rs 5,550 per share."},
+       {"date": "2026-10-23", "title": "Earnings call transcript", "detail": "Transcript of the 15 Oct 2026 investor call."},
+       {"date": "2026-10-22", "title": "Credit rating – ICRA", "detail": "ICRA continued AA+ issuer rating; assigned A1+ to Rs 1,000 cr CP and AA+ to NCDs."}]},
+
+    {"ticker": "DIXON", "name": "Dixon Technologies", "sector": "Electronics manufacturing", "weight": 4.0, "price": 12191, "mcap": 74570, "pe": 84.1, "kind": "industrial",
+     "result_date": "2026-10-30",
+     "quarters_note": "Screener page captured was STANDALONE; consolidated headline taken from the results filing summary. QoQ/EBITDA/PBT withheld rather than mixing bases.",
+     "headline_only": {"q": "Sep 2026", "sales": 21863, "pat": 411, "sales_yoy_pct": 42},
+     "announcements": [
+       {"date": "2026-11-03", "title": "Analyst/investor meet – outcome", "detail": "Outcome of meeting held on 3 Nov filed."},
+       {"date": "2026-10-31", "title": "Newspaper publication of results", "detail": "Standalone and consolidated results advertisement."},
+       {"date": "2026-10-30", "title": "Analyst/investor meet – outcome", "detail": "Q2 FY27 call audio posted."},
+       {"date": "2026-10-30", "title": "Financial results – quarter ended 30 Sep 2026", "detail": "Consolidated revenue Rs 21,863 cr (+42% YoY), PAT Rs 411 cr."},
+       {"date": "2026-10-30", "title": "Change in management – Executive Director appointed", "detail": "Board appointed Prithvi Vachani as Executive Director.",
+        "person": {"name": "Prithvi Vachani", "role": "Executive Director", "outgoing": null}}]},
+
+    {"ticker": "KAYNES", "name": "Kaynes Technology", "sector": "Electronics manufacturing", "weight": 3.0, "price": 3210, "mcap": 21523, "pe": 62.0, "kind": "industrial",
+     "result_date": null,
+     "quarters": [
+       {"q": "Jun 2025", "sales": 673, "ebitda": 113, "other_income": 27, "interest": 28, "dep": 16, "pbt": 96, "tax_pct": 22, "pat": 75},
+       {"q": "Sep 2025", "sales": 906, "ebitda": 148, "other_income": 43, "interest": 23, "dep": 17, "pbt": 152, "tax_pct": 20, "pat": 121},
+       {"q": "Dec 2025", "sales": 804, "ebitda": 119, "other_income": 42, "interest": 25, "dep": 20, "pbt": 116, "tax_pct": 34, "pat": 77},
+       {"q": "Mar 2026", "sales": 1243, "ebitda": 194, "other_income": 42, "interest": 41, "dep": 54, "pbt": 140, "tax_pct": 35, "pat": 91},
+       {"q": "Jun 2026", "sales": 946, "ebitda": 148, "other_income": 14, "interest": 37, "dep": 37, "pbt": 88, "tax_pct": 36, "pat": 56}],
+     "announcements": [
+       {"date": "2026-11-02", "title": "Acquisition – Regulation 30 disclosure", "detail": "Company filed a disclosure regarding an acquisition (details in the attachment)."},
+       {"date": "2026-10-07", "title": "Certificate under Reg. 74(5) of SEBI (DP) Regulations", "detail": "Depository compliance certificate for quarter ended 30 Sep 2026."},
+       {"date": "2026-09-23", "title": "Closure of trading window", "detail": "Trading window closed from 1 Oct until 48 hours after results."}]},
+
+    {"ticker": "NTPC", "name": "NTPC", "sector": "Power utility (PSU)", "weight": 6.0, "price": 322, "mcap": 311314, "pe": 10.5, "kind": "industrial",
+     "result_date": "2026-10-31",
+     "quarters": [
+       {"q": "Sep 2025", "sales": 44784, "ebitda": 12814, "other_income": 2735, "interest": 3432, "dep": 4816, "pbt": 7301, "tax_pct": 28, "pat": 5225},
+       {"q": "Dec 2025", "sales": 45846, "ebitda": 14570, "other_income": 1738, "interest": 3164, "dep": 5093, "pbt": 8050, "tax_pct": 30, "pat": 5597},
+       {"q": "Mar 2026", "sales": 49686, "ebitda": 8505, "other_income": 1918, "interest": 3737, "dep": 5134, "pbt": 1553, "tax_pct": -584, "pat": 10615},
+       {"q": "Jun 2026", "sales": 50741, "ebitda": 16231, "other_income": 1549, "interest": 3386, "dep": 5234, "pbt": 9160, "tax_pct": 25, "pat": 6896},
+       {"q": "Sep 2026", "sales": 54270, "ebitda": 15627, "other_income": 3007, "interest": 4086, "dep": 5330, "pbt": 9218, "tax_pct": 20, "pat": 7351}],
+     "announcements": [
+       {"date": "2026-11-03", "title": "ESG rating – SES ESG Research", "detail": "ESG score of 64.2, up 1.4 points year on year."},
+       {"date": "2026-10-31", "title": "Analyst/investor meet – outcome", "detail": "Audio of the Q2/H1 FY27 earnings call held on 31 Oct posted."},
+       {"date": "2026-10-31", "title": "Operational & financial snapshot – Q2/H1 FY27", "detail": "Operational and financial snapshot for the period."},
+       {"date": "2026-10-31", "title": "Unaudited financial results – quarter ended 30 Sep 2026", "detail": "Standalone and consolidated results filed."},
+       {"date": "2026-10-31", "title": "Interim dividend declared", "detail": "30% interim dividend; record date 6 Nov 2026."}]}
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "_meta": "Reduce-step output (snapshot, narrative vs numbers, bull/bear, watch). In the demo snapshot these were written by Claude during the build session from ONLY the captured transcripts and screener tables in research_inputs.json; in live mode engine.run_live() regenerates them with the strong model tier. Source tags refer to call ids or tables.",
+  "PERSISTENT": {
+    "generated_by": "Claude (build session) from 4 transcripts + AR-derived tables",
+    "snapshot": "Digital-engineering services firm growing ~27% a year in rupees since FY22, now at a US$488m quarterly run-rate [Q2FY27 call]. Mix is led by Software/Hi-Tech (+28.5% YoY), then BFSI (+16.2%) and Healthcare (+12.0%); North America drives growth while Europe shrank 8.5% [Q2FY27 call].",
+    "narrative_vs_numbers": [
+      {"claim": "On track for ~US$2bn — later clarified as a US$500m quarterly exit run-rate, not FY27 revenue [Q3FY26 → Q4FY26 call]", "numbers": "Q2FY27 revenue US$487.6m; only 1.3% QoQ needed for two quarters vs a 4.8% recent average [Q2FY27 call]", "read": "agree", "note": "Achievable — but the goalpost moved from annual revenue to exit run-rate."},
+      {"claim": "16–17% EBIT margin is the aspiration; growth comes first [Q4FY26 call]", "numbers": "EBIT 16.3% → 16.0% → 15.0% over three quarters; standardised EBITDA margin fell from 19.1% to 13.6% YoY [calls; quarterly table]", "read": "diverge"},
+      {"claim": "Part of the 180–200 bps wage-hike hit would be recouped in Q2 [Q1FY27 call]", "numbers": "Margin fell another 100 bps in Q2; large-deal tooling/licence amortisation cost 90 bps [Q2FY27 call]", "read": "diverge"},
+      {"claim": "OCF/PAT returns to the ~100% norm during FY27 [Q1FY27 call]", "numbers": "Q1 OCF/PAT 24%; but FY22–26 cumulative CFO/PAT is 101% [Q1FY27 call; cash-flow table]", "read": "too early"},
+      {"claim": "Healthcare and BFSI to lead FY27 growth [Q4FY26 call]", "numbers": "Hi-Tech grew fastest (+28.5%); Healthcare slowest (+12.0%) [Q2FY27 call]", "read": "diverge"}
+    ],
+    "bull": [
+      "Revenue engine intact: 7.8% cc QoQ in Q2, the fastest in the series, as the US$650m deal ramps [Q2FY27 call].",
+      "Clean balance sheet before Nagarro: debt/equity 0.06, plus ~Rs 4,265 cr fresh QIP equity [BS FY26; QIP filing].",
+      "Five-year cash conversion ~101% of PAT with no negative-CFO year [cash-flow table]."
+    ],
+    "bear": [
+      "Margin promise slipping three quarters running; pending Nagarro adds ~US$50m one-time cost and acquisition debt [Q2FY27 call].",
+      "Q2 PAT fell 25% YoY on 30% revenue growth — growth is not reaching the bottom line [quarterly table].",
+      "Bookings soft: TCV ~US$634m vs US$1.15bn in Q1; analysts flagged ~4% YoY TCV growth [Q2FY27 call]."
+    ],
+    "watch": ["Q3FY27 EBIT margin vs 16% — does the 90 bps amortisation drag start fading?", "Q4FY27 exit run-rate vs US$500m", "FY27 OCF/PAT vs the promised ~100%"],
+    "data_note": "Screener's standardised EBITDA (13.6% in Q2) sits below the company's reported EBIT (15.0%) — the two use different cost classifications. Guidance is checked against the company's own EBIT; trends use the standardised series."
+  },
+  "POLYCAB": {
+    "generated_by": "Claude (build session) from 2 transcripts + AR-derived tables",
+    "snapshot": "India's largest wires & cables maker, extending into fans/switches/lighting (FMEG) and power-distribution EPC [about; Q2FY27 call]. Q2FY27 growth was broad: W&C +47%, FMEG +124%, EPC +53% YoY; EPC was ~Rs 617 cr of the quarter [Q2FY27 call].",
+    "narrative_vs_numbers": [
+      {"claim": "W&C EBIT margin 11–13% over the medium term (Project Spring) [Q1FY27 call]", "numbers": "13.3% in Q1, 14.2% in Q2 — above the top of the band [Q1FY27, Q2FY27 calls]", "read": "diverge", "note": "Positive divergence — and management declined to raise the band when asked."},
+      {"claim": "FMEG EBITDA 8–10% by FY30 [Q1FY27 call]", "numbers": "FMEG EBIT already 10.1% in Q2FY27, four years early [Q2FY27 call]", "read": "diverge"},
+      {"claim": "Working-capital cycle normalises to 45–50 days [Q1FY27 call]", "numbers": "Cash conversion cycle fell 77 → 39 days FY22–26 and ~11 days in Q2 as payable days jumped 64 → 108 [ratios table; Q2FY27 call]", "read": "too early", "note": "FY26's 141% CFO/PAT leaned on supplier credit that management itself expects to unwind."},
+      {"claim": "No near-term revenue guidance; growth depends on copper prices [Q2FY27 call]", "numbers": "Revenue +53% YoY in Q2 vs +39% in Q1 — part of this is metal-price pass-through, not volume [quarterly table; calls]", "read": "agree"}
+    ],
+    "bull": [
+      "Operating leverage is real: EBITDA compounded 33.5% vs sales 24.0% a year FY22–26; margin +3.5 pp [P&L table].",
+      "Effectively debt-free (D/E 0.02) while funding Rs 610 cr of H1 capex internally [BS FY26; Q2FY27 call].",
+      "Every scored margin promise met or beaten — management sandbagged 2 of 3 [promise ledger]."
+    ],
+    "bear": [
+      "A new wires entrant pricing 10–15% lower was raised on the call; current 14% margins leave room to be competed away [Q2FY27 call].",
+      "FY26 cash flow was flattered by payables; a return to 45–50 day cycles reverses that [ratios table; Q1FY27 call].",
+      "Exports ~5% of revenue vs a >10% FY30 target — the diversification lever hasn't started [Q2FY27 call]."
+    ],
+    "watch": ["W&C margin vs 13% if the new entrant forces price cuts", "Payable days / cash cycle in the H1 balance sheet", "EPC margin after falling from 11% to 7.2% in a quarter"]
+  },
+  "KAYNES": {
+    "generated_by": "Claude (build session) from 2 transcripts + AR-derived tables",
+    "snapshot": "Electronics manufacturing services company with a smart-metering arm (GridCrest) and new chip-packaging (OSAT) and HDI-PCB plants due in Q3 FY27 [Q1FY27 call]. Management puts EMS at ~60–65% of revenue and metering at ~35–40%; metering revenue fell ~12% in Q1 [Q1FY27 call].",
+    "narrative_vs_numbers": [
+      {"claim": "~Rs 4,500 cr FY26 revenue (as cited by analysts) [Q4FY26 call]", "numbers": "FY26 revenue Rs 3,626 cr — 19% short [P&L table]", "read": "diverge"},
+      {"claim": "Near-neutral operating cash flow for FY26 [Q4FY26 call]", "numbers": "FY26 CFO −Rs 600 cr; negative in 3 of 5 years; cumulative CFO is −63% of PAT [cash-flow table]", "read": "diverge"},
+      {"claim": "OSAT + PCB Rs 550–700 cr in FY27 [Q4FY26 call]", "numbers": "Cut to Rs 450–500 cr one quarter later, revenue only from Q3 [Q1FY27 call]", "read": "diverge"},
+      {"claim": "Metering cash flow turns positive by year-end; 70–80% of the drag reversed by Q3 [Q4FY26 call]", "numbers": "Q1 OCF ≈ −Rs 259 cr; metering receivables Rs 1,311 cr vs Rs 1,365 cr — a 4% dent [Q1FY27 call]", "read": "too early"},
+      {"claim": "Grow at 2× the EMS market [Q4FY26 call]", "numbers": "Q1 revenue +40% YoY vs a 17% market reference — but includes the August Electronics acquisition [Q1FY27 call]", "read": "agree"}
+    ],
+    "bull": [
+      "Order book ~Rs 8,900 cr is ~2.3× TTM revenue of Rs 3,899 cr [Q1FY27 call; P&L table].",
+      "Revenue compounded 50.5% a year FY22–26 with margins up 2.4 pp [P&L table].",
+      "OSAT/PCB capacity (~Rs 1,200 cr invested, Rs 170 cr subsidy received) comes online in Q3 FY27 [Q1FY27 call]."
+    ],
+    "bear": [
+      "Growth has been bought with cash: Rs 4,055 cr of external funding against −Rs 3,949 cr cumulative FCF proxy [cash-flow table].",
+      "Debtor days doubled to 154 and the cash cycle widened to 193 days in FY26 [ratios table].",
+      "Guidance credibility: 0 of 3 scored promises kept, and the newest one was cut within a quarter [promise ledger]."
+    ],
+    "watch": ["Q2/Q3 operating cash flow vs the 'positive by year-end' promise", "Metering receivables (Rs 1,311 cr) — do they actually fall?", "First OSAT/PCB revenue in Q3 vs the Rs 450–500 cr guide"]
+  }
+}

@@ -1,0 +1,1055 @@
+{
+ "_meta": {
+  "captured_at": "2026-11-03",
+  "sources": "screener.in (multi-year P&L, balance sheet, cash flow, ratios — standardised from annual reports) + concall transcripts filed on NSE/BSE or company IR sites. No broker notes or news used.",
+  "units": "Rs crore unless stated"
+ },
+ "PERSISTENT": {
+  "name": "Persistent Systems",
+  "about": "Digital engineering and enterprise modernisation services; software/hi-tech, BFSI and healthcare clients.",
+  "price": 6097,
+  "mcap": 101459,
+  "pe": 54.2,
+  "roce": 34.4,
+  "annual": [
+   {
+    "y": "FY22",
+    "sales": 5711,
+    "ebitda": 958,
+    "pat": 690
+   },
+   {
+    "y": "FY23",
+    "sales": 8351,
+    "ebitda": 1519,
+    "pat": 921
+   },
+   {
+    "y": "FY24",
+    "sales": 9822,
+    "ebitda": 1676,
+    "pat": 1093
+   },
+   {
+    "y": "FY25",
+    "sales": 11939,
+    "ebitda": 2058,
+    "pat": 1400
+   },
+   {
+    "y": "FY26",
+    "sales": 14748,
+    "ebitda": 2796,
+    "pat": 1865
+   },
+   {
+    "y": "TTM",
+    "sales": 16801,
+    "ebitda": 2831,
+    "pat": 1803
+   }
+  ],
+  "quarters": [
+   {
+    "q": "Dec 2024",
+    "sales": 3062,
+    "ebitda": 538,
+    "pat": 373
+   },
+   {
+    "q": "Mar 2025",
+    "sales": 3242,
+    "ebitda": 584,
+    "pat": 396
+   },
+   {
+    "q": "Jun 2025",
+    "sales": 3334,
+    "ebitda": 612,
+    "pat": 425
+   },
+   {
+    "q": "Sep 2025",
+    "sales": 3581,
+    "ebitda": 683,
+    "pat": 471
+   },
+   {
+    "q": "Dec 2025",
+    "sales": 3778,
+    "ebitda": 733,
+    "pat": 439
+   },
+   {
+    "q": "Mar 2026",
+    "sales": 4056,
+    "ebitda": 768,
+    "pat": 529
+   },
+   {
+    "q": "Jun 2026",
+    "sales": 4303,
+    "ebitda": 697,
+    "pat": 483
+   },
+   {
+    "q": "Sep 2026",
+    "sales": 4664,
+    "ebitda": 633,
+    "pat": 352
+   }
+  ],
+  "bs": [
+   {
+    "y": "FY22",
+    "borrowings": 578,
+    "equity": 3368,
+    "total_assets": 5419
+   },
+   {
+    "y": "FY23",
+    "borrowings": 655,
+    "equity": 3965,
+    "total_assets": 6619
+   },
+   {
+    "y": "FY24",
+    "borrowings": 451,
+    "equity": 4958,
+    "total_assets": 7405
+   },
+   {
+    "y": "FY25",
+    "borrowings": 311,
+    "equity": 6319,
+    "total_assets": 8722
+   },
+   {
+    "y": "FY26",
+    "borrowings": 477,
+    "equity": 7838,
+    "total_assets": 11344
+   }
+  ],
+  "cf": [
+   {
+    "y": "FY22",
+    "cfo": 845,
+    "cfi": -971,
+    "cff": 182
+   },
+   {
+    "y": "FY23",
+    "cfo": 956,
+    "cfi": -383,
+    "cff": -404
+   },
+   {
+    "y": "FY24",
+    "cfo": 1302,
+    "cfi": -525,
+    "cff": -582
+   },
+   {
+    "y": "FY25",
+    "cfo": 1157,
+    "cfi": -517,
+    "cff": -628
+   },
+   {
+    "y": "FY26",
+    "cfo": 1767,
+    "cfi": -618,
+    "cff": -748
+   }
+  ],
+  "wc": [
+   {
+    "y": "FY22",
+    "debtor_days": 61,
+    "ccc": 61,
+    "roce": 26
+   },
+   {
+    "y": "FY23",
+    "debtor_days": 69,
+    "ccc": 69,
+    "roce": 30
+   },
+   {
+    "y": "FY24",
+    "debtor_days": 62,
+    "ccc": 62,
+    "roce": 29
+   },
+   {
+    "y": "FY25",
+    "debtor_days": 82,
+    "ccc": 82,
+    "roce": 31
+   },
+   {
+    "y": "FY26",
+    "debtor_days": 83,
+    "ccc": 83,
+    "roce": 34
+   }
+  ],
+  "shareholding": {
+   "as_of": "Oct 2026",
+   "promoters": 28.82,
+   "fii": 21.3,
+   "dii": 34.04,
+   "public": 15.09
+  },
+  "segments": [
+   {
+    "name": "Software, Hi-Tech & Emerging",
+    "growth_yoy": 28.5
+   },
+   {
+    "name": "BFSI",
+    "growth_yoy": 16.2
+   },
+   {
+    "name": "Healthcare & Life Sciences",
+    "growth_yoy": 12.0
+   }
+  ],
+  "geo": [
+   {
+    "name": "North America",
+    "growth_yoy": 22.5
+   },
+   {
+    "name": "Europe",
+    "growth_yoy": -8.5
+   },
+   {
+    "name": "India",
+    "growth_yoy": 19.4
+   }
+  ],
+  "calls": [
+   {
+    "id": "Q3FY26",
+    "date": "2026-01-20",
+    "url": "https://www.persistent.com/wp-content/uploads/2026/01/analyst-call-transcript-q3fy26.pdf",
+    "reported": {
+     "usd_rev_m": 422.5,
+     "cc_qoq": 4.1,
+     "ebit_margin": 14.4,
+     "tcv_m": 674.5
+    },
+    "notes": "EBIT includes ~230 bps one-time labour-code impact."
+   },
+   {
+    "id": "Q4FY26",
+    "date": "2026-04-21",
+    "url": "https://www.persistent.com/wp-content/uploads/2026/04/Analyst-Call-Transcript-Q4FY26.pdf",
+    "reported": {
+     "usd_rev_m": 436.0,
+     "cc_qoq": 3.4,
+     "ebit_margin": 16.3,
+     "tcv_m": 600.8
+    }
+   },
+   {
+    "id": "Q1FY27",
+    "date": "2026-08-03",
+    "url": "https://www.persistent.com/wp-content/uploads/2026/08/Analyst-Call-Transcript-Q1FY27.pdf",
+    "reported": {
+     "usd_rev_m": 452.4,
+     "cc_qoq": 4.1,
+     "ebit_margin": 16.0,
+     "tcv_m": 1146.0,
+     "ocf_to_pat": 24.2
+    }
+   },
+   {
+    "id": "Q2FY27",
+    "date": "2026-10-15",
+    "url": "https://www.persistent.com/wp-content/uploads/2026/10/Analyst-Call-Transcript-Q2FY27.pdf",
+    "reported": {
+     "usd_rev_m": 487.6,
+     "cc_qoq": 7.8,
+     "ebit_margin": 15.0,
+     "tcv_m": 633.5,
+     "headcount": 29598,
+     "attrition": 11.9,
+     "utilisation": 85.8
+    },
+    "margin_bridge": "QoQ EBIT -100 bps: wage hike -180 (ESOP offset +40), utilisation -20, large-deal tooling/licence amortisation -90; FX & SG&A +150."
+   }
+  ],
+  "guidance": [
+   {
+    "id": "p1",
+    "made_in": "Q3FY26",
+    "metric": "Revenue scale",
+    "promise": "On track for ~US$2bn annual revenue by March 2027",
+    "clarified_in": "Q4FY26",
+    "clarification": "Restated as a ~US$500m quarterly run-rate at Q4 FY27 exit, not FY27 revenue",
+    "measure": {
+     "type": "run_rate",
+     "target": 500,
+     "unit": "US$m/qtr",
+     "deadline": "Q4FY27"
+    }
+   },
+   {
+    "id": "p2",
+    "made_in": "Q4FY26",
+    "metric": "EBIT margin",
+    "promise": "Aspiration of 16–17% EBIT margin (explicitly 'not guidance'); growth first",
+    "measure": {
+     "type": "range",
+     "lo": 16,
+     "hi": 17,
+     "unit": "%",
+     "series": "ebit_margin",
+     "soft": true
+    }
+   },
+   {
+    "id": "p3",
+    "made_in": "Q3FY26",
+    "metric": "Margin expansion",
+    "promise": "No further 200 bps margin uplift sought — gains to be reinvested",
+    "measure": {
+     "type": "qualitative"
+    }
+   },
+   {
+    "id": "p4",
+    "made_in": "Q1FY27",
+    "metric": "Cash conversion",
+    "promise": "OCF/PAT to return to ~100% norm during FY27 (Q1 was 24%)",
+    "measure": {
+     "type": "pending",
+     "deadline": "FY27"
+    }
+   },
+   {
+    "id": "p5",
+    "made_in": "Q1FY27",
+    "metric": "Wage-hike recovery",
+    "promise": "Part of the 180–200 bps wage-hike hit to be recouped in Q2",
+    "measure": {
+     "type": "direction",
+     "series": "ebit_margin",
+     "expect": "up",
+     "from_call": "Q1FY27",
+     "to_call": "Q2FY27"
+    }
+   },
+   {
+    "id": "p6",
+    "made_in": "Q1FY27",
+    "metric": "Large deal ramp",
+    "promise": "US$650m+ deal at 75–80% of peak in Q2, peak in Q3",
+    "measure": {
+     "type": "qualitative"
+    },
+    "evidence": "Q2 cc growth of 7.8% QoQ — highest in the series — is consistent with the ramp."
+   },
+   {
+    "id": "p7",
+    "made_in": "Q4FY26",
+    "metric": "Vertical mix",
+    "promise": "Healthcare and BFSI expected to lead growth in FY27 (directional, not guidance)",
+    "measure": {
+     "type": "qualitative"
+    },
+    "evidence": "Q2: Hi-Tech +28.5% YoY led; BFSI +16.2%; Healthcare +12.0% — the opposite order."
+   }
+  ],
+  "pushback": [
+   "TCV growth only ~4% YoY vs a typical mid-teens pace",
+   "Hi-tech incremental margins ~20% below segment history",
+   "Software licence costs rising two quarters running",
+   "Intangibles up ~Rs 900 cr QoQ",
+   "Receivables spike in Q1 — one-off or structural?"
+  ],
+  "events": [
+   "Nagarro acquisition pending: close expected Q4 CY26–Q1 CY27; ~US$50m one-time costs; debt at 5–6% net cost",
+   "QIP of ~Rs 4,265 cr at Rs 5,550/share completed 26 Oct 2026"
+  ]
+ },
+ "POLYCAB": {
+  "name": "Polycab India",
+  "about": "India's largest wires & cables maker, expanding into fans, switches, lighting (FMEG) and EPC.",
+  "price": 7920,
+  "mcap": 119161,
+  "pe": 37.8,
+  "roce": 33.2,
+  "annual": [
+   {
+    "y": "FY22",
+    "sales": 12204,
+    "ebitda": 1264,
+    "pat": 917
+   },
+   {
+    "y": "FY23",
+    "sales": 14108,
+    "ebitda": 1843,
+    "pat": 1282
+   },
+   {
+    "y": "FY24",
+    "sales": 18039,
+    "ebitda": 2492,
+    "pat": 1803
+   },
+   {
+    "y": "FY25",
+    "sales": 22408,
+    "ebitda": 2964,
+    "pat": 2046
+   },
+   {
+    "y": "FY26",
+    "sales": 28884,
+    "ebitda": 4013,
+    "pat": 2708
+   },
+   {
+    "y": "TTM",
+    "sales": 34609,
+    "ebitda": 4686,
+    "pat": 3202
+   }
+  ],
+  "quarters": [
+   {
+    "q": "Jun 2025",
+    "sales": 5906,
+    "ebitda": 858,
+    "pat": 600
+   },
+   {
+    "q": "Sep 2025",
+    "sales": 6477,
+    "ebitda": 1021,
+    "pat": 693
+   },
+   {
+    "q": "Dec 2025",
+    "sales": 7636,
+    "ebitda": 966,
+    "pat": 630
+   },
+   {
+    "q": "Mar 2026",
+    "sales": 8864,
+    "ebitda": 1161,
+    "pat": 786
+   },
+   {
+    "q": "Jun 2026",
+    "sales": 8210,
+    "ebitda": 1136,
+    "pat": 797
+   },
+   {
+    "q": "Sep 2026",
+    "sales": 9899,
+    "ebitda": 1422,
+    "pat": 990
+   }
+  ],
+  "bs": [
+   {
+    "y": "FY22",
+    "borrowings": 118,
+    "equity": 5543,
+    "total_assets": 7412
+   },
+   {
+    "y": "FY23",
+    "borrowings": 191,
+    "equity": 6631,
+    "total_assets": 9424
+   },
+   {
+    "y": "FY24",
+    "borrowings": 161,
+    "equity": 8187,
+    "total_assets": 12066
+   },
+   {
+    "y": "FY25",
+    "borrowings": 202,
+    "equity": 9825,
+    "total_assets": 13749
+   },
+   {
+    "y": "FY26",
+    "borrowings": 236,
+    "equity": 12009,
+    "total_assets": 20465
+   }
+  ],
+  "cf": [
+   {
+    "y": "FY22",
+    "cfo": 512,
+    "cfi": -427,
+    "cff": -201
+   },
+   {
+    "y": "FY23",
+    "cfo": 1428,
+    "cfi": -1203,
+    "cff": -227
+   },
+   {
+    "y": "FY24",
+    "cfo": 1296,
+    "cfi": -752,
+    "cff": -387
+   },
+   {
+    "y": "FY25",
+    "cfo": 1809,
+    "cfi": -1239,
+    "cff": -628
+   },
+   {
+    "y": "FY26",
+    "cfo": 3811,
+    "cfi": -2850,
+    "cff": -799
+   }
+  ],
+  "wc": [
+   {
+    "y": "FY22",
+    "debtor_days": 39,
+    "inventory_days": 86,
+    "payable_days": 48,
+    "ccc": 77,
+    "roce": 21
+   },
+   {
+    "y": "FY23",
+    "debtor_days": 32,
+    "inventory_days": 104,
+    "payable_days": 72,
+    "ccc": 65,
+    "roce": 27
+   },
+   {
+    "y": "FY24",
+    "debtor_days": 41,
+    "inventory_days": 105,
+    "payable_days": 82,
+    "ccc": 65,
+    "roce": 31
+   },
+   {
+    "y": "FY25",
+    "debtor_days": 42,
+    "inventory_days": 86,
+    "payable_days": 64,
+    "ccc": 64,
+    "roce": 30
+   },
+   {
+    "y": "FY26",
+    "debtor_days": 48,
+    "inventory_days": 99,
+    "payable_days": 108,
+    "ccc": 39,
+    "roce": 33
+   }
+  ],
+  "shareholding": {
+   "as_of": "Sep 2026",
+   "promoters": 61.44,
+   "fii": 18.06,
+   "dii": 7.91,
+   "public": 12.6
+  },
+  "segments": [
+   {
+    "name": "Wires & Cables",
+    "growth_yoy": 47,
+    "ebit_margin": 14.2
+   },
+   {
+    "name": "FMEG",
+    "growth_yoy": 124,
+    "ebit_margin": 10.1
+   },
+   {
+    "name": "EPC",
+    "growth_yoy": 53,
+    "ebit_margin": 7.2,
+    "revenue": 617
+   }
+  ],
+  "calls": [
+   {
+    "id": "Q1FY27",
+    "date": "2026-07-16",
+    "url": "https://cms.polycab.com/media/1gmeqmrs/q1fy27-earnings-call-transcript-1.pdf",
+    "reported": {
+     "rev_yoy": 39,
+     "wc_ebit": 13.3,
+     "fmeg_ebit": 8.0,
+     "epc_ebit": 11.0,
+     "fmeg_yoy": 71,
+     "capex_cr": 320
+    }
+   },
+   {
+    "id": "Q2FY27",
+    "date": "2026-10-15",
+    "url": "https://nsearchives.nseindia.com/corporate/POLYCAB_19102026163912_Intimation_of_Earnings_Call_Transcript.pdf",
+    "reported": {
+     "rev_yoy": 53,
+     "wc_ebit": 14.2,
+     "fmeg_ebit": 10.1,
+     "epc_ebit": 7.2,
+     "fmeg_yoy": 124,
+     "exports_share": 5,
+     "capex_h1_cr": 610,
+     "wc_cycle_days": 11
+    }
+   }
+  ],
+  "guidance": [
+   {
+    "id": "g1",
+    "made_in": "Q1FY27",
+    "metric": "W&C EBIT margin",
+    "promise": "Medium/long-term 11–13% (Project Spring)",
+    "measure": {
+     "type": "range",
+     "lo": 11,
+     "hi": 13,
+     "unit": "%",
+     "series": "wc_ebit"
+    }
+   },
+   {
+    "id": "g2",
+    "made_in": "Q1FY27",
+    "metric": "FMEG EBITDA margin",
+    "promise": "8–10% by FY30 (Project Spring)",
+    "measure": {
+     "type": "range",
+     "lo": 8,
+     "hi": 10,
+     "unit": "%",
+     "series": "fmeg_ebit"
+    },
+    "caveat": "Guide is EBITDA; delivered figure is segment EBIT — EBIT ≤ EBITDA, so the comparison is conservative."
+   },
+   {
+    "id": "g3",
+    "made_in": "Q1FY27",
+    "metric": "FMEG growth",
+    "promise": "1.5–2× industry growth",
+    "measure": {
+     "type": "qualitative"
+    },
+    "evidence": "FMEG +71% (Q1) and +124% (Q2) YoY — far above any industry rate, partly a low base."
+   },
+   {
+    "id": "g4",
+    "made_in": "Q1FY27",
+    "metric": "Exports share",
+    "promise": ">10% of revenue by FY30",
+    "measure": {
+     "type": "threshold",
+     "min": 10,
+     "unit": "%",
+     "series": "exports_share",
+     "deadline": "FY30"
+    }
+   },
+   {
+    "id": "g5",
+    "made_in": "Q1FY27",
+    "metric": "EPC margin",
+    "promise": "Sustainable high-single-digit EPC margin",
+    "measure": {
+     "type": "range",
+     "lo": 7,
+     "hi": 9.9,
+     "unit": "%",
+     "series": "epc_ebit"
+    }
+   },
+   {
+    "id": "g6",
+    "made_in": "Q1FY27",
+    "metric": "Working-capital cycle",
+    "promise": "Normalises to 45–50 days as LC-payable benefits unwind",
+    "measure": {
+     "type": "qualitative"
+    },
+    "evidence": "Cycle compressed to ~11 days in Q2 (from 39 in FY26) — moving away from the guided band, i.e. a temporary cash tailwind that should reverse."
+   },
+   {
+    "id": "g7",
+    "made_in": "Q2FY27",
+    "metric": "Revenue growth",
+    "promise": "Declined to guide near-term growth (copper-price dependent)",
+    "measure": {
+     "type": "qualitative"
+    }
+   }
+  ],
+  "pushback": [
+   "Why hold 11–13% W&C margin guide while printing 13–14%?",
+   "New wires entrant pricing 10–15% lower — any pricing response?",
+   "Does 10.1% FMEG margin force a Project Spring upgrade?",
+   "Volume deceleration over three quarters; T&D capex delays",
+   "EPC revenue fell 11% YoY in Q1 — execution or milestone timing?"
+  ],
+  "events": [
+   "Insolvency (CIRP) matter: NCLAT allowed Polycab's appeal on 30 Oct 2026, setting aside the NCLT Ahmedabad order",
+   "EHV plant to commission in FY28"
+  ]
+ },
+ "KAYNES": {
+  "name": "Kaynes Technology",
+  "about": "Electronics manufacturing services (EMS) plus smart metering, with new OSAT (chip packaging) and HDI PCB ventures.",
+  "price": 3210,
+  "mcap": 21523,
+  "pe": 62.0,
+  "roce": 12.7,
+  "annual": [
+   {
+    "y": "FY22",
+    "sales": 706,
+    "ebitda": 95,
+    "pat": 42
+   },
+   {
+    "y": "FY23",
+    "sales": 1126,
+    "ebitda": 170,
+    "pat": 95
+   },
+   {
+    "y": "FY24",
+    "sales": 1805,
+    "ebitda": 257,
+    "pat": 183
+   },
+   {
+    "y": "FY25",
+    "sales": 2722,
+    "ebitda": 416,
+    "pat": 293
+   },
+   {
+    "y": "FY26",
+    "sales": 3626,
+    "ebitda": 578,
+    "pat": 364
+   },
+   {
+    "y": "TTM",
+    "sales": 3899,
+    "ebitda": 609,
+    "pat": 346
+   }
+  ],
+  "quarters": [
+   {
+    "q": "Mar 2025",
+    "sales": 984,
+    "ebitda": 168,
+    "pat": 116
+   },
+   {
+    "q": "Jun 2025",
+    "sales": 673,
+    "ebitda": 113,
+    "pat": 75
+   },
+   {
+    "q": "Sep 2025",
+    "sales": 906,
+    "ebitda": 148,
+    "pat": 121
+   },
+   {
+    "q": "Dec 2025",
+    "sales": 804,
+    "ebitda": 119,
+    "pat": 77
+   },
+   {
+    "q": "Mar 2026",
+    "sales": 1243,
+    "ebitda": 194,
+    "pat": 91
+   },
+   {
+    "q": "Jun 2026",
+    "sales": 946,
+    "ebitda": 148,
+    "pat": 56
+   }
+  ],
+  "bs": [
+   {
+    "y": "FY22",
+    "borrowings": 189,
+    "equity": 202,
+    "total_assets": 622
+   },
+   {
+    "y": "FY23",
+    "borrowings": 155,
+    "equity": 959,
+    "total_assets": 1419
+   },
+   {
+    "y": "FY24",
+    "borrowings": 323,
+    "equity": 2487,
+    "total_assets": 3265
+   },
+   {
+    "y": "FY25",
+    "borrowings": 903,
+    "equity": 2840,
+    "total_assets": 4641
+   },
+   {
+    "y": "FY26",
+    "borrowings": 913,
+    "equity": 4748,
+    "total_assets": 6894
+   }
+  ],
+  "cf": [
+   {
+    "y": "FY22",
+    "cfo": 21,
+    "cfi": -45,
+    "cff": 27
+   },
+   {
+    "y": "FY23",
+    "cfo": -42,
+    "cfi": -494,
+    "cff": 554
+   },
+   {
+    "y": "FY24",
+    "cfo": 88,
+    "cfi": -1523,
+    "cff": 1429
+   },
+   {
+    "y": "FY25",
+    "cfo": -82,
+    "cfi": -355,
+    "cff": 465
+   },
+   {
+    "y": "FY26",
+    "cfo": -600,
+    "cfi": -917,
+    "cff": 1580
+   }
+  ],
+  "wc": [
+   {
+    "y": "FY22",
+    "debtor_days": 102,
+    "inventory_days": 167,
+    "payable_days": 121,
+    "ccc": 148,
+    "roce": 25
+   },
+   {
+    "y": "FY23",
+    "debtor_days": 74,
+    "inventory_days": 191,
+    "payable_days": 103,
+    "ccc": 162,
+    "roce": 22
+   },
+   {
+    "y": "FY24",
+    "debtor_days": 72,
+    "inventory_days": 150,
+    "payable_days": 99,
+    "ccc": 123,
+    "roce": 15
+   },
+   {
+    "y": "FY25",
+    "debtor_days": 77,
+    "inventory_days": 156,
+    "payable_days": 131,
+    "ccc": 102,
+    "roce": 14
+   },
+   {
+    "y": "FY26",
+    "debtor_days": 154,
+    "inventory_days": 169,
+    "payable_days": 131,
+    "ccc": 193,
+    "roce": 13
+   }
+  ],
+  "shareholding": {
+   "as_of": "Sep 2026",
+   "promoters": 53.31,
+   "fii": 6.08,
+   "dii": 12.47,
+   "public": 28.13
+  },
+  "segments": [
+   {
+    "name": "EMS",
+    "share": "~60–65%"
+   },
+   {
+    "name": "Smart metering (GridCrest)",
+    "share": "~35–40%",
+    "growth_yoy": -12
+   }
+  ],
+  "calls": [
+   {
+    "id": "Q4FY26",
+    "date": "2026-05-14",
+    "url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_19052026172024_Transcriptinvsetormeetsigned.pdf",
+    "reported": {
+     "fy26_rev": 3626,
+     "fy26_ebitda_margin": 15.8,
+     "order_book_cr": 9000,
+     "consol_wc_days": 122,
+     "ems_wc_days": 53,
+     "metering_receivables": 1365,
+     "consol_ocf": -600,
+     "metering_rev": 971
+    }
+   },
+   {
+    "id": "Q1FY27",
+    "date": "2026-08-08",
+    "url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_12082026164943_TranscriptoftheEarningAnnouncement.pdf",
+    "reported": {
+     "rev": 946,
+     "rev_yoy": 40,
+     "ebitda_margin": 15.6,
+     "order_book_cr": 8900,
+     "nwc_days": 190,
+     "inventory_days": 105,
+     "receivables_cr": 1925,
+     "metering_receivables": 1311,
+     "q1_ocf": -259,
+     "debt_cr": 800
+    }
+   }
+  ],
+  "guidance": [
+   {
+    "id": "k1",
+    "made_in": "pre-FY26",
+    "metric": "FY26 revenue",
+    "promise": "~Rs 4,500 cr FY26 revenue (as cited by analysts on the Q4FY26 call)",
+    "measure": {
+     "type": "threshold",
+     "min": 4500,
+     "unit": "Rs cr",
+     "actual": 3626,
+     "actual_label": "FY26 revenue"
+    }
+   },
+   {
+    "id": "k2",
+    "made_in": "pre-FY26",
+    "metric": "FY26 operating cash flow",
+    "promise": "Near-neutral consolidated OCF",
+    "measure": {
+     "type": "threshold",
+     "min": 0,
+     "unit": "Rs cr",
+     "actual": -600,
+     "actual_label": "FY26 OCF"
+    }
+   },
+   {
+    "id": "k3",
+    "made_in": "Q4FY26",
+    "metric": "OSAT + PCB revenue FY27",
+    "promise": "PCB Rs 300–400 cr + OSAT Rs 250–300 cr (Rs 550–700 cr combined)",
+    "revised_in": "Q1FY27",
+    "revision": "Cut to Rs 450–500 cr combined, revenue starting Q3",
+    "measure": {
+     "type": "revision",
+     "old_mid": 625,
+     "new_mid": 475
+    }
+   },
+   {
+    "id": "k4",
+    "made_in": "Q4FY26",
+    "metric": "Metering cash flow",
+    "promise": "70–80% of the ~Rs 600 cr negative OCF reversed by Q3; positive by year-end",
+    "measure": {
+     "type": "pending",
+     "deadline": "Q3FY27"
+    },
+    "evidence": "Q1 OCF was still about -Rs 259 cr; metering receivables Rs 1,311 cr (from Rs 1,365 cr)."
+   },
+   {
+    "id": "k5",
+    "made_in": "Q4FY26",
+    "metric": "Working capital",
+    "promise": "Standalone EMS working-capital days to fall 8–10 days over coming years",
+    "measure": {
+     "type": "qualitative"
+    },
+    "evidence": "Q1 net working capital 190 days (standalone) vs 163 on a 12-month basis; inventory days up to ~105 from ~96."
+   },
+   {
+    "id": "k6",
+    "made_in": "Q4FY26",
+    "metric": "Revenue growth FY27",
+    "promise": "Grow at ~2× the EMS market rate",
+    "measure": {
+     "type": "qualitative"
+    },
+    "evidence": "Q1 revenue +40% YoY vs management's 17% market reference — ahead, but helped by the August Electronics acquisition."
+   },
+   {
+    "id": "k7",
+    "made_in": "Q1FY27",
+    "metric": "EBITDA margin",
+    "promise": "A couple of quarters to normalise margins amid cost escalation",
+    "measure": {
+     "type": "pending",
+     "deadline": "Q3FY27"
+    }
+   }
+  ],
+  "pushback": [
+   "FY26 revenue landed ~Rs 3,600 cr vs ~Rs 4,500 cr target — guidance credibility",
+   "OCF ~-Rs 600 cr vs a near-neutral guide",
+   "Metering receivables barely moved despite securitisation promises",
+   "Intangibles more than doubled to Rs 536 cr",
+   "Gap between negative OCF and rising net debt"
+  ],
+  "events": [
+   "Acquisition disclosure filed 2 Nov 2026",
+   "Semicon Unit 2 and Chennai PCB plant targeted operational by Q3 FY27",
+   "Q2 FY27 results not yet filed as of 3 Nov 2026"
+  ]
+ }
+}

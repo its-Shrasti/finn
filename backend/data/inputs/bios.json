@@ -1,0 +1,34 @@
+{
+ "_meta": "Push-side enrichment for management changes. Captured during the build from web search (public profile coverage); live mode uses enrich.person_bio().",
+ "Anup Bagchi": {
+  "bio": "With the ICICI Group since 1992: MD & CEO of ICICI Securities (2011–16), Executive Director of ICICI Bank (2017–23), then MD & CEO of ICICI Prudential Life (Jun 2023 – Oct 2026). IIT Kanpur engineer, IIM Bangalore MBA. RBI-approved three-year term at HDFC Bank, 27 Oct 2026 – 26 Oct 2029.",
+  "previous": [
+   "MD & CEO, ICICI Prudential Life Insurance (2023–2026)",
+   "Executive Director, ICICI Bank (2017–2023)",
+   "MD & CEO, ICICI Securities (2011–2016)"
+  ],
+  "education": "B.Tech, IIT Kanpur · MBA, IIM Bangalore",
+  "so_what": "An outsider from HDFC Bank's closest rival, with retail-broking and insurance distribution DNA.",
+  "sources": [
+   "https://india.entrepreneur.com/leadership/5-things-to-know-anup-bagchi-hdfc-bank-new-md-ceo",
+   "https://www.businesstoday.in/latest/corporate/story/hdfc-bank-appoints-anup-bagchi-as-md-ceo-for-three-year-term-from-october-27-559151-2026-10-01"
+  ]
+ },
+ "Bahram Vakil": {
+  "bio": "Co-founder and senior partner of law firm AZB & Partners; practice spans restructuring, insolvency, infrastructure and project finance. Has served on government committees on financial-sector reform, FDI and securities markets. Columbia LLM; qualified in India and New York. Already on Trent's board as a non-executive, non-independent director.",
+  "previous": [
+   "Co-founder & senior partner, AZB & Partners",
+   "Director, BASF India",
+   "Vice-chairman & independent director, Tata Investment Corporation"
+  ],
+  "education": "LLM, Columbia University",
+  "so_what": "An existing board insider and lawyer, not an operator — continuity at the board, no change to the executive team.",
+  "sources": [
+   "https://www.barandbench.com/news/law-policy/azb-co-founder-bahram-vakil-to-succeed-noel-tata-as-trent-chairman"
+  ]
+ },
+ "Prithvi Vachani": {
+  "bio": null,
+  "not_found": "No reliable public profile found in search; showing the filing text only rather than guessing."
+ }
+}
