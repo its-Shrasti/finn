@@ -1,0 +1,773 @@
+<title>FINN</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: one phone-width column; sticky masthead, fixed ask bar + tab bar. Triage first, detail on demand. */
+:root{
+  --bg:#EEF1F4; --surface:#FFFFFF; --sunk:#E4E9EE; --ink:#13202B; --muted:#5B6874; --faint:#8794A0; --line:#D7DEE5;
+  --accent:#2A3F9D; --accent-soft:#E3E7F7; --pos:#11795A; --pos-soft:#DDF1E9; --neg:#BE3426; --neg-soft:#F8E1DD;
+  --amber:#B87500; --amber-soft:#F8ECD3; --sim:#6B4FA0;
+  --f-display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --f-body:"Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --r:12px; --shadow:0 1px 2px rgb(19 32 43 / .06), 0 4px 16px rgb(19 32 43 / .05);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D1318; --surface:#151E26; --sunk:#1B2630; --ink:#E5EBF0; --muted:#97A4B0; --faint:#6E7C88; --line:#25323D;
+  --accent:#93A6FF; --accent-soft:#1F2847; --pos:#45C796; --pos-soft:#123328; --neg:#FF7B6B; --neg-soft:#3A1D1A;
+  --amber:#F0B547; --amber-soft:#36290F; --sim:#B49AE6; --shadow:0 1px 2px rgb(0 0 0 / .3); color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0D1318; --surface:#151E26; --sunk:#1B2630; --ink:#E5EBF0; --muted:#97A4B0; --faint:#6E7C88; --line:#25323D;
+  --accent:#93A6FF; --accent-soft:#1F2847; --pos:#45C796; --pos-soft:#123328; --neg:#FF7B6B; --neg-soft:#3A1D1A;
+  --amber:#F0B547; --amber-soft:#36290F; --sim:#B49AE6; --shadow:0 1px 2px rgb(0 0 0 / .3); color-scheme:dark }
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{color:var(--ink);font:15px/1.5 var(--f-body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+a{color:var(--accent)}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.app{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 170px}
+
+/* masthead */
+.mast{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);padding-block:12px 10px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
+.brand{font:700 26px/1 var(--f-display);letter-spacing:-.03em}
+.brand i{font-style:normal;color:var(--accent)}
+.asof{font-size:12px;color:var(--muted);line-height:1.25;min-width:0}
+.asof b{color:var(--ink);font-weight:600}
+.mast .sp{flex:1}
+.iconbtn{border:1px solid var(--line);background:var(--surface);border-radius:999px;height:34px;padding:0 12px;font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+
+/* section heads */
+h1,h2,h3{text-wrap:balance;margin:0}
+.view{display:flex;flex-direction:column;gap:18px;padding-top:16px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.h1{font:700 28px/1.12 var(--f-display);letter-spacing:-.02em}
+.h2{font:700 19px/1.2 var(--f-display);letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:13.5px}
+
+/* chips */
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+
+/* brief */
+.read{background:var(--surface);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px}
+.read ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.read li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;font-size:15px;line-height:1.45}
+.read li .tk{margin-top:2px}
+.funnel{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.funnel .num{color:var(--ink);font-weight:600}
+.funnel .arrow{color:var(--faint)}
+.rowbtns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;display:inline-flex;gap:6px;align-items:center}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.tk{font:600 11px/1 var(--f-mono);letter-spacing:.02em;padding:4px 6px;border-radius:5px;background:var(--sunk);color:var(--ink);white-space:nowrap}
+
+.group-h{display:flex;align-items:baseline;gap:8px}
+.group-h .count{font:600 12px var(--f-mono);color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
+.dot.act{background:var(--neg)} .dot.know{background:var(--amber)} .dot.noise{background:var(--faint)}
+
+.card{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;display:flex;flex-direction:column;gap:10px;position:relative}
+.card.act{border-left:3px solid var(--neg)}
+.card-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.card-top .co{color:var(--ink);font-weight:600}
+.card-top .sp{flex:1}
+.cat{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.card h3{font:600 16px/1.35 var(--f-body)}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.why{font-size:12px;color:var(--faint)}
+.acts{display:flex;gap:6px;flex-wrap:wrap}
+.acts .btn{padding:5px 11px;font-size:12px}
+.related summary{cursor:pointer;font-size:12.5px;color:var(--muted);list-style:none}
+.related summary::-webkit-details-marker{display:none}
+.related ul{margin:6px 0 0;padding-left:16px;font-size:12.5px;color:var(--muted)}
+.cleared{opacity:.55}
+
+.know-list{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.know-row{display:grid;grid-template-columns:auto 1fr auto;gap:10px;padding:12px 14px;border-top:1px solid var(--line);align-items:start;width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0}
+.know-row:first-child{border-top:0}
+.know-row .t{font-size:14px;line-height:1.4}
+.know-row .t small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.know-row .d{font-size:11.5px;color:var(--faint);white-space:nowrap}
+
+.routine{background:var(--sunk);border-radius:var(--r);padding:12px 14px}
+.routine summary{cursor:pointer;font-size:13.5px;font-weight:600;color:var(--muted);list-style:none;display:flex;gap:8px;align-items:center}
+.routine summary::-webkit-details-marker{display:none}
+.routine .grp{margin-top:10px;font-size:12.5px;color:var(--muted)}
+.routine .grp b{color:var(--ink);font-weight:600}
+.routine ul{margin:4px 0 0;padding-left:16px}
+.empty{padding:22px;text-align:center;color:var(--muted);background:var(--surface);border-radius:var(--r);font-size:14px}
+
+/* results table */
+.rt{width:100%;border-collapse:collapse;font-size:13px}
+.rt th{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);text-align:right;padding:4px 0 6px;border-bottom:1px solid var(--line)}
+.rt th:first-child,.rt td:first-child{text-align:left}
+.rt td{padding:7px 0;border-bottom:1px solid var(--line);text-align:right}
+.rt tr:last-child td{border-bottom:0}
+.up{color:var(--pos)} .down{color:var(--neg)} .flat{color:var(--muted)}
+.flags{display:flex;flex-direction:column;gap:6px}
+.flag{font-size:12.5px;padding:7px 10px;border-radius:8px;line-height:1.4}
+.flag.neg{background:var(--neg-soft);color:var(--neg)} .flag.pos{background:var(--pos-soft);color:var(--pos)} .flag.neutral{background:var(--sunk);color:var(--muted)}
+.enrich{background:var(--sunk);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.enrich .lbl{font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.person{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:center}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font:700 15px var(--f-display)}
+.person b{font-size:15px}
+.person small{display:block;color:var(--muted);font-size:12.5px}
+.enrich ul{margin:0;padding-left:16px;font-size:13px;color:var(--muted)}
+.sowhat{font-size:13.5px;font-weight:600}
+.srcs{font-size:11.5px;color:var(--faint);overflow-wrap:anywhere}
+
+/* alerts */
+.rules{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:12px}
+.sentence{font:500 17px/1.7 var(--f-display);letter-spacing:-.005em}
+.tok{display:inline-flex;align-items:center;border-bottom:2px solid var(--accent);background:var(--accent-soft);border-radius:6px 6px 2px 2px;padding:0 2px}
+.tok input,.tok select{border:0;background:transparent;font:600 17px var(--f-mono);color:var(--accent);width:3.2ch;text-align:center;padding:0;appearance:textfield;-moz-appearance:textfield}
+.tok input::-webkit-outer-spin-button,.tok input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.tok select{width:auto;padding-right:2px}
+.catgrid{display:flex;flex-wrap:wrap;gap:6px}
+.catgrid label{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:5px 10px;cursor:pointer}
+.catgrid input{accent-color:var(--accent);margin:0}
+.override{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.override select,.override input{border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:5px 8px}
+.override input{width:64px}
+.ovl{display:flex;gap:6px;flex-wrap:wrap}
+.ovl span{font-size:12px;background:var(--sunk);border-radius:999px;padding:4px 6px 4px 10px;display:inline-flex;gap:6px;align-items:center}
+.ovl button{border:0;background:none;color:var(--muted);padding:0 4px}
+.alert{display:grid;grid-template-columns:1fr 110px;gap:12px;align-items:center;padding:12px 14px;border-top:1px solid var(--line)}
+.alert:first-child{border-top:0}
+.alert .t{font-size:14px;line-height:1.4;min-width:0}
+.alert .t small{display:block;color:var(--muted);font-size:12px}
+.sev{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:4px;padding:2px 5px;margin-right:4px}
+.sev.s3{background:var(--neg-soft);color:var(--neg)} .sev.s2{background:var(--amber-soft);color:var(--amber)}
+.simtag{font:600 10px var(--f-mono);color:var(--sim);border:1px solid currentColor;border-radius:4px;padding:1px 4px;vertical-align:1px}
+.spark{width:110px;height:34px;display:block}
+
+/* book */
+.season{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface);border-radius:10px;padding:10px 12px;box-shadow:var(--shadow)}
+.stat .v{font:600 22px/1.1 var(--f-mono)}
+.stat .l{font-size:11.5px;color:var(--muted);line-height:1.3;margin-top:2px}
+.book{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);overflow-x:auto}
+.book table{width:100%;border-collapse:collapse;font-size:13px;min-width:320px}
+.book th{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);padding:10px 6px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+.book th:first-child{text-align:left;padding-left:14px}
+.book td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.book td:first-child{text-align:left;padding-left:14px}
+.book td:last-child,.book th:last-child{padding-right:14px}
+.book tr:last-child td{border-bottom:0}
+.book tbody tr{cursor:pointer}
+.book tbody tr:hover{background:var(--sunk)}
+.heat{display:inline-block;min-width:48px;text-align:right;border-radius:5px;padding:2px 6px;font:500 12.5px var(--f-mono)}
+.book .nm{font-weight:600}
+.book .nm small{display:block;font-weight:400;color:var(--faint);font-size:11px}
+
+/* research */
+.picker{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.picker form{display:flex;gap:6px;flex:1;min-width:180px}
+.picker input{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;text-transform:uppercase}
+.rhead{display:flex;flex-direction:column;gap:6px}
+.kv{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.kv b{color:var(--ink);font-family:var(--f-mono);font-weight:600}
+.jump{position:sticky;top:calc(env(safe-area-inset-top,0px) + 59px);z-index:15;background:var(--bg);padding-block:8px}
+.sec{display:flex;flex-direction:column;gap:10px;scroll-margin-top:120px}
+.panel{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.cred{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.cred .big{font:700 40px/1 var(--f-display);letter-spacing:-.03em}
+.cred .big small{font-size:18px;color:var(--muted);font-weight:500}
+.tally{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--sunk);margin-top:6px}
+.tally span{display:block;height:100%}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;vertical-align:0}
+.promise{display:grid;grid-template-columns:1fr;gap:4px;padding:12px 0;border-top:1px solid var(--line)}
+.promise:first-of-type{border-top:0;padding-top:0}
+.promise .top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.promise .m{font-weight:600;font-size:14px}
+.promise .mi{font-size:11.5px;color:var(--faint)}
+.promise .said{font-size:13.5px}
+.promise .did{font-size:13px;color:var(--muted)}
+.promise .cav{font-size:12px;color:var(--faint);font-style:italic}
+.pill{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:4px;padding:3px 6px;white-space:nowrap}
+.v-beat,.v-delivered,.v-on_track,.v-agree{background:var(--pos-soft);color:var(--pos)}
+.v-missed,.v-walked_back,.v-diverge{background:var(--neg-soft);color:var(--neg)}
+.v-at_risk{background:var(--amber-soft);color:var(--amber)}
+.v-pending,.v-unscored,.v-too_early{background:var(--sunk);color:var(--muted)}
+.nvn{display:flex;flex-direction:column;gap:6px;padding:12px 0;border-top:1px solid var(--line)}
+.nvn:first-child{border-top:0;padding-top:0}
+.nvn .row{display:grid;grid-template-columns:62px 1fr;gap:8px;font-size:13.5px}
+.nvn .row span:first-child{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);padding-top:3px}
+.nvn .note{font-size:12.5px;color:var(--muted);padding-left:70px}
+.bb{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:480px){.bb{grid-template-columns:1fr}}
+.bb ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;font-size:13.5px}
+.bb .h{font:700 15px var(--f-display);display:flex;gap:6px;align-items:center}
+.src{font-size:11px;color:var(--faint);font-family:var(--f-mono)}
+.chart{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font:10px var(--f-mono)}
+.chart .lab{fill:var(--ink);font-weight:600}
+.minitbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.minitbl th{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);text-align:right;padding:4px 4px;border-bottom:1px solid var(--line)}
+.minitbl td{text-align:right;padding:5px 4px;border-bottom:1px solid var(--line)}
+.minitbl th:first-child,.minitbl td:first-child{text-align:left}
+.tblwrap{overflow-x:auto}
+.verdict{font-size:13.5px;padding:10px 12px;border-radius:8px}
+.foot{font-size:12px;color:var(--faint);display:flex;flex-direction:column;gap:6px}
+.foot a{overflow-wrap:anywhere}
+
+/* ask + nav */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--bg);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.dock-in{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px 4px;display:flex;flex-direction:column;gap:8px}
+.askbar{display:flex;align-items:center;gap:10px;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:10px 16px;color:var(--muted);font-size:14.5px;text-align:left;box-shadow:var(--shadow)}
+.askbar svg{flex:none}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr)}
+.tab{border:0;background:none;padding:6px 0 8px;font-size:11.5px;font-weight:600;color:var(--faint);display:flex;flex-direction:column;align-items:center;gap:3px;position:relative}
+.tab svg{width:21px;height:21px}
+.tab[aria-selected="true"]{color:var(--ink)}
+.tab .badge{position:absolute;top:2px;left:calc(50% + 6px);background:var(--neg);color:#fff;font:600 10px var(--f-mono);border-radius:999px;padding:1px 5px}
+
+/* sheet */
+.scrim{position:fixed;inset:0;background:rgb(10 16 22 / .45);z-index:40}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;max-height:88%;display:flex;flex-direction:column;background:var(--bg);border-radius:18px 18px 0 0;padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -8px 30px rgb(0 0 0 / .2)}
+.sheet-in{max-width:560px;width:100%;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px 18px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
+.grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 4px}
+.sheet-h{display:flex;align-items:center;gap:8px}
+.sheet-h .sp{flex:1}
+.askform{display:flex;gap:8px}
+.askform input{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:10px 16px}
+.answer{background:var(--surface);border-radius:var(--r);padding:14px;font-size:14.5px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;white-space:pre-wrap}
+.answer .by{font-size:11.5px;color:var(--faint);white-space:normal}
+.qa-q{font-weight:600;font-size:14px}
+@media (prefers-reduced-motion:no-preference){.sheet{animation:up .22s ease-out}@keyframes up{from{transform:translateY(24px);opacity:.6}}}
+</style>
+
+<div class="app">
+  <header class="mast">
+    <div class="brand">FIN<i>N</i></div>
+    <div class="asof" id="asof"></div>
+    <div class="sp"></div>
+    <button class="iconbtn" id="aboutBtn" aria-label="About this data">Data</button>
+  </header>
+  <main id="main"></main>
+</div>
+
+<nav class="dock" aria-label="Main">
+  <div class="dock-in">
+    <button class="askbar" id="askBtn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      Ask FINN about your book…
+    </button>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-v="brief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h7"/></svg>Brief<span class="badge" id="briefBadge" hidden></span></button>
+      <button class="tab" role="tab" data-v="alerts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7 4 5"/></svg>Alerts</button>
+      <button class="tab" role="tab" data-v="book"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M10 10v10"/></svg>Results</button>
+      <button class="tab" role="tab" data-v="research"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18M5 8l7-5 7 5M6 21h12"/></svg>Research</button>
+    </div>
+  </div>
+</nav>
+
+<div id="sheetRoot"></div>
+
+<script>
+const EMBED = /*__SNAPSHOT__*/null;
+(async function () {
+  "use strict";
+  const S = EMBED || await fetch("snapshot.json").then(r => r.json());
+  const $ = (s, el = document) => el.querySelector(s);
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem("finn:" + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem("finn:" + k, JSON.stringify(v)); } catch { } }
+  };
+
+  // ---------- data prep ----------
+  const asOf = new Date(S.meta.as_of);
+  const P = Object.fromEntries(S.portfolio.map(p => [p.ticker, p]));
+  const nameOf = t => (P[t] && P[t].name) || t;
+  const items = S.items.map(it => ({ ...it, raw: 1 + (it.related ? it.related.length : 0) }));
+  const SIM = S.meta.eod_source === "simulated";
+  const D = s => new Date(s + "T12:00:00+05:30");
+  const fmtDate = s => D(s).toLocaleDateString("en-IN", { day: "numeric", month: "short" });
+  const daysAgo = s => Math.round((asOf - D(s)) / 864e5);
+  const fmtCr = n => n == null ? "—" : "₹" + Math.round(n).toLocaleString("en-IN");
+  const fmtMcap = n => n >= 100000 ? "₹" + (n / 100000).toFixed(2) + " L cr" : "₹" + Math.round(n).toLocaleString("en-IN") + " cr";
+  const pct = (x, d = 1) => x == null ? "—" : (x > 0 ? "+" : x < 0 ? "−" : "") + Math.abs(x).toFixed(d) + "%";
+  const cls = x => x == null ? "flat" : x > 0.05 ? "up" : x < -0.05 ? "down" : "flat";
+
+  const CAT = {
+    "results/filing": "Results", "results/presentation": "Results deck", "results/paperwork": "Results ad", "results/board_intimation": "Results date",
+    "management_change/top": "Top management", "management_change/director": "Board change", "management_change/senior": "Senior management",
+    "fund_raise/equity": "Equity raise", "fund_raise/debt": "Debt raise", "fund_raise/buyback": "Buyback", "M&A/deal": "Deal",
+    "litigation/legal": "Legal", "press_release/clarification": "Clarification", "press_release/orders": "Order win",
+    "press_release/operating_data": "Operating data", "press_release/general": "Press release", "credit_rating/rating": "Credit rating",
+    "dividend/dividend": "Dividend", "earnings_call/transcript": "Call transcript", "earnings_call/recording": "Call recording",
+    "investor_meetings/meet": "Investor meeting", "postal_ballot/ballot": "Postal ballot", "agm_egm/meeting": "Shareholder meeting",
+    "unclassified/paperwork": "Compliance paperwork", "unclassified/esop": "ESOP / stock options"
+  };
+  const catOf = it => CAT[it.category + "/" + it.subtype] || it.category.replace(/_/g, " ");
+  const WHY = {
+    "results/filing": "Quarterly numbers changed. FINN put the headline cut below.",
+    "management_change/top": "Who runs the company changed. FINN pulled the incoming person's background.",
+    "management_change/director": "Board composition changed.",
+    "management_change/senior": "A business head changed; below CEO level.",
+    "fund_raise/equity": "New equity means dilution and tells you what management plans to spend on.",
+    "M&A/deal": "A deal changes what you own.",
+    "litigation/legal": "A legal or regulatory outcome can move the stock.",
+    "press_release/clarification": "The exchange asked about a news report; the company's answer is on record.",
+    "press_release/operating_data": "Monthly operating numbers, ahead of the quarter.",
+    "press_release/orders": "Order wins add to revenue visibility.",
+    "results/filing:know": "A clean quarter: worth knowing, nothing to decide.",
+  };
+  function oneLiner(it) {
+    const e = it.enrichment;
+    if (e && e.kind === "results") return e.headline || it.detail;
+    if (e && e.kind === "person") return `${e.name} becomes ${e.role}` + (e.outgoing ? `, succeeding ${e.outgoing}.` : ".");
+    return it.detail;
+  }
+
+  // ---------- state ----------
+  const st = {
+    view: "brief", win: store.get("win", "1"), from: store.get("from", ""), to: store.get("to", ""),
+    cleared: new Set(store.get("cleared", [])), rt: store.get("research", "PERSISTENT"),
+    rules: Object.assign({ price: S.meta.defaults.price_move_pct, vol: S.meta.defaults.volume_multiple, look: S.meta.defaults.volume_lookback, sessions: 10, cats: S.meta.defaults.watch_categories, over: {} }, store.get("rules", {})),
+  };
+  const saveRules = () => store.set("rules", st.rules);
+
+  // ---------- masthead ----------
+  $("#asof").innerHTML = `<b>${asOf.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" })} · ${asOf.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Asia/Kolkata" })} IST</b><br>${S.portfolio.length} holdings · ${S.meta.mode === "live" ? "live data" : "snapshot"}`;
+
+  // ---------- window ----------
+  function inWindow(it) {
+    if (st.win === "custom") {
+      return (!st.from || it.date >= st.from) && (!st.to || it.date <= st.to);
+    }
+    const cutoff = new Date(asOf.getTime() - Number(st.win) * 864e5).toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+    return it.date >= cutoff;
+  }
+  const winLabel = () => ({ "1": "the last 24 hours", "3": "the last 3 days", "7": "the last 7 days", "14": "the last 14 days", "30": "the last 30 days" }[st.win] || "your custom range");
+
+  // ---------- components ----------
+  function resultsBlock(e, compact) {
+    if (!e || !e.available) return "";
+    const head = `<div class="lbl">First cut · ${esc(e.quarter)} vs ${esc(e.prev_q || "prev")} (QoQ) and ${esc(e.year_ago_q || "year ago")} (YoY) · ₹ crore</div>`;
+    const rows = e.rows.map(r => r.na
+      ? `<tr><td>${r.metric}</td><td class="flat" colspan="3" style="text-align:right;font-size:12px">${esc(r.na)}</td></tr>`
+      : `<tr><td>${r.metric}</td><td class="num">${r.value == null ? "—" : Math.round(r.value).toLocaleString("en-IN")}</td><td class="num ${cls(r.qoq)}">${pct(r.qoq)}</td><td class="num ${cls(r.yoy)}">${pct(r.yoy)}</td></tr>`).join("");
+    const m = e.margins && e.margins.ebitda_margin != null
+      ? `<div class="sub" style="font-size:12.5px">EBITDA margin <span class="num" style="color:var(--ink)">${e.margins.ebitda_margin}%</span> · last quarter <span class="num">${e.margins.prev}%</span> · a year ago <span class="num">${e.margins.year_ago}%</span></div>` : "";
+    const flags = (e.flags || []).map(f => `<div class="flag ${f.tone}">${esc(f.text)}</div>`).join("");
+    return `<div class="enrich">${head}<table class="rt"><thead><tr><th>₹ cr</th><th>${esc(e.quarter)}</th><th>QoQ</th><th>YoY</th></tr></thead><tbody>${rows}</tbody></table>${m}${flags ? `<div class="flags">${flags}</div>` : ""}</div>`;
+  }
+  function personBlock(e) {
+    const ini = (e.name || "?").split(" ").map(x => x[0]).slice(0, 2).join("");
+    let body;
+    if (e.bio) {
+      body = `<div class="sowhat">${esc(e.so_what || "")}</div><p style="font-size:13.5px;color:var(--ink)">${esc(e.bio)}</p>` +
+        (e.previous ? `<ul>${e.previous.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : "") +
+        (e.sources ? `<div class="srcs">Background from: ${e.sources.map(u => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(new URL(u).hostname.replace("www.", ""))}</a>`).join(" · ")}</div>` : "");
+    } else {
+      body = `<p style="font-size:13px">${esc(e.not_found || "No background found yet.")}</p>`;
+    }
+    return `<div class="enrich"><div class="lbl">Who is coming in</div><div class="person"><div class="avatar">${esc(ini)}</div><div><b>${esc(e.name)}</b><small>${esc(e.role)}${e.outgoing ? " · succeeds " + esc(e.outgoing) : ""}</small></div></div>${body}</div>`;
+  }
+  function actCard(it) {
+    const e = it.enrichment;
+    const enrich = e ? (e.kind === "results" ? resultsBlock(e) : e.kind === "person" ? personBlock(e) : "") : "";
+    const rel = it.related && it.related.length ? `<details class="related"><summary>+ ${it.related.length} related filing${it.related.length > 1 ? "s" : ""} folded in</summary><ul>${it.related.map(r => `<li>${fmtDate(r.date)} · ${esc(r.title)}</li>`).join("")}</ul></details>` : "";
+    const done = st.cleared.has(it.id);
+    return `<article class="card act ${done ? "cleared" : ""}" id="c-${esc(it.id)}">
+      <div class="card-top"><span class="tk">${it.ticker}</span><span class="co">${esc(nameOf(it.ticker))}</span><span class="sp"></span><span class="cat">${esc(catOf(it))}</span><span>${fmtDate(it.date)}</span></div>
+      <h3>${esc(it.title)}</h3>
+      ${e && e.kind === "results" ? "" : `<p>${esc(oneLiner(it))}</p>`}
+      ${enrich}
+      <div class="why">${esc(WHY[it.category + "/" + it.subtype] || "Material for this holding.")} Priority ${it.score}/100 · ${P[it.ticker] ? P[it.ticker].weight + "% of book" : ""}</div>
+      ${rel}
+      <div class="acts"><button class="btn" data-clear="${esc(it.id)}">${done ? "Restore" : "Done"}</button><button class="btn" data-ask="What does ${esc(nameOf(it.ticker))}'s ${esc(catOf(it).toLowerCase())} filing on ${fmtDate(it.date)} mean for me?">Ask about this</button></div>
+    </article>`;
+  }
+
+  // ---------- BRIEF ----------
+  function renderBrief() {
+    const w = items.filter(inWindow);
+    const act = w.filter(i => i.tier === "act").sort((a, b) => b.score - a.score);
+    const know = w.filter(i => i.tier === "know").sort((a, b) => b.score - a.score);
+    const noise = w.filter(i => i.tier === "noise");
+    const raw = w.reduce((s, i) => s + i.raw, 0);
+    const shownRaw = act.length + know.length;
+    const open = act.filter(i => !st.cleared.has(i.id));
+    const top = open.slice(0, 3);
+    const opts = [["1", "24h"], ["3", "3 days"], ["7", "7 days"], ["14", "14 days"], ["30", "30 days"], ["custom", "Custom"]];
+    const byCat = {};
+    noise.forEach(i => { (byCat[catOf(i)] = byCat[catOf(i)] || []).push(i); });
+    const minD = items.reduce((m, i) => i.date < m ? i.date : m, "9999"), maxD = asOf.toISOString().slice(0, 10);
+    $("#main").innerHTML = `<section class="view">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="eyebrow">Your brief</div>
+        <h1 class="h1">${open.length ? `${open.length} thing${open.length > 1 ? "s" : ""} need${open.length > 1 ? "" : "s"} you` : act.length ? "You're through what matters" : "Nothing material"}</h1>
+        <div class="chips" role="group" aria-label="Time window">${opts.map(([v, l]) => `<button class="chip" data-win="${v}" aria-pressed="${st.win === v}">${l}</button>`).join("")}</div>
+        ${st.win === "custom" ? `<div class="override"><label for="fromD">From</label><input id="fromD" type="date" min="${minD}" max="${maxD}" value="${st.from}" style="width:auto"><label for="toD">to</label><input id="toD" type="date" min="${minD}" max="${maxD}" value="${st.to}" style="width:auto"></div>` : ""}
+      </div>
+      <div class="read">
+        <div class="funnel"><span><span class="num">${raw}</span> filings in ${winLabel()}</span><span class="arrow">→</span><span><span class="num">${act.length}</span> need you</span><span class="arrow">·</span><span><span class="num">${know.length}</span> worth knowing</span><span class="arrow">·</span><span><span class="num">${raw - shownRaw}</span> routine, folded</span></div>
+        ${top.length ? `<ol>${top.map(i => `<li><span class="tk">${i.ticker}</span><span>${esc(briefLine(i))}</span></li>`).join("")}</ol>` : `<p class="sub" style="margin:0">${act.length ? "Everything that needed you is marked done." : "No material filings across your 15 holdings in this window. Try 7 days for results season."}</p>`}
+        <div class="rowbtns">${top.length ? `<button class="btn primary" id="listen">▶ Listen · ${Math.max(20, top.length * 12)} sec</button>` : ""}${st.win === "1" ? `<button class="btn" data-win="7">See results week →</button>` : ""}</div>
+      </div>
+      ${act.length ? `<div class="group-h"><span class="dot act"></span><h2 class="h2">Needs you</h2><span class="count">${act.length}</span></div>${act.map(actCard).join("")}` : ""}
+      ${know.length ? `<div class="group-h"><span class="dot know"></span><h2 class="h2">Worth knowing</h2><span class="count">${know.length}</span></div>
+        <div class="know-list">${know.map(i => `<div class="know-row"><span class="tk">${i.ticker}</span><span class="t">${esc(i.title)}<small>${esc(oneLiner(i))}</small></span><span class="d">${fmtDate(i.date)}</span></div>`).join("")}</div>` : ""}
+      ${noise.length ? `<details class="routine"><summary><span class="dot noise"></span>${raw - shownRaw} routine filings folded away</summary>
+        ${Object.entries(byCat).sort((a, b) => b[1].length - a[1].length).map(([c, arr]) => `<div class="grp"><b>${esc(c)}</b> · ${arr.reduce((s, i) => s + i.raw, 0)}<ul>${arr.map(i => `<li>${i.ticker} · ${esc(i.title)} <span style="color:var(--faint)">${fmtDate(i.date)}</span></li>`).join("")}</ul></div>`).join("")}
+        <p class="sub" style="margin:10px 0 0;font-size:12px">Folded: call recordings, investor-meet notices, ESOP allotments, results ads, compliance certificates, and debt raises at lenders (that's their business as usual).</p></details>` : ""}
+      ${!act.length && !know.length && !noise.length ? `<div class="empty">No filings in ${winLabel()}.</div>` : ""}
+    </section>`;
+    const b = $("#briefBadge"); const openAll = items.filter(i => i.tier === "act" && daysAgo(i.date) <= 1 && !st.cleared.has(i.id)).length;
+    b.hidden = !openAll; b.textContent = openAll;
+    const L = $("#listen"); if (L) L.onclick = () => speak(top);
+    const f = $("#fromD"), t = $("#toD");
+    if (f) f.onchange = () => { st.from = f.value; store.set("from", st.from); renderBrief(); };
+    if (t) t.onchange = () => { st.to = t.value; store.set("to", st.to); renderBrief(); };
+  }
+  function briefLine(i) {
+    const n = nameOf(i.ticker); const e = i.enrichment;
+    if (e && e.kind === "results") {
+      const pat = e.rows.find(r => r.metric === "PAT"); const neg = (e.flags || []).find(f => f.tone === "neg");
+      return `${n} Q2: ${e.headline.split(" — ")[0]}.` + (neg ? ` Watch: ${neg.text.split(" — ")[0].replace(/ YoY.*/, " YoY")}.` : "");
+    }
+    if (e && e.kind === "person") return `${n}: ${e.name} takes over as ${e.role}.` + (e.so_what ? " " + e.so_what : "");
+    return `${n}: ${i.detail}`;
+  }
+  function speak(list) {
+    if (!("speechSynthesis" in window)) return;
+    speechSynthesis.cancel();
+    const text = `Your FINN brief. ${list.length} thing${list.length > 1 ? "s" : ""} need you. ` + list.map(briefLine).join(" ").replace(/₹/g, "rupees ").replace(/YoY/g, "year on year").replace(/QoQ/g, "quarter on quarter").replace(/PAT/g, "profit").replace(/\bcr\b/g, "crore");
+    const u = new SpeechSynthesisUtterance(text); u.lang = "en-IN"; u.rate = 1.03; speechSynthesis.speak(u);
+  }
+
+  // ---------- ALERTS ----------
+  function eodChecks(t, bars, r) {
+    const o = Object.assign({}, r, r.over[t] || {}); const out = [];
+    if (bars.length < 2) return out;
+    const last = bars[bars.length - 1], prev = bars[bars.length - 2];
+    const chg = (last.close - prev.close) / prev.close * 100;
+    if (Math.abs(chg) >= o.price) out.push({ t, date: last.date, kind: "price", sev: Math.abs(chg) >= 2 * o.price ? 3 : 2, v: chg, text: `${chg > 0 ? "Up" : "Down"} ${Math.abs(chg).toFixed(1)}% on the day`, line: `your line ±${o.price}%` });
+    const win = bars.slice(-(o.look + 1), -1);
+    if (win.length >= 5) {
+      const avg = win.reduce((s, b) => s + b.volume, 0) / win.length; const m = last.volume / avg;
+      if (m >= o.vol) out.push({ t, date: last.date, kind: "volume", sev: m >= 1.5 * o.vol ? 3 : 2, v: m, text: `Volume ${m.toFixed(1)}× its ${win.length}-day average`, line: `your line ${o.vol}×` });
+    }
+    return out;
+  }
+  function scanAlerts() {
+    const out = [];
+    for (const [t, bars] of Object.entries(S.eod)) for (let i = Math.max(2, bars.length - st.rules.sessions + 1); i <= bars.length; i++) out.push(...eodChecks(t, bars.slice(0, i), st.rules).map(a => ({ ...a, idx: i - 1 })));
+    return out.sort((a, b) => b.date.localeCompare(a.date) || b.sev - a.sev);
+  }
+  function spark(bars, idx) {
+    const s = bars.slice(-40); const off = bars.length - s.length; const xs = s.map(b => b.close);
+    const lo = Math.min(...xs), hi = Math.max(...xs), W = 110, H = 34, p = 3;
+    const X = i => p + i * (W - 2 * p) / (s.length - 1), Y = v => H - p - (v - lo) / ((hi - lo) || 1) * (H - 2 * p);
+    const d = s.map((b, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(b.close).toFixed(1)).join("");
+    const j = idx - off;
+    return `<svg class="spark" viewBox="0 0 ${W} ${H}" aria-hidden="true"><path d="${d} L${X(s.length - 1)} ${H} L${X(0)} ${H}Z" fill="var(--accent-soft)" stroke="none"/><path d="${d}" fill="none" stroke="var(--accent)" stroke-width="1.4"/>${j >= 0 ? `<circle cx="${X(j)}" cy="${Y(s[j].close)}" r="3.2" fill="var(--neg)" stroke="var(--surface)" stroke-width="1.5"/>` : ""}</svg>`;
+  }
+  function renderAlerts() {
+    const r = st.rules; const al = scanAlerts();
+    const cats = ["results", "management_change", "M&A", "fund_raise", "litigation", "credit_rating", "pledging", "insider_trading", "dividend", "capex", "press_release"];
+    const fil = items.filter(i => i.tier === "act" && r.cats.includes(i.category) && daysAgo(i.date) <= 7).sort((a, b) => b.date.localeCompare(a.date));
+    const tick = Object.keys(S.eod);
+    $("#main").innerHTML = `<section class="view">
+      <div style="display:flex;flex-direction:column;gap:6px"><div class="eyebrow">Triggered alerts</div><h1 class="h1">You decide what's unusual</h1><p class="sub" style="margin:0">FINN watches end-of-day prices and every filing against your lines. Change a number and the log below re-runs.</p></div>
+      <div class="rules">
+        <div class="sentence">Tell me when a holding moves more than <span class="tok">±<input id="rPrice" type="number" min="0.5" max="20" step="0.5" value="${r.price}" aria-label="Price move percent"></span>% in a day, or trades <span class="tok"><input id="rVol" type="number" min="1.2" max="10" step="0.1" value="${r.vol}" aria-label="Volume multiple"></span>× its <span class="tok"><select id="rLook" aria-label="Average window">${[10, 20, 50].map(n => `<option ${n == r.look ? "selected" : ""}>${n}</option>`).join("")}</select></span>-day average volume. Look back <span class="tok"><select id="rSess" aria-label="Sessions to scan">${[1, 5, 10, 20].map(n => `<option ${n == r.sessions ? "selected" : ""}>${n}</option>`).join("")}</select></span> sessions.</div>
+        <div><div class="eyebrow" style="margin-bottom:6px">And when any of these is filed</div><div class="catgrid">${cats.map(c => `<label><input type="checkbox" data-cat="${c}" ${r.cats.includes(c) ? "checked" : ""}>${c.replace(/_/g, " ")}</label>`).join("")}</div></div>
+        <div><div class="eyebrow" style="margin-bottom:6px">Custom line for one stock</div>
+          <div class="override"><select id="ovT" aria-label="Stock">${tick.map(t => `<option>${t}</option>`).join("")}</select><span>moves ±</span><input id="ovP" type="number" min="0.5" step="0.5" value="2" aria-label="Custom percent"><span>%</span><button class="btn" id="ovAdd">Add</button></div>
+          ${Object.keys(r.over).length ? `<div class="ovl" style="margin-top:8px">${Object.entries(r.over).map(([t, o]) => `<span>${t} ±${o.price}% <button data-rmov="${t}" aria-label="Remove ${t}">×</button></span>`).join("")}</div>` : ""}
+        </div>
+        <div class="rowbtns"><button class="btn" id="rReset">Reset to defaults</button></div>
+      </div>
+      <div class="group-h"><span class="dot act"></span><h2 class="h2">Price & volume</h2><span class="count">${al.length}</span>${SIM ? `<span class="simtag" title="Simulated end-of-day series">SIM</span>` : ""}</div>
+      ${SIM ? `<p class="sub" style="margin:-8px 0 0;font-size:12.5px">The build sandbox couldn't reach Yahoo Finance, so these price series are simulated, anchored to each stock's real last price. Run <span class="num">python -m finn snapshot --live</span> for real yfinance bars; the engine is the same.</p>` : ""}
+      ${al.length ? `<div class="know-list">${al.map(a => `<div class="alert"><div class="t"><span class="sev s${a.sev}">${a.sev === 3 ? "High" : "Note"}</span><span class="tk">${a.t}</span> ${esc(a.text)}<small>${fmtDate(a.date)} · ${esc(nameOf(a.t))} · ${esc(a.line)}</small></div>${spark(S.eod[a.t], a.idx)}</div>`).join("")}</div>` : `<div class="empty">Nothing crossed your lines in the last ${r.sessions} session${r.sessions > 1 ? "s" : ""}.</div>`}
+      <div class="group-h"><span class="dot act"></span><h2 class="h2">Filings you watch</h2><span class="count">${fil.length}</span></div>
+      ${fil.length ? `<div class="know-list">${fil.map(i => `<button class="know-row" data-open="${esc(i.id)}"><span class="tk">${i.ticker}</span><span class="t">${esc(i.title)}<small>${esc(catOf(i))} · ${esc(oneLiner(i)).slice(0, 110)}</small></span><span class="d">${fmtDate(i.date)}</span></button>`).join("")}</div>` : `<div class="empty">No watched filings in the last 7 days.</div>`}
+    </section>`;
+    const upd = () => { r.price = +$("#rPrice").value || r.price; r.vol = +$("#rVol").value || r.vol; r.look = +$("#rLook").value; r.sessions = +$("#rSess").value; saveRules(); renderAlerts(); };
+    ["#rPrice", "#rVol"].forEach(s => $(s).addEventListener("change", upd));
+    ["#rLook", "#rSess"].forEach(s => $(s).addEventListener("change", upd));
+    document.querySelectorAll("[data-cat]").forEach(cb => cb.onchange = () => { r.cats = cb.checked ? [...new Set([...r.cats, cb.dataset.cat])] : r.cats.filter(c => c !== cb.dataset.cat); saveRules(); renderAlerts(); });
+    $("#ovAdd").onclick = () => { r.over[$("#ovT").value] = { price: +$("#ovP").value || 2 }; saveRules(); renderAlerts(); };
+    document.querySelectorAll("[data-rmov]").forEach(b => b.onclick = () => { delete r.over[b.dataset.rmov]; saveRules(); renderAlerts(); });
+    $("#rReset").onclick = () => { st.rules = { price: S.meta.defaults.price_move_pct, vol: S.meta.defaults.volume_multiple, look: S.meta.defaults.volume_lookback, sessions: 10, cats: S.meta.defaults.watch_categories, over: {} }; saveRules(); renderAlerts(); };
+  }
+
+  // ---------- RESULTS BOOK ----------
+  const heat = x => {
+    if (x == null) return `<span class="heat" style="color:var(--faint)">—</span>`;
+    const a = Math.min(1, Math.abs(x) / 40) * .55 + .12;
+    const c = x >= 0 ? `color-mix(in srgb, var(--pos) ${Math.round(a * 100)}%, transparent)` : `color-mix(in srgb, var(--neg) ${Math.round(a * 100)}%, transparent)`;
+    return `<span class="heat" style="background:${c}">${pct(x, 0)}</span>`;
+  };
+  const rowv = (p, m) => p.result && p.result.rows ? (p.result.rows.find(r => r.metric === m) || {}).yoy : null;
+  function renderBook() {
+    const rep = S.portfolio.filter(p => p.result && p.result.available && p.result.quarter === "Sep 2026");
+    const pend = S.portfolio.filter(p => !rep.includes(p));
+    const patUp = rep.filter(p => (rowv(p, "PAT") ?? 0) > 0).length;
+    const mDown = rep.filter(p => p.result.margins && p.result.margins.ebitda_margin != null && p.result.margins.year_ago != null && p.result.margins.ebitda_margin < p.result.margins.year_ago).length;
+    const wavg = rep.reduce((s, p) => s + (rowv(p, "Revenue") ?? 0) * p.weight, 0) / rep.reduce((s, p) => s + (rowv(p, "Revenue") != null ? p.weight : 0), 0);
+    rep.sort((a, b) => (b.result_date || "").localeCompare(a.result_date || ""));
+    $("#main").innerHTML = `<section class="view">
+      <div style="display:flex;flex-direction:column;gap:6px"><div class="eyebrow">Results season · Q2 FY27 (Jul–Sep 2026)</div><h1 class="h1">${rep.length} of ${S.portfolio.length} holdings have reported</h1></div>
+      <div class="season">
+        <div class="stat"><div class="v">${pct(wavg, 0)}</div><div class="l">weighted revenue growth YoY</div></div>
+        <div class="stat"><div class="v">${patUp}/${rep.length}</div><div class="l">grew profit (PAT) YoY</div></div>
+        <div class="stat"><div class="v">${mDown}</div><div class="l">saw EBITDA margin shrink YoY</div></div>
+      </div>
+      <div class="book"><table><thead><tr><th>Holding</th><th>Revenue</th><th>EBITDA</th><th>PAT</th></tr></thead><tbody>
+        ${rep.map(p => `<tr data-res="${p.ticker}"><td class="nm">${p.ticker}<small>${p.weight}% · ${p.result_date ? "filed " + (p.result_date_approx ? "~" : "") + fmtDate(p.result_date) : "date n/a"}</small></td><td>${heat(rowv(p, "Revenue"))}</td><td>${p.kind === "lender" ? `<span class="heat" style="color:var(--faint);font-size:11px">n/m</span>` : heat(rowv(p, "EBITDA"))}</td><td>${heat(rowv(p, "PAT"))}</td></tr>`).join("")}
+      </tbody></table></div>
+      <p class="sub" style="margin:-6px 0 0;font-size:12px">YoY change vs Sep 2025 quarter. Tap a row for QoQ, margins and what moved the bottom line. EBITDA is withheld for lenders, where interest is the cost of doing business. "~" marks a filing date inferred from the feed.</p>
+      ${pend.length ? `<div class="group-h"><span class="dot know"></span><h2 class="h2">Still to report</h2></div>
+      <div class="know-list">${pend.map(p => `<div class="know-row"><span class="tk">${p.ticker}</span><span class="t">${esc(p.name)}<small>${p.upcoming_result ? `Board meets ${fmtDate(p.upcoming_result)} to approve results` : `No results date in the feed yet. Last reported ${esc(p.result && p.result.quarter || "—")}`}</small></span><span class="d">${p.weight}%</span></div>`).join("")}</div>` : ""}
+    </section>`;
+  }
+
+  // ---------- RESEARCH ----------
+  function lineBar(annual, margins) {
+    const W = 340, H = 170, pl = 8, pr = 30, pt = 18, pb = 22;
+    const n = annual.length, bw = (W - pl - pr) / n * .58;
+    const maxS = Math.max(...annual.map(a => a.sales)) * 1.05;
+    const ms = margins.map(m => m.ebitda_margin).filter(v => v != null);
+    const mlo = Math.floor(Math.min(...ms) - 2), mhi = Math.ceil(Math.max(...ms) + 2);
+    const cx = i => pl + (i + .5) * (W - pl - pr) / n;
+    const yS = v => pt + (1 - v / maxS) * (H - pt - pb), yM = v => pt + (1 - (v - mlo) / (mhi - mlo)) * (H - pt - pb);
+    const bars = annual.map((a, i) => `<rect x="${cx(i) - bw / 2}" y="${yS(a.sales)}" width="${bw}" height="${H - pb - yS(a.sales)}" rx="2" fill="${a.y === "TTM" ? "var(--line)" : "var(--accent-soft)"}" stroke="var(--accent)" stroke-opacity=".35"/><text x="${cx(i)}" y="${H - 7}" text-anchor="middle">${a.y}</text><text x="${cx(i)}" y="${yS(a.sales) - 4}" text-anchor="middle" class="${i === n - 2 ? "lab" : ""}">${(a.sales / 1000).toFixed(a.sales < 10000 ? 1 : 0)}k</text>`).join("");
+    const pts = margins.map((m, i) => [cx(i), yM(m.ebitda_margin)]);
+    const line = `<path d="${pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join("")}" fill="none" stroke="var(--amber)" stroke-width="2"/>` + pts.map((p, i) => `<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="var(--surface)" stroke="var(--amber)" stroke-width="2"/>`).join("") +
+      `<text x="${pts[pts.length - 1][0] + 6}" y="${pts[pts.length - 1][1] + 3}" class="lab" style="fill:var(--amber)">${margins[margins.length - 1].ebitda_margin}%</text>`;
+    return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Revenue by year with EBITDA margin">${bars}${line}</svg>
+      <div class="legend"><span><i style="background:var(--accent-soft);border:1px solid var(--accent)"></i>Revenue, ₹ cr (thousands)</span><span><i style="background:var(--amber)"></i>EBITDA margin (right scale, ${mlo}–${mhi}%)</span></div>`;
+  }
+  function cashBars(rows) {
+    const W = 340, H = 170, pl = 8, pr = 8, pt = 14, pb = 22;
+    const vals = rows.flatMap(r => [r.cfo, r.pat || 0]);
+    const hi = Math.max(0, ...vals) * 1.1, lo = Math.min(0, ...vals) * 1.1, span = hi - lo || 1;
+    const y = v => pt + (hi - v) / span * (H - pt - pb);
+    const n = rows.length, gw = (W - pl - pr) / n, bw = gw * .3;
+    const g = rows.map((r, i) => {
+      const x = pl + i * gw + gw * .5;
+      const bar = (v, dx, f) => `<rect x="${x + dx}" y="${Math.min(y(v), y(0))}" width="${bw}" height="${Math.max(1, Math.abs(y(v) - y(0)))}" rx="2" fill="${f}"/>`;
+      return bar(r.pat || 0, -bw - 1, "var(--line)") + bar(r.cfo, 1, r.cfo >= 0 ? "var(--pos)" : "var(--neg)") + `<text x="${x}" y="${H - 7}" text-anchor="middle">${r.y}</text>`;
+    }).join("");
+    return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Operating cash flow versus profit by year">${g}<line x1="${pl}" x2="${W - pr}" y1="${y(0)}" y2="${y(0)}" stroke="var(--muted)" stroke-width="1"/></svg>
+      <div class="legend"><span><i style="background:var(--line)"></i>PAT (accounting profit)</span><span><i style="background:var(--pos)"></i>Cash from operations</span><span><i style="background:var(--neg)"></i>…when negative</span></div>`;
+  }
+  const VLAB = { beat: "Beat", delivered: "Delivered", on_track: "On track", at_risk: "At risk", missed: "Missed", walked_back: "Walked back", pending: "Pending", unscored: "Unscored", agree: "Agree", diverge: "Diverge", "too early": "Too early" };
+  const srcTag = s => esc(s).replace(/\[([^\]]+)\]/g, `<span class="src">[$1]</span>`);
+  function renderResearch() {
+    const R = S.research[st.rt];
+    const names = Object.keys(S.research);
+    const picker = `<div class="picker"><div class="chips">${names.map(t => `<button class="chip" data-rt="${t}" aria-pressed="${t === st.rt}">${esc(S.research[t].name)}</button>`).join("")}</div>
+      <form id="anyT"><input id="anyIn" placeholder="Any NSE ticker" aria-label="Any NSE ticker" autocomplete="off"><button class="btn">Go</button></form></div>`;
+    if (!R) { $("#main").innerHTML = `<section class="view">${picker}</section>`; return; }
+    const L = R.ledger, T = L.tally || {};
+    const kept = (T.beat || 0) + (T.delivered || 0) + (T.on_track || 0);
+    const segs = [["beat", "var(--pos)"], ["delivered", "var(--pos)"], ["on_track", "color-mix(in srgb,var(--pos) 60%,transparent)"], ["at_risk", "var(--amber)"], ["missed", "var(--neg)"], ["walked_back", "color-mix(in srgb,var(--neg) 65%,transparent)"]];
+    const tr = R.trajectory, cq = R.cash, bs = R.balance_sheet, wc = R.working_capital;
+    $("#main").innerHTML = `<section class="view">
+      ${picker}
+      <div class="rhead"><div class="eyebrow">NSE: ${R.ticker} · research from filings & calls only</div><h1 class="h1">${esc(R.name)}</h1>
+        <div class="kv"><span>Price <b>₹${R.price.toLocaleString("en-IN")}</b></span><span>Mcap <b>${fmtMcap(R.mcap)}</b></span><span>P/E <b>${R.pe}</b></span><span>ROCE <b>${R.roce}%</b></span>${R.shareholding ? `<span>Promoters <b>${R.shareholding.promoters}%</b></span>` : ""}</div>
+        <p style="margin:4px 0 0;font-size:14.5px">${srcTag(R.snapshot)}</p></div>
+      <div class="jump"><div class="chips">${[["promises", "Promised vs delivered"], ["story", "Story vs numbers"], ["case", "Bull / bear"], ["numbers", "Numbers"], ["cash", "Cash & balance sheet"], ["watch", "Watch"], ["sources", "Sources"]].map(([id, l]) => `<button class="chip" data-jump="${id}">${l}</button>`).join("")}</div></div>
+
+      <div class="sec" id="promises"><h2 class="h2">Promised vs delivered</h2>
+        <div class="panel">
+          <div class="cred"><div class="big">${kept}<small> of ${L.scored}</small></div><div><div style="font-size:14px;font-weight:600">scoreable promises kept</div><div class="sub" style="font-size:12.5px">Verdicts are computed from reported numbers, not judged by a model. Promises that can't be measured stay unscored.</div>
+            <div class="tally">${segs.map(([k, c]) => T[k] ? `<span style="width:${T[k] / L.scored * 100}%;background:${c}"></span>` : "").join("")}</div>
+            <div class="legend">${Object.entries(T).map(([k, v]) => `<span>${VLAB[k]} <b class="num">${v}</b></span>`).join("")}</div></div></div>
+          <div>${L.rows.map(r => `<div class="promise"><div class="top"><span class="pill v-${r.verdict}">${VLAB[r.verdict]}</span><span class="m">${esc(r.metric)}</span><span class="mi">said in ${esc(r.made_in)}</span></div>
+            <div class="said">${esc(r.promise)}</div>${r.evidence ? `<div class="did">${esc(r.evidence)}</div>` : ""}${r.caveat ? `<div class="cav">${esc(r.caveat)}</div>` : ""}</div>`).join("")}</div>
+        </div></div>
+
+      <div class="sec" id="story"><h2 class="h2">Story vs numbers</h2><div class="panel">
+        ${R.narrative_vs_numbers.map(n => `<div class="nvn"><div style="display:flex;gap:8px;align-items:center"><span class="pill v-${n.read.replace(" ", "_")}">${VLAB[n.read]}</span></div>
+          <div class="row"><span>They said</span><span>${srcTag(n.claim)}</span></div><div class="row"><span>Numbers</span><span>${srcTag(n.numbers)}</span></div>${n.note ? `<div class="note">${esc(n.note)}</div>` : ""}</div>`).join("")}
+      </div></div>
+
+      <div class="sec" id="case"><h2 class="h2">Bull vs bear</h2><div class="bb">
+        <div class="panel"><div class="h"><span class="dot" style="background:var(--pos)"></span>Bull</div><ul>${R.bull.map(x => `<li>${srcTag(x)}</li>`).join("")}</ul></div>
+        <div class="panel"><div class="h"><span class="dot" style="background:var(--neg)"></span>Bear</div><ul>${R.bear.map(x => `<li>${srcTag(x)}</li>`).join("")}</ul></div></div></div>
+
+      <div class="sec" id="numbers"><h2 class="h2">Trajectory</h2>
+        <div class="panel"><div class="kv"><span>Revenue CAGR <b>${pct(tr.sales_cagr)}</b></span><span>EBITDA CAGR <b>${pct(tr.ebitda_cagr)}</b></span><span>PAT CAGR <b>${pct(tr.pat_cagr)}</b></span><span>${esc(tr.span)}</span></div>
+          ${lineBar(R.annual, tr.margins)}
+          <div class="verdict ${tr.operating_leverage ? "flag pos" : "flag neg"}">${tr.operating_leverage ? `Operating leverage: EBITDA compounded faster than revenue; margin ${pct(tr.margin_change_pp, 1).replace("%", " pp")} over the period.` : `No operating leverage: EBITDA grew slower than revenue.`}</div></div>
+        <div class="panel"><div class="eyebrow">Last ${R.quarterly.length} quarters</div><div class="tblwrap"><table class="minitbl"><thead><tr><th>Quarter</th><th>Revenue</th><th>YoY</th><th>EBITDA %</th><th>PAT</th></tr></thead><tbody>
+          ${R.quarterly.map(q => `<tr><td>${esc(q.q)}</td><td class="num">${Math.round(q.sales).toLocaleString("en-IN")}</td><td class="num ${cls(q.sales_yoy)}">${pct(q.sales_yoy, 0)}</td><td class="num">${q.ebitda_margin ?? "—"}</td><td class="num">${q.pat == null ? "—" : Math.round(q.pat).toLocaleString("en-IN")}</td></tr>`).join("")}</tbody></table></div>
+          ${R.segments && R.segments.length ? `<div class="eyebrow" style="margin-top:4px">Segments (latest quarter)</div><div class="tblwrap"><table class="minitbl"><tbody>${R.segments.map(s => `<tr><td>${esc(s.name)}</td><td class="num">${s.growth_yoy != null ? pct(s.growth_yoy, 1) + " YoY" : ""}</td><td class="num">${s.ebit_margin != null ? s.ebit_margin + "% EBIT" : s.share ? esc(s.share) + " of rev" : ""}</td></tr>`).join("")}</tbody></table></div>` : ""}
+          ${R.data_note ? `<div class="flag neutral">${esc(R.data_note)}</div>` : ""}</div></div>
+
+      <div class="sec" id="cash"><h2 class="h2">Cash quality & balance sheet</h2>
+        <div class="panel"><div class="kv"><span>CFO / PAT, ${esc(cq.rows[0].y)}–${esc(cq.rows[cq.rows.length - 1].y)} <b>${cq.cum_cfo_to_pat}%</b></span><span>Negative-CFO years <b>${cq.negative_cfo_years}</b></span><span>External funding raised <b>${fmtCr(cq.external_funding)} cr</b></span></div>
+          ${cashBars(cq.rows)}
+          <div class="verdict flag ${cq.verdict === "strong" ? "pos" : cq.verdict === "weak" ? "neg" : "neutral"}">${cq.verdict === "strong" ? "Profits are turning into cash." : cq.verdict === "weak" ? "Profits are not turning into cash. Growth is being funded from outside." : "Cash conversion is adequate, not strong."}</div></div>
+        <div class="panel"><div class="tblwrap"><table class="minitbl"><thead><tr><th>Year</th><th>Debt</th><th>D/E</th><th>Debt/EBITDA</th>${wc.rows && wc.rows[0].debtor_days != null ? "<th>Debtor days</th>" : ""}${wc.rows && wc.rows[0].ccc != null ? "<th>Cash cycle</th>" : ""}</tr></thead><tbody>
+          ${bs.rows.map((b, i) => { const w = (wc.rows || [])[i] || {}; return `<tr><td>${esc(b.y)}</td><td class="num">${b.debt.toLocaleString("en-IN")}</td><td class="num">${b.de}</td><td class="num">${b.debt_to_ebitda ?? "—"}</td>${w.debtor_days != null ? `<td class="num">${w.debtor_days}</td>` : ""}${w.ccc != null ? `<td class="num">${w.ccc}</td>` : ""}</tr>`; }).join("")}</tbody></table></div>
+          <div class="sub" style="font-size:12.5px">Debt in ₹ crore. Cash cycle = debtor + inventory − payable days.</div></div></div>
+
+      <div class="sec" id="watch"><h2 class="h2">Watch next quarter</h2><div class="panel"><ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px">${R.watch.map(w => `<li>${esc(w)}</li>`).join("")}</ul>
+        ${R.pushback && R.pushback.length ? `<div class="eyebrow" style="margin-top:6px">What analysts pressed on</div><ul style="margin:0;padding-left:18px;font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:4px">${R.pushback.map(p => `<li>${esc(p)}</li>`).join("")}</ul>` : ""}
+        ${R.events && R.events.length ? `<div class="eyebrow" style="margin-top:6px">Pending events</div><ul style="margin:0;padding-left:18px;font-size:13px;color:var(--muted)">${R.events.map(p => `<li>${esc(p)}</li>`).join("")}</ul>` : ""}</div></div>
+
+      <div class="sec" id="sources"><h2 class="h2">Sources</h2><div class="foot">
+        ${R.sources.map(s => `<div><span class="src">[${esc(s.id)}]</span> ${esc(s.kind)}${s.date ? " · " + esc(s.date) : ""} · <a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.url.replace(/^https?:\/\//, "").slice(0, 70))}…</a></div>`).join("")}
+        <div>Primary sources only: annual-report tables and earnings-call transcripts. No broker notes, news or the model's own knowledge of the company. Narrative written by ${esc(R.generated_by || "the strong model tier")}; all figures computed in code.</div></div></div>
+    </section>`;
+    document.querySelectorAll("[data-jump]").forEach(b => b.onclick = () => document.getElementById(b.dataset.jump).scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
+    $("#anyT").onsubmit = e => { e.preventDefault(); anyTicker($("#anyIn").value.trim().toUpperCase()); };
+  }
+  function anyTicker(t) {
+    if (!t) return;
+    if (S.research[t]) { st.rt = t; store.set("research", t); renderResearch(); return; }
+    const p = P[t];
+    sheet(`<div class="sheet-h"><h2 class="h2">Research ${esc(t)}</h2><span class="sp"></span><button class="btn" data-close>Close</button></div>
+      <div class="answer" style="white-space:normal">The engine works on any NSE ticker, but it needs the backend: it fetches ${esc(t)}'s screener.in tables and its last four call transcripts, then runs the cheap-model extraction and one strong-model pass. This hosted demo is a static snapshot and can't reach those sites.
+      <div style="margin-top:8px"><span class="num" style="background:var(--sunk);padding:6px 8px;border-radius:6px;display:inline-block;overflow-wrap:anywhere">python -m finn research ${esc(t)}</span></div>
+      <div class="by">Typical cost on the default free-tier models: about 12 cheap calls and 2 strong calls, under US$0.05; re-runs hit the cache and cost nothing.</div></div>
+      ${p ? `<div class="answer" style="white-space:normal"><b>${esc(p.name)}</b> is in your book. What the snapshot already has:${p.result && p.result.headline ? `<br>${esc(p.result.quarter)}: ${esc(p.result.headline)}` : ""}</div>${resultsBlock(p.result)}` : ""}`);
+  }
+
+  // ---------- sheets ----------
+  function sheet(html) {
+    const root = $("#sheetRoot");
+    root.innerHTML = `<div class="scrim" data-close></div><div class="sheet" role="dialog" aria-modal="true"><div class="sheet-in"><div class="grab"></div>${html}</div></div>`;
+    root.querySelectorAll("[data-close]").forEach(el => el.onclick = () => { root.innerHTML = ""; });
+    const inp = root.querySelector("input"); if (inp) setTimeout(() => inp.focus(), 50);
+    return root;
+  }
+  function openResult(t) {
+    const p = P[t];
+    sheet(`<div class="sheet-h"><span class="tk">${t}</span><h2 class="h2">${esc(p.name)}</h2><span class="sp"></span><button class="btn" data-close>Close</button></div>
+      <div class="sub">${esc(p.result.headline || "")}</div>${resultsBlock(p.result)}
+      ${p.result.note ? `<div class="flag neutral">${esc(p.result.note)}</div>` : ""}
+      <div class="rowbtns">${S.research[t] ? `<button class="btn primary" data-goresearch="${t}">Open research</button>` : ""}<button class="btn" data-ask="How did ${esc(p.name)}'s Q2 results look?">Ask about this</button></div>`);
+  }
+  function openItem(id) {
+    const it = items.find(i => i.id === id); if (!it) return;
+    sheet(`<div class="sheet-h"><span class="sp"></span><button class="btn" data-close>Close</button></div>${actCard(it)}`);
+  }
+  function aboutSheet() {
+    sheet(`<div class="sheet-h"><h2 class="h2">About this data</h2><span class="sp"></span><button class="btn" data-close>Close</button></div>
+      <div class="answer" style="white-space:normal;display:flex;flex-direction:column;gap:10px;font-size:13.5px">
+        <div><b>As of</b> ${esc(asOf.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }))} IST · mode: ${esc(S.meta.mode)}</div>
+        <div><b>Filings</b> · ${esc(S.meta.filings_source)}. Live mode pulls NSE's announcements API, falling back to BSE.</div>
+        <div><b>Results</b> · quarterly tables standardised from company filings (screener.in). Every QoQ/YoY figure is computed in code. Dixon's captured page was standalone, so FINN shows only the consolidated headline from the filing rather than mix bases.</div>
+        <div><b>Prices & volume</b> · ${SIM ? `<span class="simtag">SIM</span> simulated in this snapshot: the build sandbox couldn't reach Yahoo Finance. Each series ends at the stock's real last price. <span class="num">python -m finn snapshot --live</span> swaps in real yfinance bars.` : "yfinance end-of-day bars."}</div>
+        <div><b>Research</b> · annual-report tables and earnings-call transcripts only. No news, broker notes or outside model knowledge.</div>
+        <div><b>People</b> · incoming-executive backgrounds from public web profiles, with links on each card.</div>
+        <div><b>Your settings</b> · alert lines, cleared items and the time window are kept in this browser only.</div>
+      </div>
+      <div class="rowbtns"><button class="btn" id="resetAll">Clear my settings</button></div>`);
+    $("#resetAll").onclick = () => { ["win", "from", "to", "cleared", "rules", "research"].forEach(k => { try { localStorage.removeItem("finn:" + k); } catch { } }); location.reload(); };
+  }
+
+  // ---------- ASK ----------
+  const samplerP = (window.claude && window.claude.use) ? window.claude.use("sample").catch(() => null) : Promise.resolve(null);
+  const SUGG = ["What needs my attention today?", "Which results disappointed?", "Who is HDFC Bank's new CEO?", "Can I trust Kaynes' guidance?", "Who raised money this week?"];
+  function askSheet(q) {
+    const root = sheet(`<div class="sheet-h"><h2 class="h2">Ask FINN</h2><span class="sp"></span><button class="btn" data-close>Close</button></div>
+      <form class="askform" id="askF"><input id="askIn" placeholder="e.g. Which results disappointed?" aria-label="Your question" value="${esc(q || "")}"><button class="btn primary">Ask</button></form>
+      <div class="chips">${SUGG.map(s => `<button class="chip" data-sugg="${esc(s)}">${esc(s)}</button>`).join("")}</div>
+      <div id="answers" style="display:flex;flex-direction:column;gap:10px"></div>`);
+    root.querySelector("#askF").onsubmit = e => { e.preventDefault(); const v = root.querySelector("#askIn").value.trim(); if (v) answer(v); };
+    root.querySelectorAll("[data-sugg]").forEach(b => b.onclick = () => { root.querySelector("#askIn").value = b.dataset.sugg; answer(b.dataset.sugg); });
+    if (q) answer(q);
+  }
+  function context() {
+    const recent = items.filter(i => daysAgo(i.date) <= 14 && i.tier !== "noise").map(i => ({ t: i.ticker, date: i.date, tier: i.tier, kind: catOf(i), title: i.title, detail: oneLiner(i), person: i.enrichment && i.enrichment.kind === "person" ? { name: i.enrichment.name, bio: i.enrichment.bio } : undefined }));
+    const res = S.portfolio.map(p => ({ t: p.ticker, name: p.name, weight: p.weight, q: p.result && p.result.quarter, headline: p.result && p.result.headline, flags: p.result && (p.result.flags || []).map(f => f.text), next_results: p.upcoming_result }));
+    const rsch = Object.values(S.research).map(R => ({ t: R.ticker, snapshot: R.snapshot, promises_kept: `${(R.ledger.tally.beat || 0) + (R.ledger.tally.delivered || 0) + (R.ledger.tally.on_track || 0)} of ${R.ledger.scored}`, ledger: R.ledger.rows.map(r => `${r.verdict}: ${r.metric} — ${r.evidence}`), bull: R.bull, bear: R.bear, cash_cfo_to_pat: R.cash.cum_cfo_to_pat }));
+    return { as_of: S.meta.as_of, filings_last_14d: recent, results: res, research: rsch, price_alerts_simulated: SIM };
+  }
+  async function answer(q) {
+    const box = $("#answers"); if (!box) return;
+    const el = document.createElement("div"); el.className = "answer";
+    el.innerHTML = `<div class="qa-q">${esc(q)}</div><div class="a">Thinking…</div><div class="by"></div>`;
+    box.prepend(el);
+    const A = el.querySelector(".a"), By = el.querySelector(".by");
+    const s = await samplerP;
+    if (s) {
+      try {
+        const prompt = `You are FINN, a concise assistant for an Indian equity investor. Answer in at most 90 words, plain text, using ONLY the JSON below (filings, computed results, primary-source research). Name tickers and dates. Amounts are ₹ crore. If the data can't answer, say so in one sentence. Do not use outside knowledge.\n\nDATA:\n${JSON.stringify(context())}\n\nQUESTION: ${q}`;
+        const r = await s(prompt, { modelTier: "quick", cache: false, onText: ({ text }) => { A.textContent = text; } });
+        A.textContent = r.text; By.textContent = "Answered by Claude from FINN's snapshot only";
+        return;
+      } catch (e) { /* fall through to local */ }
+    }
+    const loc = localAnswer(q); A.innerHTML = loc; By.textContent = "Answered on-device from FINN's snapshot";
+  }
+  function localAnswer(q) {
+    const s = q.toLowerCase();
+    const tk = S.portfolio.find(p => s.includes(p.ticker.toLowerCase()) || s.includes(p.name.toLowerCase().split(" ")[0]));
+    const li = arr => arr.length ? arr.map(x => "• " + x).join("\n") : "Nothing in the snapshot.";
+    if (/attention|today|need|matter|important/.test(s)) {
+      const a = items.filter(i => i.tier === "act" && daysAgo(i.date) <= 1).sort((x, y) => y.score - x.score);
+      const b = a.length ? a : items.filter(i => i.tier === "act" && daysAgo(i.date) <= 7).sort((x, y) => y.score - x.score).slice(0, 4);
+      return esc((a.length ? "In the last 24 hours:\n" : "Nothing material in 24h. This week:\n") + li(b.map(briefLine)));
+    }
+    if (/disappoint|miss|weak|worst|bad|fell|decline/.test(s)) {
+      const r = S.portfolio.filter(p => p.result && p.result.quarter === "Sep 2026" && rowv(p, "PAT") != null).sort((a, b) => rowv(a, "PAT") - rowv(b, "PAT")).slice(0, 4);
+      return esc("Weakest Q2 profit growth (PAT YoY):\n" + li(r.map(p => `${p.ticker} ${pct(rowv(p, "PAT"), 0)}` + ((p.result.flags || []).find(f => f.tone === "neg") ? ` — ${(p.result.flags.find(f => f.tone === "neg")).text}` : ""))));
+    }
+    if (/best|beat|strong|good/.test(s)) {
+      const r = S.portfolio.filter(p => p.result && p.result.quarter === "Sep 2026" && rowv(p, "PAT") != null).sort((a, b) => rowv(b, "PAT") - rowv(a, "PAT")).slice(0, 4);
+      return esc("Strongest Q2 profit growth (PAT YoY):\n" + li(r.map(p => `${p.ticker} ${pct(rowv(p, "PAT"), 0)} · ${p.result.headline}`)));
+    }
+    if (/ceo|cfo|chairman|management|who is|director/.test(s)) {
+      const m = items.filter(i => i.category === "management_change" && (!tk || i.ticker === tk.ticker));
+      return esc(li(m.map(i => i.enrichment && i.enrichment.bio ? `${nameOf(i.ticker)}: ${i.enrichment.name} (${i.enrichment.role}). ${i.enrichment.bio}` : `${nameOf(i.ticker)}: ${i.title} — ${i.detail}`)));
+    }
+    if (/raise|qip|fund|dilut|warrant/.test(s)) return esc(li(items.filter(i => i.category === "fund_raise" && i.subtype === "equity").map(i => `${nameOf(i.ticker)} (${fmtDate(i.date)}): ${i.detail}`)));
+    if (tk) {
+      const R = S.research[tk.ticker];
+      const parts = [];
+      if (R && /trust|guid|promise|credib|cash/.test(s)) parts.push(`Promises kept: ${(R.ledger.tally.beat || 0) + (R.ledger.tally.delivered || 0) + (R.ledger.tally.on_track || 0)} of ${R.ledger.scored} scoreable. Cash from operations was ${R.cash.cum_cfo_to_pat}% of profit over ${R.cash.rows[0].y}–${R.cash.rows[R.cash.rows.length - 1].y}.`, ...R.ledger.rows.filter(r => ["missed", "walked_back", "at_risk"].includes(r.verdict)).map(r => `${VLAB[r.verdict]}: ${r.metric} — ${r.evidence}`));
+      if (tk.result && tk.result.headline) parts.push(`${tk.result.quarter}: ${tk.result.headline}`);
+      items.filter(i => i.ticker === tk.ticker && i.tier !== "noise").slice(0, 3).forEach(i => parts.push(`${fmtDate(i.date)} · ${i.title}`));
+      return esc(`${tk.name}:\n` + li(parts));
+    }
+    return esc("I can answer from this snapshot about: what needs attention, results (best/worst), management changes, fund raises, or any holding by name. Try one of the suggestions.");
+  }
+
+  // ---------- routing ----------
+  const VIEWS = { brief: renderBrief, alerts: renderAlerts, book: renderBook, research: renderResearch };
+  function go(v, push = true) {
+    if (!VIEWS[v]) v = "brief";
+    st.view = v; document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.v === v));
+    VIEWS[v](); window.scrollTo(0, 0);
+    if (push && location.hash !== "#" + v) history.replaceState(null, "", "#" + v);
+  }
+  document.querySelectorAll(".tab").forEach(t => t.onclick = () => go(t.dataset.v));
+  window.addEventListener("hashchange", () => go(location.hash.slice(1), false));
+  $("#askBtn").onclick = () => askSheet();
+  $("#aboutBtn").onclick = aboutSheet;
+  document.addEventListener("click", e => {
+    const w = e.target.closest("[data-win]"); if (w) { st.win = w.dataset.win; store.set("win", st.win); renderBrief(); return; }
+    const c = e.target.closest("[data-clear]"); if (c) { const id = c.dataset.clear; st.cleared.has(id) ? st.cleared.delete(id) : st.cleared.add(id); store.set("cleared", [...st.cleared]); if ($("#sheetRoot").innerHTML) $("#sheetRoot").innerHTML = ""; go(st.view, false); return; }
+    const a = e.target.closest("[data-ask]"); if (a) { askSheet(a.dataset.ask); return; }
+    const r = e.target.closest("[data-res]"); if (r) { openResult(r.dataset.res); return; }
+    const o = e.target.closest("[data-open]"); if (o) { openItem(o.dataset.open); return; }
+    const rt = e.target.closest("[data-rt]"); if (rt) { st.rt = rt.dataset.rt; store.set("research", st.rt); renderResearch(); return; }
+    const gr = e.target.closest("[data-goresearch]"); if (gr) { $("#sheetRoot").innerHTML = ""; st.rt = gr.dataset.goresearch; go("research"); return; }
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") $("#sheetRoot").innerHTML = ""; });
+  go(location.hash.slice(1) || "brief", false);
+})();
+</script>
