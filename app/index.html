@@ -124,6 +124,59 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .enrich ul{margin:0;padding-left:16px;font-size:13px;color:var(--muted)}
 .sowhat{font-size:13.5px;font-weight:600}
 .srcs{font-size:11.5px;color:var(--faint);overflow-wrap:anywhere}
+.cov{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;padding:11px 14px;border-top:1px solid var(--line);align-items:start;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0;width:100%}
+.cov:first-child{border-top:0}
+.cov .t{font-size:13.5px;line-height:1.35;min-width:0}
+.cov .p{grid-column:2;font-size:12.5px;color:var(--muted);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.cov .gap{color:var(--amber);font-weight:600}
+.xmap{display:flex;flex-direction:column}
+.xrow{display:grid;grid-template-columns:118px 1fr;gap:10px;padding:9px 14px;border-top:1px solid var(--line);align-items:center}
+.xrow:first-child{border-top:0}
+.xrow .th{font-size:12.5px;font-weight:600;color:var(--muted)}
+.xrow .ppl{display:flex;flex-wrap:wrap;gap:4px 12px;min-width:0}
+.xrow button{background:none;border:0;padding:0;font-size:13.5px;font-weight:600;display:inline-flex;gap:6px;align-items:center}
+/* network: who in your own network can help with this */
+.net{background:var(--sunk);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:9px}
+.net .lbl{font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);display:flex;gap:6px;align-items:center}
+.who{display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:start;text-align:left;background:none;border:0;padding:0;width:100%;min-width:0}
+.who .avatar{width:32px;height:32px;font-size:12px;background:var(--surface);border:1.5px dashed var(--accent)}
+.who .nm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:14px;font-weight:600}
+.who .wl{display:block;font-size:13px;line-height:1.45;color:var(--ink);margin-top:3px}
+.who .meta{display:block;font-size:11.5px;color:var(--faint);margin-top:2px}
+.str{display:inline-flex;gap:2px;align-items:center;font-size:11px;font-weight:600;color:var(--muted)}
+.str i{width:4px;height:11px;border-radius:1px;background:var(--line)} .str span{margin-left:4px}
+.str.strong i{background:var(--pos)} .str.medium i:nth-child(-n+2){background:var(--amber)} .str.weak i:first-child{background:var(--faint)}
+.net details summary{font-size:12.5px;font-weight:600;color:var(--accent);cursor:pointer;list-style:none}
+.net details summary::-webkit-details-marker{display:none}
+.net details[open] summary{margin-bottom:8px}
+.net .alt{display:flex;flex-direction:column;gap:9px}
+.net .fine{font-size:11.5px;color:var(--faint);line-height:1.4}
+.net .comp{font-size:12px;color:var(--amber);background:var(--amber-soft);border-radius:6px;padding:5px 8px;margin-top:5px}
+.netmoment{display:flex;flex-direction:column;gap:6px;background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);border-left:3px solid var(--accent);padding:10px 12px;text-align:left;width:100%;border-top:0;border-right:0;border-bottom:0}
+.netmoment .top{display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.netmoment .top .sp{flex:1}
+.netmoment .foot{font-size:12px;font-weight:600;color:var(--accent);text-decoration:none;padding-left:42px}
+.netmoment .row{display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:center}
+.netmoment .avatar{width:32px;height:32px;font-size:12px;background:var(--surface);border:1.5px dashed var(--accent)}
+.netmoment .nm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:14px;font-weight:600}
+.netmoment .ln{font-size:12.5px;color:var(--muted);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pathsvg{display:block;width:100%;height:auto;max-width:420px;overflow:visible;font-family:var(--f-body)}
+.pathsvg .e{fill:none;stroke-linecap:round}
+.pathsvg .e.strong{stroke:var(--pos)} .pathsvg .e.medium{stroke:var(--amber)} .pathsvg .e.weak{stroke:var(--faint)}
+.pathsvg .e.hyp{stroke-dasharray:1 5}
+.pathsvg .n{fill:var(--surface);stroke:var(--accent);stroke-width:1.5}
+.pathsvg .n.syn{stroke-dasharray:3 2}
+.pathsvg .n.me{fill:var(--ink);stroke:var(--ink)}
+.pathsvg .n.exec{fill:var(--accent-soft)}
+.pathsvg .ini{fill:var(--accent);font-size:8.5px;font-weight:700}
+.pathsvg .ini.me{fill:var(--bg)}
+.pathsvg .nm{fill:var(--ink);font-size:10.5px;font-weight:600}
+.pathsvg .lb{fill:var(--muted);font-size:9.5px}
+.nethint{display:block;margin-top:4px;font-size:12px;color:var(--accent)}
+.syntag{font:600 10px var(--f-mono);color:var(--accent);border:1px solid currentColor;border-radius:4px;padding:1px 4px}
+.career{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13px}
+.career li{display:grid;grid-template-columns:62px 1fr;gap:8px}
+.career .y{font:500 11.5px var(--f-mono);color:var(--faint);padding-top:1px}
 
 /* alerts */
 .rules{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:12px}
@@ -226,7 +279,7 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .dock-in{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px 4px;display:flex;flex-direction:column;gap:8px}
 .askbar{display:flex;align-items:center;gap:10px;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:10px 16px;color:var(--muted);font-size:14.5px;text-align:left;box-shadow:var(--shadow)}
 .askbar svg{flex:none}
-.tabs{display:grid;grid-template-columns:repeat(4,1fr)}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr)}
 .tab{border:0;background:none;padding:6px 0 8px;font-size:11.5px;font-weight:600;color:var(--faint);display:flex;flex-direction:column;align-items:center;gap:3px;position:relative}
 .tab svg{width:21px;height:21px}
 .tab[aria-selected="true"]{color:var(--ink)}
@@ -234,6 +287,26 @@ h1,h2,h3{text-wrap:balance;margin:0}
 
 /* sheet */
 .scrim{position:fixed;inset:0;background:rgb(10 16 22 / .45);z-index:40}
+/* first-open tour */
+.tourcard{background:var(--accent-soft);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.tourcard .top{display:flex;align-items:center;gap:8px}
+.tourcard .top b{font:700 15px var(--f-display);color:var(--ink)}
+.tourcard .top .sp{flex:1}
+.tourcard .x{border:0;background:none;font-size:18px;line-height:1;color:var(--muted);padding:2px 6px}
+.tourcard ol{margin:0;padding-left:20px;font-size:13px;color:var(--ink);display:flex;flex-direction:column;gap:2px}
+.tourcard .btn{align-self:flex-start}
+.coach{position:fixed;left:0;right:0;z-index:30;display:flex;justify-content:center;padding:0 12px;pointer-events:none}
+.coach-in{pointer-events:auto;width:100%;max-width:536px;background:var(--ink);color:var(--bg);border-radius:14px;padding:12px 14px;box-shadow:0 8px 28px rgb(0 0 0 / .28);display:flex;flex-direction:column;gap:8px}
+.coach-in .h{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;opacity:.75}
+.coach-in .h .sp{flex:1}
+.coach-in .t{font:700 16px var(--f-display)}
+.coach-in p{margin:0;font-size:13.5px;line-height:1.45}
+.coach-in .row{display:flex;gap:8px;justify-content:flex-end}
+.coach-in .btn{background:transparent;color:var(--bg);border-color:color-mix(in srgb,var(--bg) 40%,transparent)}
+.coach-in .btn.primary{background:var(--bg);color:var(--ink);border-color:var(--bg)}
+.coach-in .x{border:0;background:none;color:inherit;font-size:18px;line-height:1;padding:0 4px;opacity:1}
+.tour-hl{outline:3px solid var(--accent);outline-offset:3px;border-radius:12px}
+@media (prefers-reduced-motion:no-preference){.tour-hl{animation:tourpulse 1.4s ease-out 2}@keyframes tourpulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 50%,transparent)}100%{box-shadow:0 0 0 16px transparent}}}
 .sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;max-height:88%;display:flex;flex-direction:column;background:var(--bg);border-radius:18px 18px 0 0;padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -8px 30px rgb(0 0 0 / .2)}
 .sheet-in{max-width:560px;width:100%;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px 18px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
 .grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 4px}
@@ -268,6 +341,7 @@ h1,h2,h3{text-wrap:balance;margin:0}
       <button class="tab" role="tab" data-v="alerts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7 4 5"/></svg>Alerts</button>
       <button class="tab" role="tab" data-v="book"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M10 10v10"/></svg>Results</button>
       <button class="tab" role="tab" data-v="research"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18M5 8l7-5 7 5M6 21h12"/></svg>Research</button>
+      <button class="tab" role="tab" data-v="network"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="7" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8.3 8.3l2.6 7.4M15.9 7.6l-2.8 8.2M8.5 6.8l7-.6"/></svg>Network</button>
     </div>
   </div>
 </nav>
@@ -276,9 +350,12 @@ h1,h2,h3{text-wrap:balance;margin:0}
 
 <script>
 const EMBED = /*__SNAPSHOT__*/null;
+// Private per-user network overlay. Separate from the shared snapshot on purpose.
+const NET_EMBED = /*__NETWORK__*/null;
 (async function () {
   "use strict";
   const S = EMBED || await fetch("snapshot.json").then(r => r.json());
+  const N = NET_EMBED || await fetch("network.json").then(r => r.ok ? r.json() : null).catch(() => null);
   const $ = (s, el = document) => el.querySelector(s);
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const store = {
@@ -376,6 +453,182 @@ const EMBED = /*__SNAPSHOT__*/null;
     }
     return `<div class="enrich"><div class="lbl">Who is coming in</div><div class="person"><div class="avatar">${esc(ini)}</div><div><b>${esc(e.name)}</b><small>${esc(e.role)}${e.outgoing ? " · succeeds " + esc(e.outgoing) : ""}</small></div></div>${body}</div>`;
   }
+  // ---------- network (private overlay; every score computed in code, see match.py) ----------
+  const NP = id => N && N.people[id];
+  const first = id => NP(id) ? NP(id).name.split(" ")[0] : "";
+  function strBar(lab) { if (!lab) return ""; return `<span class="str ${lab}" aria-label="${lab} link"><i></i><i></i><i></i><span>${lab}</span></span>`; }
+  function chain(x) {
+    const hops = x.hops || (x.via ? ["me", x.via, x.contact] : ["me", x.contact]);
+    return hops.map(h => h === "me" ? "You" : first(h)).join(" → ");
+  }
+  function whoRow(x, opts = {}) {
+    const p = NP(x.contact); if (!p) return "";
+    const how = x.via ? `via ${first(x.via)} · you don't know ${first(x.contact)} directly` : p.how;
+    return `<button class="who" data-person="${esc(x.contact)}"><span class="avatar">${esc(p.initials)}</span><span style="min-width:0">
+      <span class="nm">${esc(p.name)} ${strBar(x.label)}</span>
+      <span class="meta">${esc(p.headline)}</span>
+      <span class="wl">${esc(opts.evidence && x.links ? (x.via ? "Through " + first(x.via) + ": " : "") + x.links[0].reason : (x.why ? x.why.text : x.reason))}</span>
+      <span class="meta">${esc(chain(x))}${how ? " · " + esc(how) : ""}</span>
+      ${opts.extra || ""}
+      ${x.flag ? `<span class="comp" style="display:block">${esc(x.flag)}</span>` : ""}</span></button>`;
+  }
+  // Who to call for a company, each with what to ask, picked in code from the promise ledger:
+  // ex-employees take what management missed or that FINN couldn't score (a call can settle those);
+  // suppliers/customers take a promise sharing a keyword with their link; current employees get nothing.
+  function askPlan(R, rows) {
+    const L = R ? R.ledger.rows : [];
+    const bad = L.filter(r => ["walked_back", "missed", "at_risk"].includes(r.verdict));
+    const open = L.filter(r => ["unscored", "pending"].includes(r.verdict));
+    const used = new Set(), out = {};
+    const take = (pool, test = () => true) => { const r = pool.find(r => !used.has(r.metric) && test(r)); if (r) used.add(r.metric); return r; };
+    const words = t => (t || "").toLowerCase().match(/[a-z&]{3,}/g) || [];
+    const VC = ["supplier side", "customer side", "adjacent industry"];
+    rows.filter(x => VC.includes(x.relation)).forEach(x => {          // specific keyword matches first
+      const w = new Set(words(x.reason.split(": ").slice(1).join(" ")).filter(w => !["the", "and", "for", "buy", "buyers", "main", "input", "cost", "where", "has", "plant", "due", "call", "kaynes", "polycab"].includes(w)));
+      out[x.contact] = take([...bad, ...open], r => words(r.metric).some(m => w.has(m)));
+    });
+    rows.filter(x => x.relation === "ex-employee").forEach(x => { out[x.contact] = take(bad) || take(open); });
+    rows.filter(x => x.relation === "competitor").forEach(x => { out[x.contact] = take(open); });
+    return out;
+  }
+  function whoToCall(t) {
+    const rows = N && N.companies[t]; if (!rows) return "";
+    const R = S.research[t], plan = askPlan(R, rows);
+    return `<div class="net" style="background:var(--surface);box-shadow:var(--shadow)"><div class="lbl">From your network <span class="syntag">SYN</span></div>
+      ${rows.map(x => whoRow(x, { extra: plan[x.contact] ? `<span class="meta" style="color:var(--ink)"><b>Ask about:</b> ${esc(plan[x.contact].metric)} · <span class="pill v-${plan[x.contact].verdict}">${VLAB[plan[x.contact].verdict]}</span></span>` : "" })).join("")}
+      <div class="fine">"Ask about" comes from the promise ledger above: what management missed, walked back, or that FINN couldn't score from the numbers. ${TMPL.replace(/<[^>]+>/g, "")}</div></div>`;
+  }
+  // The best path, drawn: You -> (via) -> contact -> executive. Line thickness = that hop's strength
+  // (computed in code: your tie, their "knows" link, the career overlap); the last hop is dashed because
+  // a link to a real person is inferred from public history, not known.
+  function pathSvg(x, t) {
+    const hops = x.hops || (x.via ? ["me", x.via, x.contact] : ["me", x.contact]);
+    const nodes = [...hops, "target"], n = nodes.length;
+    const CLOSE = { 3: "close", 2: "regular", 1: "met" };
+    const first1 = NP(hops[1]);
+    const hopS = [];
+    hopS.push(first1 ? first1.reach : x.reach);                                // you -> first contact: your tie
+    if (n === 4) hopS.push(Math.min(0.95, x.reach / (first1.reach || 1)));      // their "knows" link
+    hopS.push(x.link);                                                         // contact -> executive: career overlap
+    const L = x.links && x.links[0], f = (L && L.facts) || {};
+    const yy = y => (y || "").replace(/(\d{2})(\d{2})–(\d{2})(\d{2})/, "$2–$4");
+    const lastLab = L ? (L.kind === "worked_together" || L.kind === "same_group" ? [f.org, yy(f.years)] : L.kind === "studied_together" ? [f.institution, String(f.year)] : [f.institution || f.org || L.kind.replace("_", " "), ""]) : ["", ""];
+    const labs = [[CLOSE[first1 && first1.closeness] || "via", ""], ...(n === 4 ? [["knows", ""]] : []), lastLab];
+    const W = 300, pad = 22, r = 11, cy = 30, gap = (W - 2 * pad) / (n - 1), X = i => pad + i * gap;
+    const SHORT = { "ICICI Prudential Life": "ICICI Pru", "ICICI Securities": "I-Sec", "Tata Consultancy Services": "TCS", "Larsen & Toubro": "L&T",
+      "Kotak Institutional Equities": "Kotak IE", "Kotak Investment Banking": "Kotak IB", "Kotak Mahindra Bank": "Kotak Bank", "Kaynes Technology": "Kaynes",
+      "Persistent Systems": "Persistent", "Dixon Technologies": "Dixon", "Sun Pharmaceutical": "Sun Pharma", "Cyril Amarchand Mangaldas": "CAM", "AZB & Partners": "AZB" };
+    const maxc = Math.max(6, Math.floor((gap - 2 * r - 6) / 5.2));              // what fits between the circles
+    const cut = s => { if (!s) return ""; if (s.length > maxc && SHORT[s]) s = SHORT[s]; return s.length > maxc ? s.slice(0, maxc - 1) + "…" : s; };
+    const name = nd => nd === "me" ? "You" : nd === "target" ? t.name.split(" ").pop() : first(nd);
+    const ini = nd => nd === "me" ? "Y" : nd === "target" ? t.name.split(" ").map(w => w[0]).slice(0, 2).join("") : NP(nd).initials;
+    let g = "";
+    for (let i = 0; i < n - 1; i++) {
+      const sv = hopS[i] || 0, lb = label3(sv), x1 = X(i) + r + 3, x2 = X(i + 1) - r - 3, mx = (x1 + x2) / 2;
+      g += `<line class="e ${lb}${i === n - 2 ? " hyp" : ""}" x1="${x1}" y1="${cy}" x2="${x2}" y2="${cy}" stroke-width="${(1 + 5 * sv).toFixed(1)}"/>`;
+      g += `<text class="lb" x="${mx}" y="${cy - 9}" text-anchor="middle">${esc(cut(labs[i][0]))}</text>`;
+      if (labs[i][1]) g += `<text class="lb" x="${mx}" y="${cy + 17}" text-anchor="middle">${esc(labs[i][1])}</text>`;
+    }
+    nodes.forEach((nd, i) => {
+      const cls = nd === "me" ? "me" : nd === "target" ? "exec" : "syn";
+      g += `<circle class="n ${cls}" cx="${X(i)}" cy="${cy}" r="${r}"/><text class="ini${nd === "me" ? " me" : ""}" x="${X(i)}" y="${cy + 3}" text-anchor="middle">${esc(ini(nd))}</text>`;
+      g += `<text class="nm" x="${X(i)}" y="${cy + 28}" text-anchor="${i === 0 ? "start" : i === n - 1 ? "end" : "middle"}" dx="${i === 0 ? -r : i === n - 1 ? r : 0}">${esc(name(nd))}</text>`;
+    });
+    const aria = nodes.map(name).join(" to ") + `. ${x.label} overall.`;
+    return `<svg class="pathsvg" viewBox="0 0 ${W} 64" role="img" aria-label="Best path: ${esc(aria)}">${g}</svg>`;
+  }
+  const label3 = v => v >= 0.5 ? "strong" : v >= 0.3 ? "medium" : "weak";
+  const TMPL = `<div class="fine">Template lines, not model-written. Strength is scored in code from shared employers, years and batches.</div>`;
+  function wayIn(it) {
+    const ev = N && N.events[it.id]; if (!ev || ev.kind !== "person") return "";
+    const t = N.targets[ev.target];
+    const lbl = `<div class="lbl">Your way in <span class="syntag" title="Synthetic network">SYN</span></div>`;
+    if (!t.paths.length) {
+      const f = ev.company_fallback;
+      return `<div class="net">${lbl}<div style="font-size:13px">${esc(t.note || "No path found.")}</div>
+        ${f ? `<div class="fine" style="margin-top:-2px">Closest to the company instead:</div>${whoRow(f)}` : ""}${TMPL}</div>`;
+    }
+    const [top, ...rest] = t.paths;
+    return `<div class="net">${lbl}${pathSvg(top, t)}${whoRow(top)}
+      ${rest.length ? `<details><summary>${rest.length} more path${rest.length > 1 ? "s" : ""}</summary><div class="alt">${rest.map(x => whoRow(x, { evidence: true })).join("")}</div></details>` : ""}
+      ${t.direct ? `<div class="fine"><b>You:</b> ${esc(t.direct.why.text.replace(/^Your own link: /, ""))}</div>` : ""}
+      <div class="fine">Hypothetical: inferred from ${esc(t.name.split(" ").pop())}'s public career history (<a href="#" data-target="${esc(t.name)}">sources</a>), not a known relationship.</div>${TMPL}</div>`;
+  }
+  function bestPlaced(it) {
+    const ev = N && N.events[it.id]; if (!ev || ev.kind !== "event" || !ev.best) return "";
+    return `<div class="net"><div class="lbl">Best placed to explain <span class="syntag" title="Synthetic network">SYN</span></div>${whoRow(ev.best)}
+      ${ev.others.length ? `<details><summary>Also: ${ev.others.map(o => esc(first(o.contact))).join(", ")}</summary><div class="alt">${ev.others.map(o => whoRow(o)).join("")}</div></details>` : ""}${TMPL}</div>`;
+  }
+  function netHint(it) {
+    const ev = N && N.events[it.id]; if (!ev) return "";
+    if (ev.kind === "event" && ev.best) return `<span class="nethint">↳ Best placed: ${esc(NP(ev.best.contact).name)} (${ev.best.label})</span>`;
+    if (ev.kind === "person") {
+      const t = N.targets[ev.target];
+      if (t.paths.length) return `<span class="nethint">↳ Your way in: ${esc(NP(t.paths[0].contact).name)} (${t.paths[0].label})</span>`;
+      if (ev.company_fallback) return `<span class="nethint">↳ No path to ${esc(t.name)}. Closest to ${esc(nameOf(it.ticker))}: ${esc(NP(ev.company_fallback.contact).name)}</span>`;
+    }
+    return "";
+  }
+  const shortDate = d => D(d).toLocaleDateString("en-IN", { day: "numeric", month: "short" });
+  const asOfShort = asOf.toLocaleDateString("en-IN", { day: "numeric", month: "short", timeZone: "Asia/Kolkata" });
+  const WIN_SHORT = { "1": "last 24h", "3": "last 3 days", "7": "last 7 days", "14": "last 14 days", "30": "last 30 days" };
+  const winShort = () => st.win === "custom" ? (st.from || st.to ? `${st.from ? shortDate(st.from) : "start"} – ${st.to ? shortDate(st.to) : asOfShort}` : "your range") : WIN_SHORT[st.win];
+  const weekLabel = () => `the 7 days to ${asOfShort}`;
+  // The strongest network moment in the current window (else this week), shown above the summary
+  // so the Network is visible in the first screen. Picked in code: covered events, "needs you" first, then link strength, then priority.
+  function netMoment(w) {
+    if (!N) return "";
+    const best = i => { const ev = N.events[i.id]; const x = ev.kind === "event" ? ev.best : N.targets[ev.target].paths[0]; return x ? x.score ?? x.strength : 0; };
+    const pick = list => list.filter(i => N.events[i.id] && N.coverage.items[i.id])
+      .sort((a, b) => (b.tier === "act") - (a.tier === "act") || best(b) - best(a) || b.score - a.score)[0];
+    let it = pick(w), scope = "";
+    if (!it) {
+      const cutoff = new Date(asOf.getTime() - 7 * 864e5).toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+      it = pick(items.filter(i => i.date >= cutoff)); scope = ` · from ${weekLabel()}`;
+    }
+    if (!it) return "";
+    const ev = N.events[it.id];
+    const x = ev.kind === "event" ? ev.best : N.targets[ev.target].paths[0];
+    const p = NP(x.contact);
+    const line = ev.kind === "event"
+      ? `Best placed on this ${esc(catOf(it).toLowerCase())}: ${esc(x.reason.replace(/; left .*$/, ""))}`
+      : `Your way in to ${esc(N.targets[ev.target].name)}: ${esc((x.via ? "through " + first(x.via) + ", " : "") + x.links[0].reason)}`;
+    const inWin = w.filter(i => N.events[i.id]);
+    const cov = inWin.filter(i => N.coverage.items[i.id]).length;
+    return `<div class="netmoment" role="group" aria-label="From your network">
+      <div class="top">From your network <span class="syntag">SYN</span>${scope ? `<span style="text-transform:none;letter-spacing:0;font-weight:600">${scope}</span>` : ""}</div>
+      <button class="row" data-open="${esc(it.id)}" style="background:none;border:0;padding:0;text-align:left;width:100%"><span class="avatar">${esc(p.initials)}</span><span style="min-width:0"><span class="nm"><span class="tk">${it.ticker}</span>${esc(p.name)} ${strBar(x.label)}</span><span class="ln">${line}</span></span></button>
+      <a href="#network" data-go="network" class="foot">${inWin.length ? `${cov} of ${inWin.length} material events covered · ${winShort()}` : "Open your network"} ›</a>
+    </div>`;
+  }
+
+  function personSheet(id) {
+    const p = NP(id); if (!p) return;
+    const rel = [];
+    Object.entries(N.events).forEach(([iid, ev]) => {
+      const it = items.find(i => i.id === iid); if (!it) return;
+      const xs = ev.kind === "event" ? [ev.best, ...ev.others] : (N.targets[ev.target].paths.concat(ev.company_fallback ? [ev.company_fallback] : []));
+      const x = xs.find(y => y && y.contact === id);
+      if (x) rel.push(`<li><span class="tk">${it.ticker}</span> ${esc(it.title)}<br><span class="sub" style="font-size:12.5px">${esc(x.why ? x.why.text : x.reason)}</span></li>`);
+    });
+    sheet(`<div class="sheet-h"><span class="avatar" style="width:36px;height:36px;font-size:13px;border:1.5px dashed var(--accent);background:var(--surface)">${esc(p.initials)}</span><h2 class="h2">${esc(p.name)}</h2><span class="syntag">SYN</span><span class="sp"></span><button class="btn" data-close>Close</button></div>
+      <div class="sub">${esc(p.headline)}</div>
+      <div class="panel"><div class="eyebrow">How you know them</div><div style="font-size:14px">${p.via ? `Through ${esc(NP(p.via).name)}: ${esc(p.how)}` : esc(p.how)}${p.last_spoke_months != null ? ` · last spoke ${p.last_spoke_months} month${p.last_spoke_months === 1 ? "" : "s"} ago` : ""}</div>
+        ${p.themes.length ? `<div class="chips">${p.themes.map(t => `<span class="chip">${esc(t)}</span>`).join("")}</div>` : ""}</div>
+      <div class="panel"><div class="eyebrow">Career</div><ul class="career">${p.career.map(c => `<li><span class="y">${esc(c.years)}</span><span>${esc(c.role)}, <b>${esc(c.org)}</b></span></li>`).join("")}
+        ${p.education.map(e => `<li><span class="y">${e.year || ""}</span><span>${esc(e.inst)}</span></li>`).join("")}</ul></div>
+      ${rel.length ? `<div class="panel"><div class="eyebrow">Shows up for</div><ul style="margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:13.5px">${rel.join("")}</ul></div>` : ""}
+      <div class="fine sub" style="font-size:11.5px">Fictional person in a synthetic demo network. Your private notes on contacts stay on this device and are never sent to a model.</div>`);
+  }
+  function targetSheet(name) {
+    const t = N && N.targets[name]; if (!t) return;
+    sheet(`<div class="sheet-h"><h2 class="h2">${esc(t.name)}</h2><span class="sp"></span><button class="btn" data-close>Close</button></div>
+      <div class="sub">${esc(t.role)}, ${esc(nameOf(t.ticker))} · public career history used for matching</div>
+      <div class="panel"><ul class="career">${t.career.map(c => `<li><span class="y">${esc(c.years)}</span><span>${esc(c.role)}, <b>${esc(c.org)}</b>${c.kind === "board" ? ` <span class="sub" style="font-size:11.5px">(board seat: not counted as working together)</span>` : ""}${c.source ? ` · <a href="${esc(c.source)}" target="_blank" rel="noopener">${esc(new URL(c.source).hostname.replace("www.", ""))}</a>` : ""}</span></li>`).join("")}
+        ${(t.education || []).map(d => `<li><span class="y">${d.year || "year n/a"}</span><span>${esc(d.degree)}, <b>${esc(d.inst)}</b>${d.source ? ` · <a href="${esc(d.source)}" target="_blank" rel="noopener">${esc(new URL(d.source).hostname.replace("www.", ""))}</a>` : ""}</span></li>`).join("")}</ul></div>
+      <div class="fine sub" style="font-size:11.5px">Years not in a cited source are left out, never guessed. Links from your network to this person are inferred from overlapping employers and years only.</div>`);
+  }
+
   function actCard(it) {
     const e = it.enrichment;
     const enrich = e ? (e.kind === "results" ? resultsBlock(e) : e.kind === "person" ? personBlock(e) : "") : "";
@@ -386,6 +639,7 @@ const EMBED = /*__SNAPSHOT__*/null;
       <h3>${esc(it.title)}</h3>
       ${e && e.kind === "results" ? "" : `<p>${esc(oneLiner(it))}</p>`}
       ${enrich}
+      ${e && e.kind === "person" ? wayIn(it) : bestPlaced(it)}
       <div class="why">${esc(WHY[it.category + "/" + it.subtype] || "Material for this holding.")} Priority ${it.score}/100 · ${P[it.ticker] ? P[it.ticker].weight + "% of book" : ""}</div>
       ${rel}
       <div class="acts"><button class="btn" data-clear="${esc(it.id)}">${done ? "Restore" : "Done"}</button><button class="btn" data-ask="What does ${esc(nameOf(it.ticker))}'s ${esc(catOf(it).toLowerCase())} filing on ${fmtDate(it.date)} mean for me?">Ask about this</button></div>
@@ -413,6 +667,8 @@ const EMBED = /*__SNAPSHOT__*/null;
         <div class="chips" role="group" aria-label="Time window">${opts.map(([v, l]) => `<button class="chip" data-win="${v}" aria-pressed="${st.win === v}">${l}</button>`).join("")}</div>
         ${st.win === "custom" ? `<div class="override"><label for="fromD">From</label><input id="fromD" type="date" min="${minD}" max="${maxD}" value="${st.from}" style="width:auto"><label for="toD">to</label><input id="toD" type="date" min="${minD}" max="${maxD}" value="${st.to}" style="width:auto"></div>` : ""}
       </div>
+      ${tourCard()}
+      ${netMoment(w)}
       <div class="read">
         <div class="funnel"><span><span class="num">${raw}</span> filings in ${winLabel()}</span><span class="arrow">→</span><span><span class="num">${act.length}</span> need you</span><span class="arrow">·</span><span><span class="num">${know.length}</span> worth knowing</span><span class="arrow">·</span><span><span class="num">${raw - shownRaw}</span> routine, folded</span></div>
         ${top.length ? `<ol>${top.map(i => `<li><span class="tk">${i.ticker}</span><span>${esc(briefLine(i))}</span></li>`).join("")}</ol>` : `<p class="sub" style="margin:0">${act.length ? "Everything that needed you is marked done." : "No material filings across your 15 holdings in this window. Try 7 days for results season."}</p>`}
@@ -420,7 +676,7 @@ const EMBED = /*__SNAPSHOT__*/null;
       </div>
       ${act.length ? `<div class="group-h"><span class="dot act"></span><h2 class="h2">Needs you</h2><span class="count">${act.length}</span></div>${act.map(actCard).join("")}` : ""}
       ${know.length ? `<div class="group-h"><span class="dot know"></span><h2 class="h2">Worth knowing</h2><span class="count">${know.length}</span></div>
-        <div class="know-list">${know.map(i => `<div class="know-row"><span class="tk">${i.ticker}</span><span class="t">${esc(i.title)}<small>${esc(oneLiner(i))}</small></span><span class="d">${fmtDate(i.date)}</span></div>`).join("")}</div>` : ""}
+        <div class="know-list">${know.map(i => `<div class="know-row"><span class="tk">${i.ticker}</span><span class="t">${esc(i.title)}<small>${esc(oneLiner(i))}</small>${netHint(i)}</span><span class="d">${fmtDate(i.date)}</span></div>`).join("")}</div>` : ""}
       ${noise.length ? `<details class="routine"><summary><span class="dot noise"></span>${raw - shownRaw} routine filings folded away</summary>
         ${Object.entries(byCat).sort((a, b) => b[1].length - a[1].length).map(([c, arr]) => `<div class="grp"><b>${esc(c)}</b> · ${arr.reduce((s, i) => s + i.raw, 0)}<ul>${arr.map(i => `<li>${i.ticker} · ${esc(i.title)} <span style="color:var(--faint)">${fmtDate(i.date)}</span></li>`).join("")}</ul></div>`).join("")}
         <p class="sub" style="margin:10px 0 0;font-size:12px">Folded: call recordings, investor-meet notices, ESOP allotments, results ads, compliance certificates, and debt raises at lenders (that's their business as usual).</p></details>` : ""}
@@ -439,7 +695,10 @@ const EMBED = /*__SNAPSHOT__*/null;
       const pat = e.rows.find(r => r.metric === "PAT"); const neg = (e.flags || []).find(f => f.tone === "neg");
       return `${n} Q2: ${e.headline.split(" — ")[0]}.` + (neg ? ` Watch: ${neg.text.split(" — ")[0].replace(/ YoY.*/, " YoY")}.` : "");
     }
-    if (e && e.kind === "person") return `${n}: ${e.name} takes over as ${e.role}.` + (e.so_what ? " " + e.so_what : "");
+    if (e && e.kind === "person") {
+      const ev = N && N.events[i.id], t = ev && N.targets[ev.target], w = t && t.paths[0];
+      return `${n}: ${e.name} takes over as ${e.role}.` + (e.so_what ? " " + e.so_what : "") + (w ? ` Your way in: ${NP(w.contact).name} (${w.label}).` : "");
+    }
     return `${n}: ${i.detail}`;
   }
   function speak(list) {
@@ -585,7 +844,7 @@ const EMBED = /*__SNAPSHOT__*/null;
       <div class="rhead"><div class="eyebrow">NSE: ${R.ticker} · research from filings & calls only</div><h1 class="h1">${esc(R.name)}</h1>
         <div class="kv"><span>Price <b>₹${R.price.toLocaleString("en-IN")}</b></span><span>Mcap <b>${fmtMcap(R.mcap)}</b></span><span>P/E <b>${R.pe}</b></span><span>ROCE <b>${R.roce}%</b></span>${R.shareholding ? `<span>Promoters <b>${R.shareholding.promoters}%</b></span>` : ""}</div>
         <p style="margin:4px 0 0;font-size:14.5px">${srcTag(R.snapshot)}</p></div>
-      <div class="jump"><div class="chips">${[["promises", "Promised vs delivered"], ["story", "Story vs numbers"], ["case", "Bull / bear"], ["numbers", "Numbers"], ["cash", "Cash & balance sheet"], ["watch", "Watch"], ["sources", "Sources"]].map(([id, l]) => `<button class="chip" data-jump="${id}">${l}</button>`).join("")}</div></div>
+      <div class="jump"><div class="chips">${[["promises", "Promised vs delivered"], ...(N && N.companies[R.ticker] ? [["call", "Who to call"]] : []), ["story", "Story vs numbers"], ["case", "Bull / bear"], ["numbers", "Numbers"], ["cash", "Cash & balance sheet"], ["watch", "Watch"], ["sources", "Sources"]].map(([id, l]) => `<button class="chip" data-jump="${id}">${l}</button>`).join("")}</div></div>
 
       <div class="sec" id="promises"><h2 class="h2">Promised vs delivered</h2>
         <div class="panel">
@@ -595,6 +854,8 @@ const EMBED = /*__SNAPSHOT__*/null;
           <div>${L.rows.map(r => `<div class="promise"><div class="top"><span class="pill v-${r.verdict}">${VLAB[r.verdict]}</span><span class="m">${esc(r.metric)}</span><span class="mi">said in ${esc(r.made_in)}</span></div>
             <div class="said">${esc(r.promise)}</div>${r.evidence ? `<div class="did">${esc(r.evidence)}</div>` : ""}${r.caveat ? `<div class="cav">${esc(r.caveat)}</div>` : ""}</div>`).join("")}</div>
         </div></div>
+
+      ${N && N.companies[R.ticker] ? `<div class="sec" id="call"><h2 class="h2">Who to call</h2>${whoToCall(R.ticker)}</div>` : ""}
 
       <div class="sec" id="story"><h2 class="h2">Story vs numbers</h2><div class="panel">
         ${R.narrative_vs_numbers.map(n => `<div class="nvn"><div style="display:flex;gap:8px;align-items:center"><span class="pill v-${n.read.replace(" ", "_")}">${VLAB[n.read]}</span></div>
@@ -641,7 +902,8 @@ const EMBED = /*__SNAPSHOT__*/null;
       <div class="answer" style="white-space:normal">The engine works on any NSE ticker, but it needs the backend: it fetches ${esc(t)}'s screener.in tables and its last four call transcripts, then runs the cheap-model extraction and one strong-model pass. This hosted demo is a static snapshot and can't reach those sites.
       <div style="margin-top:8px"><span class="num" style="background:var(--sunk);padding:6px 8px;border-radius:6px;display:inline-block;overflow-wrap:anywhere">python -m finn research ${esc(t)}</span></div>
       <div class="by">Typical cost on the default free-tier models: about 12 cheap calls and 2 strong calls, under US$0.05; re-runs hit the cache and cost nothing.</div></div>
-      ${p ? `<div class="answer" style="white-space:normal"><b>${esc(p.name)}</b> is in your book. What the snapshot already has:${p.result && p.result.headline ? `<br>${esc(p.result.quarter)}: ${esc(p.result.headline)}` : ""}</div>${resultsBlock(p.result)}` : ""}`);
+      ${p ? `<div class="answer" style="white-space:normal"><b>${esc(p.name)}</b> is in your book. What the snapshot already has:${p.result && p.result.headline ? `<br>${esc(p.result.quarter)}: ${esc(p.result.headline)}` : ""}</div>${resultsBlock(p.result)}` : ""}
+      ${N && N.companies[t] ? `<h2 class="h2" style="margin-top:4px">Who to call</h2>${whoToCall(t)}` : ""}`);
   }
 
   // ---------- sheets ----------
@@ -672,15 +934,16 @@ const EMBED = /*__SNAPSHOT__*/null;
         <div><b>Prices & volume</b> · ${SIM ? `<span class="simtag">SIM</span> simulated in this snapshot: the build sandbox couldn't reach Yahoo Finance. Each series ends at the stock's real last price. <span class="num">python -m finn snapshot --live</span> swaps in real yfinance bars.` : "yfinance end-of-day bars."}</div>
         <div><b>Research</b> · annual-report tables and earnings-call transcripts only. No news, broker notes or outside model knowledge.</div>
         <div><b>People</b> · incoming-executive backgrounds from public web profiles, with links on each card.</div>
+        ${N ? `<div><b>Your network</b> · <span class="syntag">SYN</span> ${N.meta.contacts} fictional contacts, labelled synthetic; no scraping. Links to real executives rest only on public career history (same employer, overlapping years) and are marked hypothetical. Real people never get a "knows" link, and board seats never count as working together. Every strength is scored in code; the "why" lines are templates. The network lives in a private per-user file, separate from the shared market snapshot, and network questions are answered on this device, never by a model. This public demo bundles that file because the people are fictional.</div>` : ""}
         <div><b>Your settings</b> · alert lines, cleared items and the time window are kept in this browser only.</div>
       </div>
-      <div class="rowbtns"><button class="btn" id="resetAll">Clear my settings</button></div>`);
-    $("#resetAll").onclick = () => { ["win", "from", "to", "cleared", "rules", "research"].forEach(k => { try { localStorage.removeItem("finn:" + k); } catch { } }); location.reload(); };
+      <div class="rowbtns">${N ? `<button class="btn primary" data-tour="start">Replay tour</button>` : ""}<button class="btn" id="resetAll">Clear my settings</button></div>`);
+    $("#resetAll").onclick = () => { ["win", "from", "to", "cleared", "rules", "research", "tour"].forEach(k => { try { localStorage.removeItem("finn:" + k); } catch { } }); location.reload(); };
   }
 
   // ---------- ASK ----------
   const samplerP = (window.claude && window.claude.use) ? window.claude.use("sample").catch(() => null) : Promise.resolve(null);
-  const SUGG = ["What needs my attention today?", "Which results disappointed?", "Who is HDFC Bank's new CEO?", "Can I trust Kaynes' guidance?", "Who raised money this week?"];
+  const SUGG = ["What needs my attention today?", "Who knows Anup Bagchi?", "Who's my go-to for semiconductors?", "Which results disappointed?", "Who should I call about Polycab?", "Can I trust Kaynes' guidance?", "Who raised money this week?"];
   function askSheet(q) {
     const root = sheet(`<div class="sheet-h"><h2 class="h2">Ask FINN</h2><span class="sp"></span><button class="btn" data-close>Close</button></div>
       <form class="askform" id="askF"><input id="askIn" placeholder="e.g. Which results disappointed?" aria-label="Your question" value="${esc(q || "")}"><button class="btn primary">Ask</button></form>
@@ -702,6 +965,9 @@ const EMBED = /*__SNAPSHOT__*/null;
     el.innerHTML = `<div class="qa-q">${esc(q)}</div><div class="a">Thinking…</div><div class="by"></div>`;
     box.prepend(el);
     const A = el.querySelector(".a"), By = el.querySelector(".by");
+    // Network questions, and any question naming someone in your network, never reach a model.
+    const na = netAnswer(q);
+    if (na) { A.innerHTML = na; A.style.whiteSpace = "normal"; By.textContent = "Answered on this device from your private network. Not sent to a model."; return; }
     const s = await samplerP;
     if (s) {
       try {
@@ -712,6 +978,63 @@ const EMBED = /*__SNAPSHOT__*/null;
       } catch (e) { /* fall through to local */ }
     }
     const loc = localAnswer(q); A.innerHTML = loc; By.textContent = "Answered on-device from FINN's snapshot";
+  }
+  const THEME_SYN = { "semis": "semiconductors", "chip": "semiconductors", "osat": "semiconductors", "cable": "cables & wires", "wire": "cables & wires",
+    "insolven": "insolvency & restructuring", "ibc": "insolvency & restructuring", "nclt": "insolvency & restructuring", "restructur": "insolvency & restructuring",
+    "qip": "equity capital markets", "ecm": "equity capital markets", "fund rais": "equity capital markets", "it services": "IT services", "software": "IT services",
+    "ems": "EMS", "electronics manufactur": "EMS", "contract manufactur": "EMS", "ev": "autos & EV", "auto": "autos & EV", "bank": "retail banking",
+    "nbfc": "NBFC lending", "lending": "NBFC lending", "insur": "insurance", "pharma": "pharma regulation", "usfda": "pharma regulation", "fda": "pharma regulation",
+    "power": "power & renewables", "renewab": "power & renewables", "solar": "power & renewables", "copper": "copper", "paint": "paints", "jewel": "jewellery",
+    "retail": "fashion retail", "fashion": "fashion retail", "healthcare it": "healthcare IT", "m&a": "M&A integration", "acquisition": "M&A integration",
+    "law": "corporate law", "legal": "corporate law", "epc": "EPC & construction", "construction": "EPC & construction", "treasury": "treasury", "capital market": "capital markets" };
+  function findTheme(s) {
+    const direct = N.index.themes.find(t => s.includes(t.toLowerCase()));
+    if (direct) return direct;
+    const k = Object.keys(THEME_SYN).sort((a, b) => b.length - a.length).find(k => new RegExp("\\b" + k.replace(/[&]/g, "\\$&")).test(s));
+    return k && N.themes[THEME_SYN[k]] ? THEME_SYN[k] : null;
+  }
+  function findPerson(s) {
+    // full name, then a unique surname, then a unique first name (word-bounded): any of these keeps the question on the device
+    const names = Object.keys(N.index.people).sort((a, b) => b.length - a.length);
+    const uniq = (part, n) => names.filter(m => part(m) === part(n)).length === 1;
+    const has = w => w.length > 3 && new RegExp("\\b" + w + "\\b").test(s);
+    return names.find(n => s.includes(n)) || names.find(n => uniq(m => m.split(" ").pop(), n) && has(n.split(" ").pop()))
+      || names.find(n => uniq(m => m.split(" ")[0], n) && has(n.split(" ")[0]));
+  }
+  function findOrg(s) {
+    const k = Object.keys(N.index.orgs).sort((a, b) => b.length - a.length).find(a => a.length > 2 && new RegExp("\\b" + a.replace(/[.*+?^${}()|[\]\\&]/g, "\\$&") + "\\b").test(s));
+    return k ? N.index.orgs[k] : null;
+  }
+  function netAnswer(q) {
+    if (!N) return null;
+    const s = q.toLowerCase();
+    const isNet = /\bwho (knows|can intro|do i know|should i (call|ask|talk)|has worked|worked with|to call|is my|can help|can explain)|go-?to|way in|introduc|expert|reconnect|keep warm|haven't spoken|my network|\bcall about\b/.test(s);
+    const person = findPerson(s);
+    if (!isNet && !person) return null;
+    const rows = xs => xs.map(x => whoRow(x)).join("");
+    if (/reconnect|keep warm|haven't spoken|catch up/.test(s)) {
+      const r = N.reconnect.slice(0, 4);
+      return r.length ? `<p>Worth a call: someone you haven't spoken to in a while, whose former employer just filed something material.</p>${r.map(x => whoRow({ ...x, label: "", why: { text: x.reason + ". Their old employer filed: " + x.title } })).join("")}` : "No natural reconnects right now.";
+    }
+    if (person) {
+      const key = N.index.people[person];
+      if (key.startsWith("target:")) {
+        const t = N.targets[key.slice(7)];
+        if (!t.paths.length) return `${esc(t.note || "No path found.")}`;
+        return `<p><b>${esc(t.name)}</b> (${esc(t.role)}, ${esc(nameOf(t.ticker))}). Best ways in, inferred from public career overlap (hypothetical):</p>${rows(t.paths.slice(0, 3))}${t.direct ? `<div class="fine">You: ${esc(t.direct.why.text.replace(/^Your own link: /, ""))}</div>` : ""}`;
+      }
+      const p = NP(key);
+      return `<p><b>${esc(p.name)}</b> · ${esc(p.headline)}. ${p.via ? `You reach them through ${esc(NP(p.via).name)}: ${esc(p.how)}.` : `You know them: ${esc(p.how)}.`}${p.last_spoke_months != null ? ` Last spoke ${p.last_spoke_months} month${p.last_spoke_months === 1 ? "" : "s"} ago.` : ""}</p><button class="btn" data-person="${esc(key)}">Open profile</button>`;
+    }
+    const org = findOrg(s), theme = findTheme(s);
+    if (org && N.companies[org] && !/go-?to|expert/.test(s)) {
+      return `<p>Who to call about <b>${esc(nameOf(org))}</b>:</p>${rows(N.companies[org].slice(0, 4))}`;
+    }
+    if (theme) {
+      return `<p>Your go-to people for <b>${esc(theme)}</b>:</p>${N.themes[theme].slice(0, 3).map(x => whoRow({ ...x, why: { text: x.reason + "." } })).join("")}`;
+    }
+    if (org) return `Nobody in your network has a link to ${esc(nameOf(org) || org)} yet.`;
+    return `I can answer from your network: "Who knows Anup Bagchi?", "Who should I call about Kaynes?", "Who's my go-to for insolvency?", or "Who should I reconnect with?". These are answered on this device.`;
   }
   function localAnswer(q) {
     const s = q.toLowerCase();
@@ -746,8 +1069,110 @@ const EMBED = /*__SNAPSHOT__*/null;
     return esc("I can answer from this snapshot about: what needs attention, results (best/worst), management changes, fund raises, or any holding by name. Try one of the suggestions.");
   }
 
+  // ---------- NETWORK ----------
+  function renderNetwork() {
+    if (!N) { $("#main").innerHTML = `<section class="view"><div class="empty">No network loaded.</div></section>`; return; }
+    const cutoff = new Date(asOf.getTime() - 7 * 864e5).toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+    const evs = Object.entries(N.events).map(([id, ev]) => ({ id, ev, it: items.find(i => i.id === id) })).filter(x => x.it && x.it.date >= cutoff)
+      .sort((a, b) => b.it.date.localeCompare(a.it.date) || b.it.score - a.it.score);
+    const covered = evs.filter(x => N.coverage.items[x.id]).length;
+    const who = x => {
+      if (x.ev.kind === "event") return x.ev.best;
+      const t = N.targets[x.ev.target]; return t.paths[0] || null;
+    };
+    const row = x => {
+      const w = who(x), ok = N.coverage.items[x.id];
+      const t = x.ev.kind === "person" ? N.targets[x.ev.target] : null;
+      const lead = x.ev.kind === "person" ? `Way in to ${esc(t.name)}:` : "Best placed:";
+      const p = w ? `<span>${lead}</span><b style="color:var(--ink)">${esc(NP(w.contact).name)}</b>${strBar(w.label)}${ok ? "" : `<span class="gap">thin</span>`}`
+        : `<span class="gap">Gap:</span><span>no path to ${esc(t ? t.name : "anyone")}${x.ev.company_fallback ? `; closest to the company is ${esc(NP(x.ev.company_fallback.contact).name)}` : ""}</span>`;
+      return `<button class="cov" data-open="${esc(x.id)}"><span class="tk">${x.it.ticker}</span><span class="t">${esc(x.it.title)}</span><span class="p">${p}</span></button>`;
+    };
+    const held = S.portfolio.map(p => p.ticker);
+    const thin = held.filter(t => !(N.companies[t] || []).some(x => x.label !== "weak" && !x.flag));
+    const themes = Object.entries(N.themes).sort((a, b) => b[1][0].score - a[1][0].score);
+    const rc = N.reconnect.slice(0, 3);
+    $("#main").innerHTML = `<section class="view">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div class="eyebrow">Your network · <span class="syntag">SYN</span> ${N.meta.contacts} fictional contacts</div>
+        <h1 class="h1">Covers ${covered} of ${evs.length} material events in ${weekLabel()}</h1>
+        <p class="sub" style="margin:0">Across every material filing in this snapshot (${shortDate(N.coverage.window.from)} – ${shortDate(N.coverage.window.to)}): ${N.coverage.covered} of ${N.coverage.material}. Covered means a medium or strong link to someone who can explain it, scored in code from shared employers, years and batches.</p>
+      </div>
+      <div class="know-list">${evs.map(row).join("") || `<div class="empty">No material events in ${weekLabel()}.</div>`}</div>
+      ${thin.length ? `<div class="flag neutral">Thin spots in your book: nobody you can call freely at ${thin.map(t => `<b>${esc(nameOf(t))}</b>`).join(", ")}. Either nobody is linked, or the only link is weak or a current employee.</div>` : ""}
+      <div class="group-h"><h2 class="h2">Who's your go-to for…</h2></div>
+      ${(() => {
+        const xr = ([th, xs]) => `<div class="xrow"><span class="th">${esc(th)}</span><span class="ppl">${xs.slice(0, 2).map(x => `<button data-person="${esc(x.contact)}">${esc(NP(x.contact).name)}${strBar(x.label)}</button>`).join("")}</span></div>`;
+        return `<div class="know-list xmap">${themes.slice(0, 10).map(xr).join("")}</div>
+          ${themes.length > 10 ? `<details class="routine"><summary>${themes.length - 10} more themes</summary><div class="xmap" style="margin-top:8px">${themes.slice(10).map(xr).join("")}</div></details>` : ""}`;
+      })()}
+      ${rc.length ? `<div class="group-h"><h2 class="h2">Worth a call</h2></div>
+        <div class="know-list">${rc.map(x => `<button class="cov" data-person="${esc(x.contact)}"><span class="avatar" style="width:28px;height:28px;font-size:11px;border:1.5px dashed var(--accent);background:var(--surface)">${esc(NP(x.contact).initials)}</span><span class="t"><b>${esc(NP(x.contact).name)}</b> · ${esc(x.reason)}</span><span class="p">Natural opener: ${esc(nameOf(x.ticker))} just filed "${esc(x.title)}"</span></button>`).join("")}</div>
+        <p class="sub" style="margin:0;font-size:12px">Never suggests a current employee right after a material event.</p>` : ""}
+      <p class="sub" style="margin:0;font-size:12px">Private to you: this view is built from a per-user file kept apart from shared market data, and nothing here is sent to a model. Ask the bar "who knows…" or "go-to for…" for anything else.</p>
+    </section>`;
+  }
+
+  // ---------- first-open tour ----------
+  let tourAt = -1;
+  const reduceMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tourCard() {
+    if (store.get("tour") || tourAt >= 0 || !N) return "";
+    return `<div class="tourcard" role="region" aria-label="Start here"><div class="top"><b>Start here</b><span class="sub" style="font-size:12.5px">3 stops · 30 seconds</span><span class="sp"></span><button class="x" data-tour="dismiss" aria-label="Dismiss the tour">×</button></div>
+      <ol><li>Your way in to HDFC Bank's new CEO</li><li>What your network covers this week</li><li>Kaynes: what was promised vs delivered</li></ol>
+      <button class="btn primary" data-tour="start">Take the tour</button></div>`;
+  }
+  function tourSteps() {
+    const pe = items.find(i => i.ticker === "HDFCBANK" && N.events[i.id] && N.events[i.id].kind === "person")
+      || items.find(i => N.events[i.id] && N.events[i.id].kind === "person" && N.targets[N.events[i.id].target].paths.length);
+    const t = pe && N.targets[N.events[pe.id].target], p = t && t.paths[0];
+    const kt = S.research.KAYNES ? "KAYNES" : Object.keys(S.research)[0], R = S.research[kt];
+    const T = R.ledger.tally || {}, kept = (T.beat || 0) + (T.delivered || 0) + (T.on_track || 0);
+    return [
+      { title: "Your way in", text: p ? `${nameOf(pe.ticker)} named ${t.name} ${t.role}. FINN's best way in is ${NP(p.contact).name} (${p.label}). Every link is scored in code and marked hypothetical.` : "Leadership changes come with your best way in to the new person.",
+        show: () => { st.win = "7"; go("brief"); return pe && document.querySelector(`[id="c-${pe.id}"] .net`); } },
+      { title: "What your network covers", text: `How many material events in ${weekLabel()} someone you know can explain, where the gaps are, and who your go-to is for each theme.`,
+        show: () => { go("network"); return [document.querySelector("#main .view .know-list"), document.querySelector("#main .view > div")]; } },
+      { title: "Promised vs delivered", text: `${R.name} kept ${kept} of ${R.ledger.scored} scoreable promises. Each guidance item from four earnings calls is scored in code against reported numbers. Below it, "Who to call" turns the misses into questions.`,
+        show: () => { st.rt = kt; go("research"); return document.querySelector("#promises .panel"); } },
+    ];
+  }
+  function tourShow(i) {
+    const steps = tourSteps();
+    document.querySelectorAll(".tour-hl").forEach(e => e.classList.remove("tour-hl"));
+    $("#sheetRoot").innerHTML = "";
+    tourAt = i;
+    const shown = steps[i].show();
+    const [el, anchor] = Array.isArray(shown) ? shown : [shown, shown];   // highlight one element, scroll to another
+    let c = $("#coach");
+    if (!c) { c = document.createElement("div"); c.id = "coach"; c.className = "coach"; document.body.appendChild(c); }
+    c.style.bottom = ($(".dock").offsetHeight + 10) + "px";
+    c.innerHTML = `<div class="coach-in" role="dialog" aria-label="Tour step ${i + 1} of ${steps.length}">
+      <div class="h">Tour · ${i + 1} of ${steps.length}<span class="sp"></span><button class="x" data-tour="end" aria-label="End the tour">×</button></div>
+      <div class="t">${esc(steps[i].title)}</div><p>${esc(steps[i].text)}</p>
+      <div class="row">${i > 0 ? `<button class="btn" data-tour="back">Back</button>` : ""}<button class="btn primary" data-tour="${i < steps.length - 1 ? "next" : "end"}">${i < steps.length - 1 ? "Next" : "Done"}</button></div></div>`;
+    if (el) {
+      el.classList.add("tour-hl");
+      requestAnimationFrame(() => {
+        // clear the sticky masthead and any sticky bar under it (Research's jump chips)
+        const sticky = [...document.querySelectorAll("#main .jump")].reduce((h, e) => h + e.offsetHeight, 0);
+        const top = (anchor || el).getBoundingClientRect().top + window.scrollY - $(".mast").offsetHeight - sticky - 14;
+        window.scrollTo({ top: Math.max(0, top), behavior: reduceMotion() ? "auto" : "smooth" });
+      });
+    }
+    const btn = c.querySelector(".btn.primary"); if (btn) btn.focus({ preventScroll: true });
+  }
+  function tourEnd() {
+    store.set("tour", "done"); tourAt = -1;
+    const c = $("#coach"); if (c) c.remove();
+    document.querySelectorAll(".tour-hl").forEach(e => e.classList.remove("tour-hl"));
+    st.win = store.get("win", "1");                 // the tour borrowed the 7-day window; give yours back
+    if (st.view === "brief") renderBrief();
+  }
+  function tourStart() { tourShow(0); }
+
   // ---------- routing ----------
-  const VIEWS = { brief: renderBrief, alerts: renderAlerts, book: renderBook, research: renderResearch };
+  const VIEWS = { brief: renderBrief, alerts: renderAlerts, book: renderBook, research: renderResearch, network: renderNetwork };
   function go(v, push = true) {
     if (!VIEWS[v]) v = "brief";
     st.view = v; document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.v === v));
@@ -765,9 +1190,22 @@ const EMBED = /*__SNAPSHOT__*/null;
     const r = e.target.closest("[data-res]"); if (r) { openResult(r.dataset.res); return; }
     const o = e.target.closest("[data-open]"); if (o) { openItem(o.dataset.open); return; }
     const rt = e.target.closest("[data-rt]"); if (rt) { st.rt = rt.dataset.rt; store.set("research", st.rt); renderResearch(); return; }
+    const tb = e.target.closest("[data-tour]");
+    if (tb) {
+      const a = tb.dataset.tour;
+      if (a === "start") tourStart();
+      else if (a === "dismiss") { store.set("tour", "done"); renderBrief(); }
+      else if (a === "next") tourShow(tourAt + 1);
+      else if (a === "back") tourShow(tourAt - 1);
+      else if (a === "end") tourEnd();
+      return;
+    }
+    const gg = e.target.closest("[data-go]"); if (gg) { e.preventDefault(); $("#sheetRoot").innerHTML = ""; go(gg.dataset.go); return; }
+    const pe = e.target.closest("[data-person]"); if (pe) { personSheet(pe.dataset.person); return; }
+    const tg = e.target.closest("[data-target]"); if (tg) { e.preventDefault(); targetSheet(tg.dataset.target); return; }
     const gr = e.target.closest("[data-goresearch]"); if (gr) { $("#sheetRoot").innerHTML = ""; st.rt = gr.dataset.goresearch; go("research"); return; }
   });
-  document.addEventListener("keydown", e => { if (e.key === "Escape") $("#sheetRoot").innerHTML = ""; });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") { if ($("#sheetRoot").innerHTML) $("#sheetRoot").innerHTML = ""; else if (tourAt >= 0) tourEnd(); } });
   go(location.hash.slice(1) || "brief", false);
 })();
 </script>

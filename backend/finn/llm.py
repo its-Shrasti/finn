@@ -94,16 +94,18 @@ def _dispatch(provider: str, model: str, system: str, prompt: str, json_mode: bo
     raise LLMUnavailable(f"unknown provider {provider}")
 
 
-def complete(tier: str, system: str, prompt: str, *, json_mode: bool = False) -> str:
+def complete(tier: str, system: str, prompt: str, *, json_mode: bool = False, cache_ns: str = "llm") -> str:
+    """cache_ns: the shared "llm" namespace for public inputs (filings, transcripts);
+    a per-user private namespace for anything derived from the investor's network."""
     cfg = MODELS[tier]
     k = cache.key(cfg["model"], system, prompt, json_mode)
-    hit = cache.get("llm", k)
+    hit = cache.get(cache_ns, k)
     if hit is not None:
         METER.cached += 1
         return hit["text"]
     text, tin, tout = _dispatch(cfg["provider"], cfg["model"], system, prompt, json_mode)
     METER.add(tier, cfg["model"], tin, tout)
-    cache.put("llm", k, {"text": text})
+    cache.put(cache_ns, k, {"text": text})
     return text
 
 

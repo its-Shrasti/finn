@@ -1,0 +1,10 @@
+Notes:
+"When exporting your connection data, you may notice that some of the email addresses are missing. You will only see email addresses for connections who have allowed their connections to see or download their email address using this setting https://www.linkedin.com/psettings/privacy/email. You can learn more here https://www.linkedin.com/help/linkedin/answer/261"
+
+First Name,Last Name,URL,Email Address,Company,Position,Connected On
+Kabir,Arora,https://www.linkedin.com/in/kabir-arora-fictional,kabir.arora@example.com,ICICI Securities Limited,Vice President - Equity Sales,14 Mar 2019
+Leela,Fernandes,https://www.linkedin.com/in/leela-fernandes-fictional,,Kaynes Technology India Limited,Head - Quality,02 Aug 2023
+Omar,Siddiqui,https://www.linkedin.com/in/omar-siddiqui-fictional,,Bluefin Robotics,Founder,21 Jan 2024
+Vikram,Rao,https://www.linkedin.com/in/vikram-rao-fictional,,Kotak Mahindra Bank,Senior VP,05 Jun 2015
+Tara,Menon,https://www.linkedin.com/in/tara-menon-fictional,,,,not a date
+,,https://www.linkedin.com/in/blank,,,,

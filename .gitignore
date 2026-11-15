@@ -3,3 +3,4 @@ __pycache__/
 .pytest_cache/
 backend/data/cache/
 .env
+backend/data/network/imported_*.json

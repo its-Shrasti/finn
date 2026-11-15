@@ -1,8 +1,12 @@
 """CLI.
 
-  python -m finn snapshot [--live]     build app/snapshot.json
+  python -m finn snapshot [--live]     build app/snapshot.json (shared: same for every user)
+  python -m finn network [--model]     build app/network.json (private per-user overlay; --model lets the
+                                       cheap model reword the "why call them" lines from pseudonymised facts)
+  python -m finn import-linkedin Connections.csv [--merge]
+                                       LinkedIn's official data export -> network contacts
   python -m finn research TICKER       run pull research on any NSE ticker (needs an LLM key)
-  python -m finn build-app             inline snapshot into app/dist/index.html (single-file deploy)
+  python -m finn build-app             inline snapshot + overlay into app/dist/index.html (single-file deploy)
   python -m finn serve                 run the API on :8000
 """
 from __future__ import annotations
@@ -18,6 +22,12 @@ def main(argv: list[str]) -> None:
     if cmd == "snapshot":
         from . import snapshot
         print(snapshot.write(live="--live" in argv))
+    elif cmd == "network":
+        from .network import overlay
+        print(overlay.write(use_model="--model" in argv))
+    elif cmd == "import-linkedin":
+        from .network import importer
+        print(importer.run(argv[1], merge="--merge" in argv))
     elif cmd == "research":
         from . import llm
         from .research import engine
@@ -30,6 +40,12 @@ def main(argv: list[str]) -> None:
         dist = root / "app" / "dist"
         dist.mkdir(exist_ok=True)
         body = src.replace("/*__SNAPSHOT__*/null", snap.replace("</", "<\\/"))
+        # The private overlay goes in its own slot, never merged into the shared snapshot.
+        # This demo's network is synthetic, so bundling it into a public page is acceptable;
+        # a real deployment serves it per user behind auth instead (see README).
+        netf = root / "app" / "network.json"
+        if netf.exists():
+            body = body.replace("/*__NETWORK__*/null", netf.read_text().replace("</", "<\\/"))
         # artifact.html: bare page (the host adds the document skeleton)
         (dist / "artifact.html").write_text(body)
         # index.html: standalone page for any static host (Vercel, Netlify, GitHub Pages)

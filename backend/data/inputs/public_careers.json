@@ -1,0 +1,62 @@
+{
+ "_meta": {
+  "what": "Structured public career history of real people named in portfolio filings. Shared data: it is the same for every user and contains nothing about the investor's network.",
+  "rules": [
+   "Every stint and degree cites the public source it came from.",
+   "A year that is not in a cited source is left null. It is never inferred.",
+   "kind=board marks a board seat. Board seats are not employment and never create a 'worked together' link.",
+   "Real people never carry 'knows' links. Their only connection to a contact is overlapping public career history, shown as hypothetical."
+  ],
+  "captured": "2026-11-15 via web search during the build session"
+ },
+ "people": {
+  "Anup Bagchi": {
+   "filing": {"ticker": "HDFCBANK", "role": "MD & CEO", "from": "2026-10-27"},
+   "career": [
+    {"org": "ICICI_GROUP", "role": "Various roles across the ICICI Group, starting in retail banking, corporate banking and treasury", "from": 1992, "to": 2026, "kind": "employment",
+     "source": "https://www.moneylife.in/article/anup-bagchi-is-the-new-mdceo-of-hdfc-bank-to-take-charge-from-27th-october/81828.html"},
+    {"org": "ICICISEC", "role": "MD & CEO", "from": 2011, "to": 2016, "kind": "employment",
+     "source": "https://www.cxodigitalpulse.com/?p=63012"},
+    {"org": "ICICIBANK", "role": "Executive Director (Retail, Business and Rural Banking, then Wholesale Banking)", "from": 2017, "to": 2023, "kind": "employment",
+     "source": "https://www.businesstoday.in/latest/corporate/story/hdfc-bank-appoints-anup-bagchi-as-md-ceo-for-three-year-term-from-october-27-559151-2026-10-01"},
+    {"org": "ICICIPRU", "role": "MD & CEO", "from": 2023, "to": 2026, "kind": "employment",
+     "source": "https://www.businesstoday.in/industry/banks/story/meet-anup-bagchi-the-icici-veteran-picked-as-hdfc-bank-ceo-559154-2026-10-01"},
+    {"org": "HDFCBANK", "role": "MD & CEO", "from": 2026, "to": null, "kind": "employment",
+     "source": "https://www.hdfc.bank.in/kannada/about-us/management-team/mr-anup-bagchi"}
+   ],
+   "education": [
+    {"inst": "IITK", "degree": "B.Tech, chemical engineering", "year": null,
+     "source": "https://www.businesstoday.in/industry/banks/story/meet-anup-bagchi-the-icici-veteran-picked-as-hdfc-bank-ceo-559154-2026-10-01"},
+    {"inst": "IIMB", "degree": "Management degree", "year": null,
+     "source": "https://www.moneylife.in/article/anup-bagchi-is-the-new-mdceo-of-hdfc-bank-to-take-charge-from-27th-october/81828.html"}
+   ]
+  },
+  "Bahram Vakil": {
+   "filing": {"ticker": "TRENT", "role": "Chairman", "from": "2026-11-12"},
+   "career": [
+    {"org": "LITTLECO", "role": "Partner", "from": 1991, "to": 2001, "kind": "employment",
+     "source": "https://be.marketscreener.com/insider/BAHRAM-NAVROZ-VAKIL-A1HMDD/"},
+    {"org": "AZB", "role": "Co-founder & senior partner", "from": 2004, "to": null, "kind": "employment",
+     "source": "https://be.marketscreener.com/insider/BAHRAM-NAVROZ-VAKIL-A1HMDD/"},
+    {"org": "TRENT", "role": "Independent non-executive director", "from": 2012, "to": 2022, "kind": "board",
+     "source": "https://be.marketscreener.com/insider/BAHRAM-NAVROZ-VAKIL-A1HMDD/"},
+    {"org": "LT", "role": "Independent non-executive director", "from": 2015, "to": 2016, "kind": "board",
+     "source": "https://be.marketscreener.com/insider/BAHRAM-NAVROZ-VAKIL-A1HMDD/"},
+    {"org": "VOLTAS", "role": "Independent non-executive director", "from": 2014, "to": null, "kind": "board",
+     "source": "https://ca.marketscreener.com/insider/BAHRAM-NAVROZ-VAKIL-A1HMDD/experience/"}
+   ],
+   "education": [
+    {"inst": "COLUMBIA", "degree": "LLM", "year": 1983,
+     "source": "https://be.marketscreener.com/insider/BAHRAM-NAVROZ-VAKIL-A1HMDD/"},
+    {"inst": "MUMBAIUNI", "degree": "Undergraduate degree", "year": null,
+     "source": "https://be.marketscreener.com/insider/BAHRAM-NAVROZ-VAKIL-A1HMDD/"}
+   ]
+  },
+  "Prithvi Vachani": {
+   "filing": {"ticker": "DIXON", "role": "Executive Director", "from": "2026-10-30"},
+   "career": [],
+   "education": [],
+   "not_found": "No reliable public career history found, so FINN cannot compute a path to him."
+  }
+ }
+}
