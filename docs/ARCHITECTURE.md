@@ -35,7 +35,7 @@ Who sees what. "Server" is the production design. In this demo the backend runs 
 
 | Data | Investor's device | FINN server | Model provider |
 |---|---|---|---|
-| Shared market data: filings, prices, results, research | Yes, as the snapshot | Yes. Built once for every user | Public text only: filing subjects the rules can't classify, transcript chunks, results PDFs, search snippets about executives named in filings |
+| Shared market data: filings, prices, results, research | Yes, as the snapshot | Yes. Built once for every user | Public text only: filing subjects the rules can't classify, filing attachments when a name isn't in the text, transcript chunks, results PDFs, search snippets about executives named in filings |
 | Network: contacts, employers and years, schools, closeness, "knows" links | Display fields only, in the overlay | Yes, owner-only store with row-level security. Matching runs here | Never |
 | Private notes, exact last-spoke dates | Yes, and only here | No. Matching gets "N months ago" | Never |
 | Network questions in Ask ("who knows…", "go-to for…") | Answered here | Not involved | Never |
@@ -46,20 +46,20 @@ Demo caveat: the public Vercel page bundles the synthetic overlay. A real deploy
 
 ## Data flow for one event
 
-How HDFC Bank's CEO filing (27 Oct) becomes "Your way in: Vikram Rao (strong)". **[code]** marks deterministic code; **[model could run]** marks the only places a model is ever called, and what happens instead in this demo.
+How HDFC Bank's CEO filing (27 Oct) becomes "Your way in: Vikram Rao (strong)", as it ran live on 16 Nov 2026. **[code]** marks deterministic code; **[model could run]** marks the only places a model is ever called, and what happened on that run.
 
-1. **Fetch** [code]. Live mode pulls NSE's announcements API, falling back to BSE per ticker. The demo replays the captured feed. Result: a filing titled "Change in Managing Director & CEO".
-2. **Classify** [code; model could run]. Regex rules label it `management_change/top`. A cheap model would see the subject only if no rule matched; here one did.
+1. **Fetch** [code]. NSE's announcements API, with BSE as the per-ticker fallback. On 16 Nov NSE answered for all 15 holdings; BSE returned HTTP 403 from the test laptop, so the fallback hasn't run live. Result: a filing in the 27 Oct feed whose text says the bank's MD & CEO changed, without naming him.
+2. **Classify** [code; model could run]. Regex rules label it `management_change/top`. A cheap model sees the subject only if no rule matches: that day, 29 of 198 filings; this one matched a rule.
 3. **Score** [code]. Priority 91/100 puts it in "needs you".
-4. **Name** [code; model could run]. A regex pulls "Anup Bagchi, MD & CEO" from the filing text. The cheap model is the fallback if the regex finds nothing.
-5. **Background** [model could run]. Live mode searches the web and the cheap model writes the bio from the snippets only. The structured career used for matching is in `public_careers.json`, one cited source per fact, with unknown years left null.
+4. **Name** [code; model could run]. NSE's text didn't name him, so FINN read the first pages of the attached PDF. Regex rules collect every appointment the filing states, drop anyone it says is leaving (here Sashidhar Jagdishan, who "has vacated the office") and honorary titles, and keep the most senior: "Anup Bagchi, MD & CEO". The cheap model is the fallback only if the rules find nobody; on 16 Nov they found all five names without it.
+5. **Background** [model could run]. Bagchi's background and the structured career used for matching come from `public_careers.json`, one cited source per fact, with unknown years left null. For a name not in that file, live mode searches the web and the cheap model writes a bio from the snippets only; the bio is kept only if it cites a page the search returned. On 16 Nov none of the three other names got one, and their cards say "No sourced background found".
 6. **Snapshot** [code]. The filing, label, score and bio go into the shared `snapshot.json`, the same for every user.
 7. **Match** [code, per user]. `overlay.py` resolves the name exactly against the public register. For each contact, `match.py` compares careers:
    - Vikram was at ICICI Bank 2016–22 and Bagchi was Executive Director there 2017–23, a 5-year overlap.
    - That company link, combined with a weak shared-alumni link (IIT Kanpur, year not public), scores 0.745.
    - Your tie to Vikram is "close" (0.9).
    - The path scores 0.9 × 0.745 = 0.67, which is "strong". Ritu (two hops) and others rank below.
-8. **Why-line** [code; model could run]. A template fills the line from the match evidence. With `--model`, the cheap model may reword it from pseudonymised facts; it can't change the ranking.
+8. **Why-line** [code; model could run]. A template fills the line from the match evidence. With `--model` (run on 16 Nov) the cheap model rewords it from pseudonymised facts: "Call Vikram to leverage their 5 years working together at ICICI Bank…". The line is accepted only if it is one plain sentence with no number missing from the facts; it can't change the ranking.
 9. **Render** [device]. The overlay is written to `network.json` and kept apart from the snapshot. The app draws the "Your way in" block, the path diagram and the summary line ("Your way in: Vikram Rao (strong)").
 
 Nothing in steps 3, 7 or 9 involves a model, so every number on that card comes from code.
@@ -126,11 +126,11 @@ Sources: [Act, s. 3](https://future.indiankanoon.org/doc/115332071/) · [s. 6](h
 
 | Step | Model | Why |
 |---|---|---|
-| Classify a filing that the rules can't | cheap: Gemini 2.5 Flash-Lite | bulk, short, cached by subject; rules handle all 72 captured filings at zero cost |
+| Classify a filing that the rules can't | cheap: `gemini-3.5-flash-lite` | bulk, short, cached by subject; on 16 Nov rules labelled 169 of 198 live filings, the model the other 29 |
 | Pull guidance sentences from transcript chunks | cheap | map step over keyword-filtered chunks only (~15% of a call) |
-| Incoming executive's bio from search snippets | cheap | extraction from snippets only; "no reliable profile" is an allowed answer |
+| Incoming executive's bio from search snippets | cheap | extraction from snippets only; kept only if it cites a returned page, else "No sourced background found" |
 | Transcribe a results table from a PDF | cheap | copies printed numbers; EBITDA and growth are computed in Python |
-| Dedupe promises + attach measures; research reduce | strong: Gemini 2.5 Pro | the two steps that need reasoning |
+| Dedupe promises + attach measures; research reduce | strong: `gemini-3.8-flash`, falling back to `gemini-3.6-flash` | the two steps that need reasoning; the fallback answers only after 503/429/timeouts, and the report records which model answered |
 | Ask, non-network questions | Claude, quick tier, only when run as a Claude artifact; on-device router on Vercel | snapshot-only context; the network is never included |
 | Network "why call them" line | none by default; cheap with `--model` | pseudonymised; can reword, not rerank |
 | Numbers, ledger verdicts, priority, alerts, all network matching | **no model** | code, tested |
@@ -152,19 +152,21 @@ Sources: [Act, s. 3](https://future.indiankanoon.org/doc/115332071/) · [s. 6](h
 What FINN does today, and the gap where there is one.
 
 **Exchange API down.**
-- **What happens:** NSE is tried first. If its session or request fails, BSE is tried for that ticker. The app keeps showing the last snapshot it was given, with its as-of time in the header.
-- **The gap:** if both fail, that ticker gets no filings for the run, and the empty result is cached for 30 minutes.
-- **The fix:** record a source status per ticker in the snapshot, show "filings for X unavailable since…" in the app, and refuse to replace a good snapshot with an empty one.
+- **What happens:** NSE is tried first. If its session or request fails, BSE is tried for that ticker. The snapshot records, per ticker, which source answered and how many filings it returned ("NSE (17)", "BSE (4)", or "none: <reason>"), and the Data sheet shows the summary ("live: NSE for 15 of 15 tickers"). An empty or failed fetch is never cached, so the next run tries again. If both exchanges fail for every ticker, the captured feed is used and labelled.
+- **Seen on 16 Nov:** BSE's API returned HTTP 403 to the test laptop on every request, so the BSE fallback is untested live. NSE answered for all 15.
+- **Still a gap:** the app doesn't yet show a per-ticker "filings for X unavailable since…" line, and nothing stops a scheduled run from replacing a good snapshot with a thinner one.
 
-**A model call fails** (no key, timeout, bad JSON). No number depends on a model, so nothing on screen becomes wrong; something is missing instead:
+**A model call fails** (no key, quota, overload, timeout, bad JSON). No number depends on a model, so nothing on screen becomes wrong; something is missing instead, and the snapshot records why (`meta.sources.classify_errors`, `person_errors`, `bio_errors`):
+- **Retries:** HTTP 429, 500 and 503 are retried up to four times, honouring the wait Google asks for. The strong tier then falls back to a second model, and so does a call with no answer after 3 minutes. Every retry and fallback is logged and counted in the meter.
+- **Seen on 16 Nov:** the free tier hit its per-minute quota (429) during the snapshot, and `gemini-3.8-flash` returned 503 or no answer on every research write-up call. `gemini-3.6-flash` wrote both reports, and each says so.
 - **Classification:** rules still label the filing. If the model fallback also fails, the filing becomes `unclassified`, scored as paperwork, and lands in "routine". It is visible but not promoted.
 - **Name extraction:** the card shows the filing without a person. No network path is computed.
-- **Executive bio:** the card says "No background found yet."
-- **Live research run:** stops with an error and publishes nothing. The last good research stays.
-- **"Why call them" line:** falls back to the labelled template. This is tested.
+- **Executive bio:** the card says "No sourced background found."
+- **Live research run:** stops with an error and publishes nothing. The last good research stays, and the steps already done stay cached, so a re-run costs only the failed call.
+- **"Why call them" line:** falls back to the labelled template, including when the model's line fails the checks. This is tested.
 - **Ask:** falls back to the on-device router.
 
 **An ambiguous name in a filing.**
 - **How names are matched:** honorifics, case and middle initials are normalised, and then the name must match exactly one person in the public register.
-- **Two candidates, or none:** FINN links to nobody. The card says the name didn't match a known public profile, and the "Your way in" block points to the best person who knows the company instead. This is the same path Dixon's new ED takes, since he has no public profile.
+- **Two candidates, or none:** FINN links to nobody. The card says the name didn't match a known public profile, and the "Your way in" block points to the best person who knows the company instead. In the live snapshot this is what happens for HDFC Bank's new whole-time director, V. Srinivasa Rangan, whose career isn't in the sourced register: FINN names the gap and points to Vikram Rao.
 - **No guessing:** FINN never picks between two people with the same name. This is tested (`test_ambiguous_or_unknown_name_resolves_to_nobody`).
