@@ -363,3 +363,13 @@ def test_coverage_states_its_window(ov, snap):
     assert (ov["coverage"]["covered"], ov["coverage"]["material"]) == (9, 10)       # the figures the README quotes
     week = [k for k in ov["coverage"]["items"] if dates[k] >= "2026-10-27"]           # the 7 days to 3 Nov
     assert (sum(ov["coverage"]["items"][k] for k in week), len(week)) == (7, 8)
+
+
+def test_model_why_line_is_unwrapped_and_checked():
+    from finn.network.explain import clean_line, PLACEHOLDER
+    facts = {"contact": PLACEHOLDER, "matched_experience": {"org": "ICICI Bank", "years": "2017–22"}}
+    wrapped = '```json\n{"pitch": "Call ' + PLACEHOLDER + ' about the new CEO; they overlapped at ICICI Bank in 2017."}\n```'
+    assert clean_line(wrapped, facts) == "Call " + PLACEHOLDER + " about the new CEO; they overlapped at ICICI Bank in 2017."
+    assert clean_line("Call " + PLACEHOLDER + " about 5 years at ICICI Bank.", facts) is None      # 5 isn't in the facts
+    assert clean_line("Call Vikram about ICICI Bank.", facts) is None                                # no placeholder: real name leaked or invented
+    assert clean_line("Call " + PLACEHOLDER + " who worked there in 2022.", facts)                  # "22" in facts -> 2022 allowed

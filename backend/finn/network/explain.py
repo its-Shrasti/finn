@@ -120,4 +120,28 @@ def why(net: Network, x: dict, event: dict, template: str, *, use_model: bool = 
             json.dumps(payload, ensure_ascii=False), cache_ns=f"private/{owner}/why")
     except Exception:
         return {"text": template, "by": "template"}
-    return {"text": text.strip().replace(PLACEHOLDER, first(net.contacts[x["contact"]])), "by": "model"}
+    line = clean_line(text, payload)
+    if not line:
+        return {"text": template, "by": "template"}
+    return {"text": line.replace(PLACEHOLDER, first(net.contacts[x["contact"]])), "by": "model"}
+
+
+def clean_line(text: str, payload: dict) -> str | None:
+    """Accept the model's line only if it is one plain sentence that names the contact by
+    placeholder and uses no number absent from the facts it was given. Some replies come
+    wrapped as ```json {"pitch": "..."}```: unwrap those. Anything else falls back to the template."""
+    t = re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip())
+    if t.startswith("{"):
+        try:
+            obj = json.loads(t)
+            t = next((v for v in obj.values() if isinstance(v, str)), "") if isinstance(obj, dict) else ""
+        except ValueError:
+            return None
+    t = " ".join(t.strip().strip('"').split())
+    if not t or PLACEHOLDER not in t or len(t.split()) > 30 or "{" in t:
+        return None
+    facts = json.dumps(payload, ensure_ascii=False)
+    for n in re.findall(r"\d+", t):
+        if n not in facts and not (len(n) == 4 and n[:2] in ("19", "20") and n[2:] in facts):
+            return None
+    return t

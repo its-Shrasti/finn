@@ -183,8 +183,13 @@ def write(use_model: bool = False) -> str:
     ov["meta"]["why_by"] = "model" if counts.get("model") else "template"
     if use_model:
         m = llm.METER
-        ov["meta"]["why_model"] = {"model": llm.MODELS["cheap"]["model"], "calls": m.calls, "cached": m.cached,
-                                   "tokens_in": m.tokens_in, "tokens_out": m.tokens_out, "usd_list_price": round(m.usd, 5)}
+        # Cached answers carry the token counts metered when they were generated, so a
+        # re-run (e.g. after a parsing fix) still reports what producing the lines cost.
+        from datetime import date
+        ov["meta"]["why_model"] = {"model": llm.MODELS["cheap"]["model"], "run_on": date.today().isoformat(),
+                                   "calls": m.calls + m.cached, "new_calls_this_run": m.calls,
+                                   "tokens_in": m.tokens_in + m.cached_tokens_in, "tokens_out": m.tokens_out + m.cached_tokens_out,
+                                   "usd_list_price": round(m.usd + m.cached_usd, 5), "billed": "$0 on the Gemini free tier"}
     out = APP / "network.json"
     out.write_text(json.dumps(ov, ensure_ascii=False, separators=(",", ":"), default=str), encoding="utf-8")
     cost = ov["meta"].get("why_model")
