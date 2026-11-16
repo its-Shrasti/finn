@@ -416,7 +416,7 @@ const NET_EMBED = /*__NETWORK__*/null;
   // ---------- state ----------
   const st = {
     view: "brief", win: store.get("win", "1"), from: store.get("from", ""), to: store.get("to", ""),
-    cleared: new Set(store.get("cleared", [])), rt: store.get("research", "PERSISTENT"),
+    cleared: new Set(store.get("cleared", [])), rt: store.get("research", null),
     rules: Object.assign({ price: S.meta.defaults.price_move_pct, vol: S.meta.defaults.volume_multiple, look: S.meta.defaults.volume_lookback, sessions: 10, cats: S.meta.defaults.watch_categories, over: {} }, store.get("rules", {})),
   };
   const saveRules = () => store.set("rules", st.rules);
@@ -837,6 +837,8 @@ const NET_EMBED = /*__NETWORK__*/null;
   }
   const VLAB = { beat: "Beat", delivered: "Delivered", on_track: "On track", at_risk: "At risk", missed: "Missed", walked_back: "Walked back", pending: "Pending", unscored: "Unscored", agree: "Agree", diverge: "Diverge", "too early": "Too early" };
   const srcTag = s => esc(s).replace(/\[([^\]]+)\]/g, `<span class="src">[$1]</span>`);
+  // Live reports first, so they are visible without scrolling the chip row at 390px.
+  const researchOrder = () => Object.keys(S.research).sort((a, b) => (S.research[b].mode === "live") - (S.research[a].mode === "live"));
   function provenance(R) {
     if (R.mode !== "live") return `Demo research: the narrative was written during the build from captured transcripts, not generated live. Figures are computed in code from screener.in tables.`;
     const c = R.cost || {}, d = new Date(R.generated_on + "T00:00:00");
@@ -846,9 +848,11 @@ const NET_EMBED = /*__NETWORK__*/null;
     return `<b>Generated live on ${esc(when)}</b> · models ${esc(R.models.cheap)} and ${esc(R.models.strong)}${fb} · ${(c.calls || 0) + (c.cached || 0)} model calls, ${((c.tokens_in || 0) + (c.cached_tokens_in || 0) + (c.tokens_out || 0) + (c.cached_tokens_out || 0)).toLocaleString("en-IN")} tokens · cost $${usd.toFixed(3)} at Gemini list prices; $0 billed on the free tier`;
   }
   function renderResearch() {
+    if (!S.research[st.rt]) st.rt = researchOrder()[0];
     const R = S.research[st.rt];
-    const names = Object.keys(S.research);
-    const picker = `<div class="picker"><div class="chips">${names.map(t => `<button class="chip" data-rt="${t}" aria-pressed="${t === st.rt}">${esc(S.research[t].name)}${S.research[t].mode === "live" ? " · live" : ""}</button>`).join("")}</div>
+    const names = researchOrder();
+    const short = n => n.replace(/\s+(International\s+)?(Ltd|Limited)\.?$/i, "").replace(/^P I /, "PI ");
+    const picker = `<div class="picker"><div class="chips">${names.map(t => `<button class="chip" data-rt="${t}" aria-pressed="${t === st.rt}">${esc(short(S.research[t].name))}${S.research[t].mode === "live" ? " · live" : ""}</button>`).join("")}</div>
       <form id="anyT"><input id="anyIn" placeholder="Any NSE ticker" aria-label="Any NSE ticker" autocomplete="off"><button class="btn">Go</button></form></div>`;
     if (!R) { $("#main").innerHTML = `<section class="view">${picker}</section>`; return; }
     const L = R.ledger, T = L.tally || {};
