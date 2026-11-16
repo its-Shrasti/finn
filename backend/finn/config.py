@@ -57,21 +57,28 @@ class AlertRules:
 # ---- Model routing ----------------------------------------------------------
 # Two tiers. "cheap" does bulk extraction (classify a filing, pull guidance
 # sentences out of a 40-page transcript chunk). "strong" only runs the final
-# reasoning step (promise-vs-delivery verdicts, bull/bear). Any OpenAI-compatible
-# endpoint works; defaults are free tiers.
+# reasoning step (promise-vs-delivery measures, bull/bear). Any OpenAI-compatible
+# endpoint works. Defaults are the models Google offers new API keys as of Nov 2026:
+# the 2.5 family is now limited to accounts that used it before. On a free key the
+# "strong" tier is a Flash model, not Pro; set FINN_STRONG_MODEL to change it.
 MODELS = {
     "cheap": {
         "provider": os.getenv("FINN_CHEAP_PROVIDER", "gemini"),
-        "model": os.getenv("FINN_CHEAP_MODEL", "gemini-2.5-flash-lite"),
+        "model": os.getenv("FINN_CHEAP_MODEL", "gemini-3.5-flash-lite"),
     },
     "strong": {
         "provider": os.getenv("FINN_STRONG_PROVIDER", "gemini"),
-        "model": os.getenv("FINN_STRONG_MODEL", "gemini-2.5-pro"),
+        "model": os.getenv("FINN_STRONG_MODEL", "gemini-3.8-flash"),
     },
 }
 
-# Rough public list prices (USD per 1M tokens: input, output) for cost reporting.
+# Public list prices, USD per 1M tokens (input, output incl. thinking), Gemini API paid
+# Standard tier, checked 16 Nov 2026. The meter reports cost at these prices; on the free
+# tier Google bills $0. gemini-3.8-flash is an introductory rate through 31 Dec 2026.
 PRICES = {
+    "gemini-3.5-flash-lite": (0.30, 2.50),
+    "gemini-3.8-flash": (0.75, 3.75),
+    "gemini-3.1-pro-preview": (2.00, 12.00),
     "gemini-2.5-flash-lite": (0.10, 0.40),
     "gemini-2.5-flash": (0.30, 2.50),
     "gemini-2.5-pro": (1.25, 10.0),

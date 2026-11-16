@@ -65,28 +65,48 @@ def bse(ticker: str, frm: date, to: date) -> list[dict]:
     return out
 
 
-def announcements(tickers: list[str], frm: date, to: date) -> list[dict]:
-    """Fetch for all tickers; NSE first, BSE if NSE fails for a ticker. Cached 30 min."""
-    k = cache.key("ann", sorted(tickers), str(frm), str(to))
+def announcements_status(tickers: list[str], frm: date, to: date) -> tuple[list[dict], dict[str, str]]:
+    """NSE first, BSE if NSE fails for a ticker. Returns rows and, per ticker, which
+    source answered (or the error). Empty fetches are never cached."""
+    k = cache.key("ann2", sorted(tickers), str(frm), str(to))
     hit = cache.get("ann", k, max_age_s=1800)
     if hit:
-        return hit
+        return hit["rows"], hit["status"]
     out: list[dict] = []
+    status: dict[str, str] = {}
     try:
         sess = _nse_session()
-    except Exception:
-        sess = None
+        nse_err = None
+    except Exception as e:  # noqa: BLE001
+        sess, nse_err = None, f"{type(e).__name__}"
     for t in tickers:
         rows: list[dict] = []
+        why = []
         if sess:
             try:
                 rows = nse(t, frm, to, sess)
-            except Exception:
-                rows = []
+                if rows:
+                    status[t] = f"NSE ({len(rows)})"
+            except Exception as e:  # noqa: BLE001
+                why.append(f"NSE {_short(e)}")
+        else:
+            why.append(f"NSE session {nse_err}")
         if not rows:
             try:
                 rows = bse(t, frm, to)
-            except Exception:
-                rows = []
+                status[t] = f"BSE ({len(rows)})" if rows else "none: " + "; ".join(why + ["BSE returned 0"])
+            except Exception as e:  # noqa: BLE001
+                status[t] = "none: " + "; ".join(why + [f"BSE {_short(e)}"])
         out.extend(rows)
-    return cache.put("ann", k, out)
+    if out:
+        cache.put("ann", k, {"rows": out, "status": status})
+    return out, status
+
+
+def _short(e: Exception) -> str:
+    r = getattr(e, "response", None)
+    return f"HTTP {r.status_code}" if r is not None else type(e).__name__
+
+
+def announcements(tickers: list[str], frm: date, to: date) -> list[dict]:
+    return announcements_status(tickers, frm, to)[0]

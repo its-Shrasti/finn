@@ -48,41 +48,51 @@ def _normalise_screener(raw: dict) -> dict:
 
 
 def run_live(ticker: str, n_calls: int = 4) -> dict:
+    llm.METER.reset()                 # each run reports its own cost
     d = _normalise_screener(screener.company(ticker))
     facts = _facts(d)
-    calls = []
+    calls, skipped = [], []
     for c in d["docs"]["concalls"][:n_calls]:
         try:
             txt = documents.text(c["url"])
-        except Exception:
+        except Exception as e:  # noqa: BLE001
+            skipped.append({"call": c.get("date"), "url": c.get("url"), "why": f"transcript fetch failed: {type(e).__name__}"})
             continue
         cid = c["date"] or c["url"][-12:]
         ext = {"guidance": [], "reported": {}, "pushback": []}
         for chunk in documents.guidance_chunks(txt)[:3]:
-            part = llm.complete_json("cheap", prompts.GROUNDING, prompts.MAP.format(call_id=cid, date=c["date"], text=chunk))
+            try:
+                part = llm.complete_obj("cheap", prompts.GROUNDING, prompts.MAP.format(call_id=cid, date=c["date"], text=chunk))
+            except (ValueError, KeyError, TypeError) as e:   # unparseable model output: skip this chunk, say so
+                skipped.append({"call": cid, "why": f"map step output unreadable: {type(e).__name__}"})
+                continue
             ext["guidance"] += part.get("guidance", [])
             ext["reported"].update(part.get("reported", {}))
             ext["pushback"] += part.get("pushback", [])
         calls.append({"id": cid, "date": c["date"], "url": c["url"], **ext})
     calls.reverse()  # oldest → newest
     series_keys = sorted({k for c in calls for k in c["reported"]})
-    measured = llm.complete_json("strong", prompts.GROUNDING, prompts.MEASURE.format(
+    measured = llm.complete_obj("strong", prompts.GROUNDING, prompts.MEASURE.format(
         series_keys=series_keys,
         guidance=json.dumps([{"call": c["id"], "guidance": c["guidance"]} for c in calls], indent=1),
         series=json.dumps([{"call": c["id"], **c["reported"]} for c in calls], indent=1)))
     led = ledger.build(measured.get("guidance", []), calls)
     pushback = [p for c in calls for p in c["pushback"]][:10]
-    notes = llm.complete_json("strong", prompts.GROUNDING, prompts.REDUCE.format(
+    notes = llm.complete_obj("strong", prompts.GROUNDING, prompts.REDUCE.format(
         name=d["name"], ticker=ticker, facts=json.dumps(facts)[:12000],
         ledger=json.dumps(led["rows"]), pushback="\n".join(pushback)))
-    return assemble(ticker, d, facts, led, notes, calls, pushback, mode="live")
+    out = assemble(ticker, d, facts, led, notes, calls, pushback, mode="live")
+    out["skipped"] = skipped
+    out["generated_on"] = datetime.now().date().isoformat()
+    out["models"] = {t: llm.MODELS[t]["model"] for t in ("cheap", "strong")}
+    return out
 
 
 def run_from_inputs(ticker: str) -> dict:
     """Offline path used for the demo snapshot: same metrics + ledger code,
     inputs captured during the build, reduce-step output stored in research_notes.json."""
-    inp = json.loads((DATA / "inputs" / "research_inputs.json").read_text())[ticker]
-    notes = json.loads((DATA / "inputs" / "research_notes.json").read_text())[ticker]
+    inp = json.loads((DATA / "inputs" / "research_inputs.json").read_text(encoding="utf-8"))[ticker]
+    notes = json.loads((DATA / "inputs" / "research_notes.json").read_text(encoding="utf-8"))[ticker]
     facts = _facts(inp)
     led = ledger.build(inp["guidance"], inp["calls"])
     return assemble(ticker, inp, facts, led, notes, inp["calls"], inp.get("pushback", []), mode="snapshot")
@@ -99,5 +109,8 @@ def assemble(ticker, d, facts, led, notes, calls, pushback, mode) -> dict:
         "sources": [{"id": c["id"], "date": c.get("date"), "url": c.get("url"), "kind": "concall transcript"} for c in calls]
                    + [{"id": "screener", "url": f"https://www.screener.in/company/{ticker}/consolidated/", "kind": "AR-derived tables"}],
         **{k: notes.get(k) for k in ("snapshot", "narrative_vs_numbers", "bull", "bear", "watch", "generated_by", "data_note")},
-        "cost": {"calls": llm.METER.calls, "cached": llm.METER.cached, "usd": round(llm.METER.usd, 4), "by_tier": llm.METER.by_tier},
+        "cost": {"calls": llm.METER.calls, "cached": llm.METER.cached, "retries": llm.METER.retries,
+                 "tokens_in": llm.METER.tokens_in, "tokens_out": llm.METER.tokens_out,
+                 "usd": round(llm.METER.usd, 4), "by_tier": llm.METER.by_tier,
+                 "basis": "list price, Gemini API paid tier; billed $0 on the free tier"},
     }

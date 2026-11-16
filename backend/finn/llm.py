@@ -15,6 +15,8 @@ from __future__ import annotations
 import json
 import os
 import re
+import sys
+import time
 from dataclasses import dataclass, field
 
 import requests
@@ -30,7 +32,11 @@ class Meter:
     tokens_in: int = 0
     tokens_out: int = 0
     usd: float = 0.0
+    retries: int = 0
     by_tier: dict = field(default_factory=dict)
+
+    def reset(self):
+        self.__init__()
 
     def add(self, tier: str, model: str, tin: int, tout: int):
         self.calls += 1
@@ -50,22 +56,59 @@ class LLMUnavailable(RuntimeError):
     pass
 
 
+def _retry_hint(r) -> float | None:
+    """Seconds Google asks us to wait, from a 429's RetryInfo detail (e.g. "17s")."""
+    try:
+        for d in r.json().get("error", {}).get("details", []):
+            if str(d.get("@type", "")).endswith("RetryInfo") and d.get("retryDelay"):
+                return float(str(d["retryDelay"]).rstrip("s"))
+    except (ValueError, AttributeError):
+        pass
+    return None
+
+
 def _gemini(model: str, system: str, prompt: str, json_mode: bool) -> tuple[str, int, int]:
+    """The key goes in a header, never the URL, so it can't leak into an error
+    message, a traceback or a log. Retries rate limits and transient errors."""
     key = os.getenv("GEMINI_API_KEY")
     if not key:
         raise LLMUnavailable("GEMINI_API_KEY not set")
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     body = {
         "systemInstruction": {"parts": [{"text": system}]},
         "contents": [{"role": "user", "parts": [{"text": prompt}]}],
         "generationConfig": {"temperature": 0.1, **({"responseMimeType": "application/json"} if json_mode else {})},
     }
-    r = requests.post(url, json=body, timeout=120)
-    r.raise_for_status()
+    for attempt in range(5):
+        r = requests.post(url, json=body, timeout=180, headers={"x-goog-api-key": key})
+        if r.status_code in (429, 500, 503) and attempt < 4:
+            wait = min(60, 8 * 2 ** attempt)
+            hint = _retry_hint(r)
+            if hint:
+                wait = min(90, max(wait, hint))           # Google's own suggested delay, if it gives one
+            msg = ""
+            try:
+                msg = r.json().get("error", {}).get("message", "")[:140]
+            except ValueError:
+                pass
+            print(f"[llm] {model} HTTP {r.status_code}, retry {attempt + 1}/4 in {wait:.0f}s: {msg}", file=sys.stderr)
+            METER.retries += 1
+            time.sleep(wait)
+            continue
+        break
+    if r.status_code != 200:
+        # Report status and Google's message only; never the request (it carries the key header).
+        try:
+            msg = r.json().get("error", {}).get("message", "")[:300]
+        except ValueError:
+            msg = r.text[:300]
+        raise LLMUnavailable(f"Gemini {model} HTTP {r.status_code}: {msg}")
     d = r.json()
-    text = d["candidates"][0]["content"]["parts"][0]["text"]
+    parts = d["candidates"][0]["content"]["parts"]
+    text = "".join(p.get("text", "") for p in parts if not p.get("thought"))
     u = d.get("usageMetadata", {})
-    return text, u.get("promptTokenCount", 0), u.get("candidatesTokenCount", 0)
+    # Gemini 2.5 bills "thinking" tokens as output tokens; count them or the meter under-reports.
+    return text, u.get("promptTokenCount", 0), u.get("candidatesTokenCount", 0) + u.get("thoughtsTokenCount", 0)
 
 
 def _openai_compat(base: str, key_env: str, model: str, system: str, prompt: str, json_mode: bool):
@@ -118,6 +161,20 @@ def complete_json(tier: str, system: str, prompt: str) -> dict | list:
         if not m:
             raise
         return json.loads(m.group(0))
+
+
+def as_obj(x) -> dict:
+    """Models sometimes answer a one-object question with a list (e.g. a filing that
+    appoints three people). Callers that expect an object get the first object."""
+    if isinstance(x, dict):
+        return x
+    if isinstance(x, list):
+        return next((i for i in x if isinstance(i, dict)), {})
+    return {}
+
+
+def complete_obj(tier: str, system: str, prompt: str) -> dict:
+    return as_obj(complete_json(tier, system, prompt))
 
 
 def available() -> bool:

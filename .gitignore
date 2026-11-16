@@ -4,3 +4,5 @@ __pycache__/
 backend/data/cache/
 .env
 backend/data/network/imported_*.json
+backend/.venv/
+backend/data/runs/*.log

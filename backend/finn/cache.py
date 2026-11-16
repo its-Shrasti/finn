@@ -34,11 +34,11 @@ def get(ns: str, k: str, max_age_s: float | None = None) -> Any | None:
         return None
     if max_age_s is not None and time.time() - p.stat().st_mtime > max_age_s:
         return None
-    return json.loads(p.read_text())
+    return json.loads(p.read_text(encoding="utf-8"))
 
 
 def put(ns: str, k: str, value: Any) -> Any:
-    _path(ns, k).write_text(json.dumps(value, default=str))
+    _path(ns, k).write_text(json.dumps(value, default=str), encoding="utf-8")
     return value
 
 

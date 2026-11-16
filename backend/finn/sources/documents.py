@@ -23,14 +23,29 @@ GUIDANCE_HINTS = re.compile(
 
 
 def text(url: str, max_pages: int = 400) -> str:
-    k = cache.key("doc", url)
+    k = cache.key("doc", url, max_pages)
     hit = cache.get("doc", k)
     if hit:
         return hit["text"]
-    r = requests.get(url, headers={"User-Agent": USER_AGENT, "Referer": "https://www.bseindia.com/"}, timeout=60)
-    r.raise_for_status()
+    referer = "https://www.nseindia.com/" if "nseindia" in url else "https://www.bseindia.com/"
+    for attempt in (1, 2):          # exchange archives sometimes drop a download mid-stream: retry once
+        try:
+            r = requests.get(url, headers={"User-Agent": USER_AGENT, "Referer": referer}, timeout=60)
+            r.raise_for_status()
+            break
+        except (requests.ConnectionError, requests.exceptions.ChunkedEncodingError):
+            if attempt == 2:
+                raise
     from pypdf import PdfReader
-    reader = PdfReader(io.BytesIO(r.content))
+    content = r.content
+    if content[:2] == b"PK":            # exchanges sometimes attach a .zip holding the PDF
+        import zipfile
+        with zipfile.ZipFile(io.BytesIO(content)) as z:
+            pdfs = [n for n in z.namelist() if n.lower().endswith(".pdf")]
+            if not pdfs:
+                raise ValueError("zip attachment contains no PDF")
+            content = z.read(pdfs[0])
+    reader = PdfReader(io.BytesIO(content))
     pages = [p.extract_text() or "" for p in reader.pages[:max_pages]]
     t = "\n\n".join(f"[p{i + 1}] {p}" for i, p in enumerate(pages))
     cache.put("doc", k, {"text": t, "pages": len(pages)})

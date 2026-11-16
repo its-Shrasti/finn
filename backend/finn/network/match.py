@@ -88,7 +88,8 @@ def stint_link(net: Network, a: Stint, b: Stint, other: Person | None = None) ->
     if not (same or group):
         return None
     now = _year(net)
-    who = f" while {_surname(other)} was {re.sub(r' \(.*\)', '', b.role)}" if other is not None and other.real and other.id != "me" else ""
+    role = re.sub(r" \(.*\)", "", b.role)          # Python 3.11: no backslashes inside f-string braces
+    who = f" while {_surname(other)} was {role}" if other is not None and other.real and other.id != "me" else ""
     if a.start is None or b.start is None:
         if not same:
             return None

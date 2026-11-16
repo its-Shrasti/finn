@@ -1,0 +1,104 @@
+{
+ "python": "3.11.4",
+ "platform": "Windows-10-10.0.26200-SP0",
+ "utf8_mode": true,
+ "gemini_key_set": true,
+ "yfinance_version": "1.8.0",
+ "nse": {
+  "ok": true,
+  "detail": "17 HDFCBANK filings in 30 days; latest 2026-11-13 'Change in Director(s)'",
+  "secs": 1.5
+ },
+ "bse": {
+  "ok": false,
+  "error": "HTTPError HTTP 403",
+  "message": "403 Client Error: Forbidden for url: https://api.bseindia.com/BseIndiaAPI/api/AnnSubCategoryGetData/w?pageno=1&strCat=-1&strPrevDate=20261017&strScrip=500180&strSearch=P&strToDate=20261116&strType=C&subcategory=-1",
+  "secs": 0.2
+ },
+ "yahoo": {
+  "ok": true,
+  "detail": "20 bars; last 2026-11-16 close 809.70 volume 8712108.0",
+  "secs": 1.6
+ },
+ "screener HDFCBANK": {
+  "ok": true,
+  "detail": "HDFC Bank Ltd (consolidated); 13 quarters, latest Sep 2026 sales 95132.0; 21 transcripts, newest Oct 2026",
+  "secs": 0.0
+ },
+ "screener NAVINFLUOR": {
+  "ok": true,
+  "detail": "Navin Fluorine International Ltd (consolidated); 13 quarters, latest Sep 2026 sales 1191.0; 45 transcripts, newest Nov 2026",
+  "secs": 0.0
+ },
+ "screener PIIND": {
+  "ok": true,
+  "detail": "P I Industries Ltd (consolidated); 13 quarters, latest Sep 2026 sales 1702.0; 45 transcripts, newest Nov 2026",
+  "secs": 0.0
+ },
+ "gemini_models_available": [
+  "antigravity-preview-05-2026",
+  "antigravity-preview-09-2026",
+  "antigravity-preview-latest",
+  "deep-research-max-preview-04-2026",
+  "deep-research-preview-04-2026",
+  "deep-research-pro-preview-12-2025",
+  "gemini-2.5-computer-use-preview-10-2025",
+  "gemini-2.5-flash",
+  "gemini-2.5-flash-image",
+  "gemini-2.5-flash-lite",
+  "gemini-2.5-flash-preview-tts",
+  "gemini-2.5-pro",
+  "gemini-2.5-pro-preview-tts",
+  "gemini-3-flash-preview",
+  "gemini-3-pro-image",
+  "gemini-3-pro-image-preview",
+  "gemini-3.1-flash-image",
+  "gemini-3.1-flash-image-preview",
+  "gemini-3.1-flash-lite",
+  "gemini-3.1-flash-lite-image",
+  "gemini-3.1-flash-lite-preview",
+  "gemini-3.1-flash-tts-preview",
+  "gemini-3.1-pro-preview",
+  "gemini-3.1-pro-preview-customtools",
+  "gemini-3.5-flash",
+  "gemini-3.5-flash-lite",
+  "gemini-3.5-transcribe",
+  "gemini-3.6-flash",
+  "gemini-3.7-flash",
+  "gemini-3.8-flash",
+  "gemini-3.8-flash-lite-tts",
+  "gemini-3.8-flash-tts",
+  "gemini-4-argon",
+  "gemini-4-carbon",
+  "gemini-4-hydrogen",
+  "gemini-flash-latest",
+  "gemini-flash-lite-latest",
+  "gemini-nano-banana-2.1",
+  "gemini-omni-1.1-flash",
+  "gemini-omni-1.2-flash",
+  "gemini-omni-flash-preview",
+  "gemini-pro-latest",
+  "gemini-robotics-er-2-preview",
+  "gemma-4-26b-a4b-it",
+  "gemma-4-31b-it",
+  "lyria-3-clip-preview",
+  "lyria-3-pro-preview",
+  "lyria-3.5",
+  "nano-banana-pro-preview"
+ ],
+ "gemini models": {
+  "ok": true,
+  "detail": "49 text models available to this key",
+  "secs": 0.7
+ },
+ "gemini cheap": {
+  "ok": true,
+  "detail": "gemini-3.5-flash-lite replied 'OK'; 28 in / 1 out tokens",
+  "secs": 1.2
+ },
+ "gemini strong": {
+  "ok": true,
+  "detail": "gemini-3.8-flash replied 'OK'; 28 in / 50 out tokens",
+  "secs": 120.2
+ }
+}

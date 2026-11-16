@@ -69,6 +69,9 @@ RULES: list[tuple[str, str, str]] = [
 _COMPILED = [(c, s, re.compile(p, re.I)) for c, s, p in RULES]
 
 
+ERRORS: list[str] = []      # model-fallback failures in this process, reported in the snapshot meta
+
+
 def classify(title: str, detail: str = "", *, use_llm: bool = True) -> Label:
     text = f"{title}"
     for cat, sub, rx in _COMPILED:
@@ -81,8 +84,8 @@ def classify(title: str, detail: str = "", *, use_llm: bool = True) -> Label:
     if use_llm:
         try:
             return _llm_classify(title, detail)
-        except Exception:
-            pass
+        except Exception as e:  # noqa: BLE001  keep the reason: the snapshot reports it
+            ERRORS.append(f"{type(e).__name__}: {str(e)[:200]}")
     return Label("unclassified", "unknown", "fallthrough")
 
 
@@ -91,7 +94,7 @@ def _llm_classify(title: str, detail: str) -> Label:
     hit = cache.get("classify", k)
     if hit:
         return Label(**hit)
-    out = llm.complete_json(
+    out = llm.complete_obj(
         "cheap",
         "You label Indian stock-exchange corporate announcements. Answer JSON only.",
         f"Categories: {', '.join(CATEGORIES)}.\nSubject: {title}\nDetail: {detail[:600]}\n"

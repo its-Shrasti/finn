@@ -368,7 +368,12 @@ const NET_EMBED = /*__NETWORK__*/null;
   const P = Object.fromEntries(S.portfolio.map(p => [p.ticker, p]));
   const nameOf = t => (P[t] && P[t].name) || t;
   const items = S.items.map(it => ({ ...it, raw: 1 + (it.related ? it.related.length : 0) }));
-  const SIM = S.meta.eod_source === "simulated";
+  const SIM = S.meta.eod_source === "simulated";                 // only the replayed demo simulates prices
+  const LIVE = S.meta.mode === "live";
+  const srcs = S.meta.sources || {};
+  const priceMissing = srcs.prices_missing || [];
+  const fundLive = Object.values(srcs.fundamentals || {}).filter(v => v.startsWith("screener")).length;
+  const lastBar = Object.values(S.eod || {}).map(b => b.length ? b[b.length - 1].date : "").sort().pop() || "";
   const D = s => new Date(s + "T12:00:00+05:30");
   const fmtDate = s => D(s).toLocaleDateString("en-IN", { day: "numeric", month: "short" });
   const daysAgo = s => Math.round((asOf - D(s)) / 864e5);
@@ -468,7 +473,7 @@ const NET_EMBED = /*__NETWORK__*/null;
       <span class="nm">${esc(p.name)} ${strBar(x.label)}</span>
       <span class="meta">${esc(p.headline)}</span>
       <span class="wl">${esc(opts.evidence && x.links ? (x.via ? "Through " + first(x.via) + ": " : "") + x.links[0].reason : (x.why ? x.why.text : x.reason))}</span>
-      <span class="meta">${esc(chain(x))}${how ? " · " + esc(how) : ""}</span>
+      <span class="meta">${esc(chain(x))}${how ? " · " + esc(how) : ""}${x.why && x.why.by === "model" ? " · model-worded" : ""}</span>
       ${opts.extra || ""}
       ${x.flag ? `<span class="comp" style="display:block">${esc(x.flag)}</span>` : ""}</span></button>`;
   }
@@ -538,7 +543,10 @@ const NET_EMBED = /*__NETWORK__*/null;
     return `<svg class="pathsvg" viewBox="0 0 ${W} 64" role="img" aria-label="Best path: ${esc(aria)}">${g}</svg>`;
   }
   const label3 = v => v >= 0.5 ? "strong" : v >= 0.3 ? "medium" : "weak";
-  const TMPL = `<div class="fine">Template lines, not model-written. Strength is scored in code from shared employers, years and batches.</div>`;
+  const WM = N && N.meta.why_model, WC = (N && N.meta.why_counts) || {};
+  const TMPL = WC.model
+    ? `<div class="fine">Lines marked "model-worded" were reworded by ${esc(WM ? WM.model : "a model")} from pseudonymised facts (no names); the rest are templates. Who is listed, and every strength, is scored in code.</div>`
+    : `<div class="fine">Template lines, not model-written. Strength is scored in code from shared employers, years and batches.</div>`;
   function wayIn(it) {
     const ev = N && N.events[it.id]; if (!ev || ev.kind !== "person") return "";
     const t = N.targets[ev.target];
@@ -715,8 +723,8 @@ const NET_EMBED = /*__NETWORK__*/null;
     const last = bars[bars.length - 1], prev = bars[bars.length - 2];
     const chg = (last.close - prev.close) / prev.close * 100;
     if (Math.abs(chg) >= o.price) out.push({ t, date: last.date, kind: "price", sev: Math.abs(chg) >= 2 * o.price ? 3 : 2, v: chg, text: `${chg > 0 ? "Up" : "Down"} ${Math.abs(chg).toFixed(1)}% on the day`, line: `your line ±${o.price}%` });
-    const win = bars.slice(-(o.look + 1), -1);
-    if (win.length >= 5) {
+    const win = bars.slice(-(o.look + 1), -1).filter(b => b.volume != null);
+    if (win.length >= 5 && last.volume != null) {
       const avg = win.reduce((s, b) => s + b.volume, 0) / win.length; const m = last.volume / avg;
       if (m >= o.vol) out.push({ t, date: last.date, kind: "volume", sev: m >= 1.5 * o.vol ? 3 : 2, v: m, text: `Volume ${m.toFixed(1)}× its ${win.length}-day average`, line: `your line ${o.vol}×` });
     }
@@ -929,9 +937,9 @@ const NET_EMBED = /*__NETWORK__*/null;
     sheet(`<div class="sheet-h"><h2 class="h2">About this data</h2><span class="sp"></span><button class="btn" data-close>Close</button></div>
       <div class="answer" style="white-space:normal;display:flex;flex-direction:column;gap:10px;font-size:13.5px">
         <div><b>As of</b> ${esc(asOf.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }))} IST · mode: ${esc(S.meta.mode)}</div>
-        <div><b>Filings</b> · ${esc(S.meta.filings_source)}. Live mode pulls NSE's announcements API, falling back to BSE.</div>
-        <div><b>Results</b> · quarterly tables standardised from company filings (screener.in). Every QoQ/YoY figure is computed in code. Dixon's captured page was standalone, so FINN shows only the consolidated headline from the filing rather than mix bases.</div>
-        <div><b>Prices & volume</b> · ${SIM ? `<span class="simtag">SIM</span> simulated in this snapshot: the build sandbox couldn't reach Yahoo Finance. Each series ends at the stock's real last price. <span class="num">python -m finn snapshot --live</span> swaps in real yfinance bars.` : "yfinance end-of-day bars."}</div>
+        <div><b>Filings</b> · ${esc(S.meta.filings_source)}.${LIVE ? " Pulled from NSE's announcements API, falling back to BSE per stock." : " Live mode pulls NSE's announcements API, falling back to BSE."}</div>
+        <div><b>Results</b> · ${LIVE ? `quarterly tables from screener.in, fetched live for ${fundLive} of ${S.portfolio.length} stocks${fundLive < S.portfolio.length ? "; the rest from the captured copy, labelled" : ""}.` : "quarterly tables standardised from company filings (screener.in). Dixon's captured page was standalone, so FINN shows only the consolidated headline from the filing rather than mix bases."} Every QoQ/YoY figure is computed in code.</div>
+        <div><b>Prices & volume</b> · ${SIM ? `<span class="simtag">SIM</span> simulated in this snapshot: the build sandbox couldn't reach Yahoo Finance. Each series ends at the stock's real last price. <span class="num">python -m finn snapshot --live</span> swaps in real yfinance bars.` : `Yahoo Finance end-of-day bars via yfinance, last bar ${esc(lastBar)}.${priceMissing.length ? ` No prices for ${esc(priceMissing.join(", "))}: shown as missing, never simulated.` : ""}`}</div>
         <div><b>Research</b> · annual-report tables and earnings-call transcripts only. No news, broker notes or outside model knowledge.</div>
         <div><b>People</b> · incoming-executive backgrounds from public web profiles, with links on each card.</div>
         ${N ? `<div><b>Your network</b> · <span class="syntag">SYN</span> ${N.meta.contacts} fictional contacts, labelled synthetic; no scraping. Links to real executives rest only on public career history (same employer, overlapping years) and are marked hypothetical. Real people never get a "knows" link, and board seats never count as working together. Every strength is scored in code; the "why" lines are templates. The network lives in a private per-user file, separate from the shared market snapshot, and network questions are answered on this device, never by a model. This public demo bundles that file because the people are fictional.</div>` : ""}

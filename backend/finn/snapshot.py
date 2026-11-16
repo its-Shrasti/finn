@@ -10,7 +10,7 @@ from __future__ import annotations
 import json
 import math
 import random
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 
 from . import alerts, classify, enrich, priority, results
 from .config import DATA, PORTFOLIO, AlertRules
@@ -55,7 +55,7 @@ def simulated_eod(ticker: str, last_price: float, end: date, n: int = 60) -> lis
     return bars
 
 
-def _items(companies: list[dict], cuts: dict[str, dict]) -> list[priority.Item]:
+def _items(companies: list[dict], cuts: dict[str, dict], use_llm: bool = False) -> list[priority.Item]:
     items = []
     for c in companies:
         anns = list(c.get("announcements", []))
@@ -69,7 +69,7 @@ def _items(companies: list[dict], cuts: dict[str, dict]) -> list[priority.Item]:
                          "detail": "Results filing outside the captured feed; numbers from the parsed results table."
                                    + (" Filing date inferred." if c.get("result_date_approx") else "")})
         for i, a in enumerate(anns):
-            lab = classify.classify(a["title"], a.get("detail", ""), use_llm=False)
+            lab = classify.classify(a["title"], a.get("detail", ""), use_llm=use_llm)
             it = priority.Item(id=f"{c['ticker']}-{a['date']}-{i}", ticker=c["ticker"], date=a["date"],
                                title=a["title"], detail=a.get("detail", ""), category=lab.category, subtype=lab.subtype)
             surprise = cuts.get(c["ticker"], {}).get("surprise") if lab.category == "results" else None
@@ -83,27 +83,78 @@ def _items(companies: list[dict], cuts: dict[str, dict]) -> list[priority.Item]:
     return items
 
 
-def build(live: bool = False, now: datetime | None = None) -> dict:
-    raw = json.loads((DATA / "inputs" / "portfolio_raw.json").read_text())
-    bios = json.loads((DATA / "inputs" / "bios.json").read_text())
-    companies = raw["companies"]
-    now = now or datetime.fromisoformat(raw["_meta"]["captured_at"])
-    eod_source = "simulated"
+IST = timezone(timedelta(hours=5, minutes=30))
+RESEARCH_LIVE = DATA / "research_live"
 
+
+def _live_companies(raw: dict, now: datetime, sources: dict) -> tuple[list[dict], dict]:
+    """Live fetch, one ticker at a time, so one failure never sinks the run. A ticker
+    screener.in can't serve falls back to the captured copy and is labelled so."""
+    from .sources import filings, prices, screener
+    captured = {c["ticker"]: c for c in raw["companies"]}
+    tickers = list(PORTFOLIO)
+    frm = (now - timedelta(days=30)).date()
+    ann, sources["filings"] = filings.announcements_status(tickers, frm, now.date())
+    companies, sources["fundamentals"] = [], {}
+    for t in tickers:
+        meta = {k: captured.get(t, {}).get(k) for k in ("sector", "kind")}
+        try:
+            sc = screener.company(t)
+            c = {"ticker": t, "name": sc["name"], "weight": PORTFOLIO[t], "price": sc["price"], "mcap": sc["mcap"],
+                 "pe": sc["pe"], "quarters": sc["quarters"][-5:], **meta}
+            sources["fundamentals"][t] = f"screener.in ({sc['basis']})"
+        except Exception as e:  # noqa: BLE001
+            c = dict(captured[t])
+            sources["fundamentals"][t] = f"captured {raw['_meta']['captured_at'][:10]} (screener.in failed: {type(e).__name__})"
+        live_ann = [a for a in ann if a["ticker"] == t]
+        if live_ann or not sources["filings"].get(t, "").startswith("none"):
+            c["announcements"] = live_ann
+        else:   # neither exchange answered: keep the captured filings for this ticker, labelled
+            c["announcements"] = captured.get(t, {}).get("announcements", [])
+            sources["filings"][t] += f"; showing captured feed from {raw['_meta']['captured_at'][:10]}"
+        res = sorted(a["date"] for a in c["announcements"]
+                     if classify.classify(a["title"], a.get("detail", ""), use_llm=False).category == "results")
+        c["result_date"] = res[0] if res else captured.get(t, {}).get("result_date")
+        for a in c["announcements"]:
+            if "person" in a:
+                continue
+            lab = classify.classify(a["title"], a.get("detail", ""), use_llm=False)
+            if lab.category == "management_change" and lab.subtype in ("top", "director"):
+                try:
+                    p = enrich.incoming(a["title"], a.get("detail", ""))
+                    # NSE's announcement text often doesn't name the person ("Change in Managing
+                    # Director and CEO"); the name is in the attached filing. Read its first pages.
+                    if not p and a.get("url"):
+                        from .sources import documents
+                        pdf = documents.text(a["url"], max_pages=3)
+                        p = enrich.incoming(a["title"], pdf, max_chars=6000)
+                        if p:
+                            p["from"] = "filing attachment"
+                except Exception as e:  # noqa: BLE001  one odd filing must not stop the snapshot
+                    p = None
+                    sources.setdefault("person_errors", []).append(f"{t} {a['date']}: {type(e).__name__}")
+                if p:
+                    a["person"] = {"name": p["name"], "role": p["role"], "from": p.get("from", "announcement text"),
+                                   **({"outgoing": p["outgoing"]} if p.get("outgoing") else {})}
+        companies.append(c)
+    bars, sources["prices"] = prices.eod_status(tickers)
+    return companies, bars
+
+
+def build(live: bool = False, now: datetime | None = None, live_research: bool = False) -> dict:
+    raw = json.loads((DATA / "inputs" / "portfolio_raw.json").read_text(encoding="utf-8"))
+    bios = json.loads((DATA / "inputs" / "bios.json").read_text(encoding="utf-8"))
+    companies = raw["companies"]
+    sources: dict = {}
     if live:
-        from .sources import filings, prices, screener
-        tickers = list(PORTFOLIO)
-        frm = (now - timedelta(days=30)).date()
-        ann = filings.announcements(tickers, frm, now.date())
-        companies = []
-        for t in tickers:
-            s = screener.company(t)
-            companies.append({"ticker": t, "name": s["name"], "weight": PORTFOLIO[t], "price": s["price"],
-                              "mcap": s["mcap"], "pe": s["pe"], "quarters": s["quarters"][-5:],
-                              "announcements": [a for a in ann if a["ticker"] == t]})
-        bars_by = prices.eod(tickers)
-        eod_source = "yfinance"
+        now = now or datetime.now(IST).replace(microsecond=0)
+        companies, bars_by = _live_companies(raw, now, sources)
+        missing = [t for t in PORTFOLIO if t not in bars_by]
+        eod_source = "yfinance" if bars_by else "unavailable"
+        sources["prices_missing"] = missing     # no prices for these: shown as missing, never simulated
     else:
+        now = now or datetime.fromisoformat(raw["_meta"]["captured_at"])
+        eod_source = "simulated"
         bars_by = {c["ticker"]: simulated_eod(c["ticker"], c["price"], now.date()) for c in companies}
 
     for c in companies:
@@ -113,8 +164,8 @@ def build(live: bool = False, now: datetime | None = None) -> dict:
                 if live and not bios.get(p["name"]):
                     try:
                         bios[p["name"]] = enrich.person_bio(p["name"], c["name"], p["role"])
-                    except Exception:
-                        pass
+                    except Exception as e:  # noqa: BLE001  no bio is fine ("No background found yet"); say why
+                        sources.setdefault("bio_errors", []).append(f"{p['name']}: {type(e).__name__}: {str(e)[:200]}")
                 a["bio"] = bios.get(p["name"])
 
     cuts = {}
@@ -130,7 +181,11 @@ def build(live: bool = False, now: datetime | None = None) -> dict:
                                  "flags": [{"kind": "data_basis", "tone": "neutral", "text": c.get("quarters_note", "")}],
                                  "headline": f"Revenue {h['sales_yoy_pct']:+d}% YoY · PAT ₹{h['pat']:,} cr", "surprise": None}
 
-    items = priority.cluster(_items(companies, cuts))
+    classify.ERRORS.clear()
+    items = priority.cluster(_items(companies, cuts, use_llm=live))
+    if classify.ERRORS:
+        from collections import Counter
+        sources["classify_errors"] = [f"{n}x {m}" for m, n in Counter(classify.ERRORS).most_common(5)]
     items.sort(key=lambda x: (x.date, x.score), reverse=True)
 
     rules = AlertRules()
@@ -147,11 +202,16 @@ def build(live: bool = False, now: datetime | None = None) -> dict:
 
     research = {}
     for t in RESEARCH_DEMO:
-        research[t] = engine.run_live(t) if live else engine.run_from_inputs(t)
+        research[t] = engine.run_live(t) if live_research else engine.run_from_inputs(t)
+    # research generated live with `python -m finn research TICKER` (saved with its date and real cost)
+    for f in sorted(RESEARCH_LIVE.glob("*.json")) if RESEARCH_LIVE.exists() else []:
+        r = json.loads(f.read_text(encoding="utf-8"))
+        research.setdefault(r["ticker"], r)
 
     return {
         "meta": {"as_of": now.isoformat(), "mode": "live" if live else "snapshot", "eod_source": eod_source,
-                 "filings_source": "NSE/BSE" if live else "screener.in announcement feed (captured)",
+                 "filings_source": _summary(sources.get("filings")) if live else "screener.in announcement feed (captured)",
+                 "sources": sources,
                  "fundamentals_source": "screener.in (AR-derived tables) + concall transcripts",
                  "defaults": {"price_move_pct": rules.price_move_pct, "volume_multiple": rules.volume_multiple,
                               "volume_lookback": rules.volume_lookback, "watch_categories": sorted(rules.watch_categories)}},
@@ -164,8 +224,32 @@ def build(live: bool = False, now: datetime | None = None) -> dict:
     }
 
 
-def write(live: bool = False) -> str:
-    snap = build(live=live)
+def _summary(status: dict | None) -> str:
+    if not status:
+        return "unavailable"
+    n = {"NSE": 0, "BSE": 0, "none": 0}
+    for v in status.values():
+        n["NSE" if v.startswith("NSE") else "BSE" if v.startswith("BSE") else "none"] += 1
+    parts = [f"NSE for {n['NSE']}", f"BSE for {n['BSE']}"] + ([f"neither for {n['none']} (captured feed shown)"] if n["none"] else [])
+    return "live: " + ", ".join(p for p in parts if not p.endswith(" 0")) + f" of {len(status)} tickers"
+
+
+def write(live: bool = False, live_research: bool = False) -> str:
+    snap = build(live=live, live_research=live_research)
     out = DATA.parent.parent / "app" / "snapshot.json"
-    out.write_text(json.dumps(snap, ensure_ascii=False, separators=(",", ":"), default=str))
+    out.write_text(json.dumps(snap, ensure_ascii=False, separators=(",", ":"), default=str), encoding="utf-8")
     return str(out)
+
+
+def add_research() -> str:
+    """Merge saved live research (data/research_live/*.json) into the existing
+    app/snapshot.json without refetching anything else."""
+    out = DATA.parent.parent / "app" / "snapshot.json"
+    snap = json.loads(out.read_text(encoding="utf-8"))
+    added = []
+    for f in sorted(RESEARCH_LIVE.glob("*.json")) if RESEARCH_LIVE.exists() else []:
+        r = json.loads(f.read_text(encoding="utf-8"))
+        snap["research"][r["ticker"]] = r
+        added.append(r["ticker"])
+    out.write_text(json.dumps(snap, ensure_ascii=False, separators=(",", ":"), default=str), encoding="utf-8")
+    return f"{out}: research now {sorted(snap['research'])} (added/updated {added})"

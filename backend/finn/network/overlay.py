@@ -158,8 +158,34 @@ def build(snapshot: dict, net: Network | None = None, *, use_model: bool = False
     }
 
 
+def _why_counts(ov: dict) -> dict:
+    n = {"model": 0, "template": 0}
+    def walk(x):
+        if isinstance(x, dict):
+            if isinstance(x.get("why"), dict) and "by" in x["why"]:
+                n[x["why"]["by"]] = n.get(x["why"]["by"], 0) + 1
+            for v in x.values():
+                walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+    walk({k: v for k, v in ov.items() if k != "meta"})
+    return n
+
+
 def write(use_model: bool = False) -> str:
-    snap = json.loads((APP / "snapshot.json").read_text())
+    from .. import llm
+    llm.METER.reset()
+    snap = json.loads((APP / "snapshot.json").read_text(encoding="utf-8"))
+    ov = build(snap, use_model=use_model)
+    counts = _why_counts(ov)
+    ov["meta"]["why_counts"] = counts
+    ov["meta"]["why_by"] = "model" if counts.get("model") else "template"
+    if use_model:
+        m = llm.METER
+        ov["meta"]["why_model"] = {"model": llm.MODELS["cheap"]["model"], "calls": m.calls, "cached": m.cached,
+                                   "tokens_in": m.tokens_in, "tokens_out": m.tokens_out, "usd_list_price": round(m.usd, 5)}
     out = APP / "network.json"
-    out.write_text(json.dumps(build(snap, use_model=use_model), ensure_ascii=False, separators=(",", ":"), default=str))
-    return str(out)
+    out.write_text(json.dumps(ov, ensure_ascii=False, separators=(",", ":"), default=str), encoding="utf-8")
+    cost = ov["meta"].get("why_model")
+    return f"{out}: why-lines {counts}" + (f"; model meter {json.dumps(cost)}" if cost else "")

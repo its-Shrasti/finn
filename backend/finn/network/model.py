@@ -178,9 +178,9 @@ def build(net: dict, orgs: dict, public: dict, *, allow_real: bool = False) -> N
 
 
 def raw(path: Path | None = None) -> tuple[dict, dict, dict]:
-    net = json.loads((path or NET_DIR / "network.json").read_text())
-    orgs = json.loads((NET_DIR / "orgs.json").read_text())
-    public = json.loads((DATA / "inputs" / "public_careers.json").read_text())
+    net = json.loads((path or NET_DIR / "network.json").read_text(encoding="utf-8"))
+    orgs = json.loads((NET_DIR / "orgs.json").read_text(encoding="utf-8"))
+    public = json.loads((DATA / "inputs" / "public_careers.json").read_text(encoding="utf-8"))
     return net, orgs, public
 
 

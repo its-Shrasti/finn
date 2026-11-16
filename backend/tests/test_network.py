@@ -216,7 +216,10 @@ SNAP = Path(__file__).resolve().parents[2] / "app" / "snapshot.json"
 
 @pytest.fixture(scope="module")
 def snap():
-    return _json.loads(SNAP.read_text())
+    # The replayed demo snapshot, rebuilt in memory: deterministic whatever app/snapshot.json holds
+    # (after a live run it holds today's real filings, so ids and counts differ).
+    from finn import snapshot
+    return _json.loads(_json.dumps(snapshot.build(live=False), default=str))
 
 
 @pytest.fixture(scope="module")
@@ -265,7 +268,7 @@ def test_overlay_is_separate_and_holds_no_private_notes(ov, snap, net):
     assert "last_spoke\"" not in blob
     assert all(c.notes not in blob for c in net.contacts.values() if c.notes)
     assert all(c.last_spoke not in blob for c in net.contacts.values() if c.last_spoke)   # only "N months ago"
-    snap_blob = SNAP.read_text()
+    snap_blob = SNAP.read_text(encoding="utf-8")
     assert not any(c.name in snap_blob for c in net.contacts.values())                  # shared snapshot stays network-free
     assert ov["meta"]["synthetic"] is True and ov["meta"]["why_by"] == "template"
     assert all(p["synthetic"] for p in ov["people"].values())

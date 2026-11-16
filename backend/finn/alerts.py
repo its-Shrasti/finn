@@ -34,8 +34,8 @@ def eod_checks(ticker: str, bars: list[dict], rules: AlertRules) -> list[Alert]:
         out.append(Alert(ticker, last["date"], "price_move", sev,
                          f"{'Up' if chg > 0 else 'Down'} {abs(chg):.1f}% on the day (your line: ±{r.price_move_pct:g}%)",
                          round(chg, 2), r.price_move_pct))
-    window = bars[-(r.volume_lookback + 1):-1]
-    if len(window) >= 5:
+    window = [b for b in bars[-(r.volume_lookback + 1):-1] if b.get("volume") is not None]
+    if len(window) >= 5 and last.get("volume") is not None:   # a day with no reported volume gets no volume check
         avg = sum(b["volume"] for b in window) / len(window)
         if avg > 0:
             mult = last["volume"] / avg

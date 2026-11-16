@@ -109,15 +109,15 @@ def to_contacts(text: str, orgs: dict, existing: list[dict] | None = None, *, sy
 
 def run(csv_path: str, out: str | None = None, *, merge: bool = False) -> str:
     """CLI: write imported contacts next to the demo network (never over it unless --merge)."""
-    orgs = json.loads((NET_DIR / "orgs.json").read_text())
+    orgs = json.loads((NET_DIR / "orgs.json").read_text(encoding="utf-8"))
     net_path = NET_DIR / "network.json"
-    net = json.loads(net_path.read_text())
+    net = json.loads(net_path.read_text(encoding="utf-8"))
     res = to_contacts(Path(csv_path).read_text(encoding="utf-8-sig"), orgs, net["contacts"])
     if merge:
         net["contacts"] += res["contacts"]
         target = Path(out) if out else net_path
-        target.write_text(json.dumps(net, ensure_ascii=False, indent=1))
+        target.write_text(json.dumps(net, ensure_ascii=False, indent=1), encoding="utf-8")
     else:
         target = Path(out) if out else NET_DIR / "imported_linkedin.json"
-        target.write_text(json.dumps(res, ensure_ascii=False, indent=1))
+        target.write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
     return f"{target}: {len(res['contacts'])} imported, {len(res['needs_review'])} need a company match, {res['skipped']} skipped"
