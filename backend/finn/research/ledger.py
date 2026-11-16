@@ -15,33 +15,72 @@ def _series(calls: list[dict], key: str) -> list[tuple[str, float]]:
     return [(c["id"], c["reported"][key]) for c in calls if key in c.get("reported", {})]
 
 
+LOWER_IS_BETTER = ("days", "working capital", "debt", "leverage", "cost", "attrition", "npa")
+
+
+def _after_promise(s: list[tuple[str, float]], item: dict, calls: list[dict]) -> list[tuple[str, float]]:
+    """Only figures reported after the promise can test it; the call that made the
+    promise gives the starting point, not the result."""
+    ids = [c["id"] for c in calls]
+    if item.get("made_in") not in ids:
+        return s
+    i = ids.index(item["made_in"])
+    return [(cid, val) for cid, val in s if ids.index(cid) > i]
+
+
+def _not_yet(item: dict, s: list[tuple[str, float]], unit: str) -> dict:
+    last = f" (latest: {s[-1][1]:g}{unit} in {s[-1][0]}, when the promise was made)" if s else ""
+    return {"verdict": "pending", "evidence": f"No figure reported after {item.get('made_in')} yet{last}"}
+
+
 def score(item: dict, calls: list[dict]) -> dict:
     m = item.get("measure", {})
     t = m.get("type")
     v: dict = {"verdict": "unscored", "evidence": item.get("evidence", "")}
 
     if t == "range":
-        s = _series(calls, m["series"])
-        if s:
+        s_all = _series(calls, m["series"])
+        s = _after_promise(s_all, item, calls)
+        unit = m.get("unit", "")
+        u = unit if unit in ("%", "") else f" {unit}"
+        gap_unit = " pp" if unit == "%" else u
+        lower_better = any(w in f"{item.get('metric', '')} {m['series']}".lower().replace("_", " ") for w in LOWER_IS_BETTER)
+        if s_all and not s:
+            v = _not_yet(item, s_all, u)
+        elif s and lower_better:
             last_id, last = s[-1]
-            hist = ", ".join(f"{cid} {val:g}{m.get('unit', '')}" for cid, val in s)
+            hist = ", ".join(f"{cid} {val:g}{u}" for cid, val in s_all)
+            if last < m["lo"]:
+                v = {"verdict": "beat", "evidence": f"{last:g}{u} in {last_id}, better than the {m['lo']:g}–{m['hi']:g}{u} band (lower is better) ({hist})"}
+            elif last <= m["hi"]:
+                v = {"verdict": "delivered", "evidence": f"{last:g}{u} in {last_id}, inside the band ({hist})"}
+            else:
+                gap = last - m["hi"]
+                verdict = "at_risk" if (m.get("soft") or gap < 1) else "missed"
+                v = {"verdict": verdict, "evidence": f"{last:g}{u} in {last_id}, {gap:g}{gap_unit} above the top of the band (lower is better) ({hist})"}
+        elif s:
+            last_id, last = s[-1]
+            hist = ", ".join(f"{cid} {val:g}{u}" for cid, val in s_all)
             if last > m["hi"]:
-                v = {"verdict": "beat", "evidence": f"Delivered {last:g}{m['unit']} in {last_id}, above the {m['lo']:g}–{m['hi']:g}{m['unit']} band ({hist})"}
+                v = {"verdict": "beat", "evidence": f"Delivered {last:g}{u} in {last_id}, above the {m['lo']:g}–{m['hi']:g}{u} band ({hist})"}
             elif last >= m["lo"]:
-                v = {"verdict": "delivered", "evidence": f"{last:g}{m['unit']} in {last_id}, inside the band ({hist})"}
+                v = {"verdict": "delivered", "evidence": f"{last:g}{u} in {last_id}, inside the band ({hist})"}
             else:
                 gap = m["lo"] - last
                 # An undated aspiration can't be "missed" yet — only drifting away.
                 verdict = "at_risk" if (m.get("soft") or gap < 1) else "missed"
                 v = {"verdict": verdict,
-                     "evidence": f"{last:g}{m['unit']} in {last_id}, {gap:.1f} pp below the bottom of the band"
+                     "evidence": f"{last:g}{u} in {last_id}, {gap:.1f}{gap_unit} below the bottom of the band"
                                  + (" (an undated aspiration)" if m.get("soft") else "") + f" ({hist})"}
 
     elif t == "threshold":
         actual = m.get("actual")
         if actual is None and m.get("series"):
-            s = _series(calls, m["series"])
+            s_all = _series(calls, m["series"])
+            s = _after_promise(s_all, item, calls)
             actual = s[-1][1] if s else None
+            if s_all and not s:
+                return {**{k: item[k] for k in ("id", "made_in", "metric", "promise") if k in item}, **_not_yet(item, s_all, m.get("unit", ""))}
         if actual is not None:
             ok = actual >= m["min"]
             fmt = (lambda x: f"Rs {x:,.0f} cr") if m.get("unit") == "Rs cr" else (lambda x: f"{x:,.0f} {m['unit']}")

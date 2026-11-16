@@ -46,7 +46,8 @@ def balance_sheet(bs: list[dict], annual: list[dict]) -> dict:
     ann = {a["y"]: a for a in annual}
     rows = []
     for b in bs:
-        e = ann.get(b["y"], {}).get("ebitda")
+        # A half-year column ("Sep 2026") is measured against trailing-twelve-month EBITDA.
+        e = ann.get(b["y"], ann.get("TTM", {}) if not b["y"].startswith("FY") else {}).get("ebitda")
         rows.append({"y": b["y"], "debt": b["borrowings"], "equity": b["equity"],
                      "de": round(b["borrowings"] / b["equity"], 2) if b["equity"] else None,
                      "debt_to_ebitda": round(b["borrowings"] / e, 2) if e else None})
@@ -57,17 +58,19 @@ def balance_sheet(bs: list[dict], annual: list[dict]) -> dict:
 
 def cash_quality(cf: list[dict], annual: list[dict]) -> dict:
     ann = {a["y"]: a for a in annual}
+    # cfo_plus_cfi = operating + investing cash flow. Investing includes treasury
+    # investments as well as capex, so this is NOT free cash flow; named to say so.
     rows, cum_cfo, cum_pat, cum_fcf = [], 0.0, 0.0, 0.0
     for c in cf:
         pat = ann.get(c["y"], {}).get("pat")
-        fcf = c["cfo"] + c["cfi"]  # proxy: cfi includes capex plus investments
-        rows.append({"y": c["y"], "cfo": c["cfo"], "pat": pat, "fcf_proxy": round(fcf),
+        fcf = c["cfo"] + c["cfi"]
+        rows.append({"y": c["y"], "cfo": c["cfo"], "pat": pat, "cfo_plus_cfi": round(fcf),
                      "cfo_to_pat": round(c["cfo"] / pat * 100) if pat else None})
         cum_cfo += c["cfo"]; cum_pat += pat or 0; cum_fcf += fcf
     conv = round(cum_cfo / cum_pat * 100) if cum_pat else None
     verdict = "strong" if conv and conv >= 90 else "adequate" if conv and conv >= 60 else "weak"
     neg_years = sum(1 for r in rows if r["cfo"] < 0)
-    return {"rows": rows, "cum_cfo_to_pat": conv, "cum_fcf_proxy": round(cum_fcf), "verdict": verdict,
+    return {"rows": rows, "cum_cfo_to_pat": conv, "cum_cfo_plus_cfi": round(cum_fcf), "verdict": verdict,
             "negative_cfo_years": neg_years, "external_funding": round(sum(c["cff"] for c in cf if c["cff"] > 0))}
 
 

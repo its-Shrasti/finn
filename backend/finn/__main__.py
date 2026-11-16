@@ -90,6 +90,7 @@ def _run(argv: list[str]) -> None:
         led = out["ledger"]
         print(f"{t}: {out['name']} · {len(out['sources']) - 1} transcripts · {led.get('scored')} scoreable promises · tally {led.get('tally')}")
         print("skipped:", out.get("skipped") or "none")
+        print("models:", out.get("models"), "| fallbacks:", out.get("fallbacks") or "none")
         print("cost:", json.dumps(out["cost"]))
         print("saved:", d / f"{t}.json")
     elif cmd == "build-app":

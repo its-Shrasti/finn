@@ -837,10 +837,18 @@ const NET_EMBED = /*__NETWORK__*/null;
   }
   const VLAB = { beat: "Beat", delivered: "Delivered", on_track: "On track", at_risk: "At risk", missed: "Missed", walked_back: "Walked back", pending: "Pending", unscored: "Unscored", agree: "Agree", diverge: "Diverge", "too early": "Too early" };
   const srcTag = s => esc(s).replace(/\[([^\]]+)\]/g, `<span class="src">[$1]</span>`);
+  function provenance(R) {
+    if (R.mode !== "live") return `Demo research: the narrative was written during the build from captured transcripts, not generated live. Figures are computed in code from screener.in tables.`;
+    const c = R.cost || {}, d = new Date(R.generated_on + "T00:00:00");
+    const when = d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+    const fb = (R.fallbacks || []).length ? ` (${esc((R.models.strong || "").split(", ").pop())} answered after ${esc(R.fallbacks[0].split(" ->")[0])} was overloaded)` : "";
+    const usd = c.usd_total != null ? c.usd_total : c.usd;
+    return `<b>Generated live on ${esc(when)}</b> · models ${esc(R.models.cheap)} and ${esc(R.models.strong)}${fb} · ${(c.calls || 0) + (c.cached || 0)} model calls, ${((c.tokens_in || 0) + (c.cached_tokens_in || 0) + (c.tokens_out || 0) + (c.cached_tokens_out || 0)).toLocaleString("en-IN")} tokens · cost $${usd.toFixed(3)} at Gemini list prices; $0 billed on the free tier`;
+  }
   function renderResearch() {
     const R = S.research[st.rt];
     const names = Object.keys(S.research);
-    const picker = `<div class="picker"><div class="chips">${names.map(t => `<button class="chip" data-rt="${t}" aria-pressed="${t === st.rt}">${esc(S.research[t].name)}</button>`).join("")}</div>
+    const picker = `<div class="picker"><div class="chips">${names.map(t => `<button class="chip" data-rt="${t}" aria-pressed="${t === st.rt}">${esc(S.research[t].name)}${S.research[t].mode === "live" ? " · live" : ""}</button>`).join("")}</div>
       <form id="anyT"><input id="anyIn" placeholder="Any NSE ticker" aria-label="Any NSE ticker" autocomplete="off"><button class="btn">Go</button></form></div>`;
     if (!R) { $("#main").innerHTML = `<section class="view">${picker}</section>`; return; }
     const L = R.ledger, T = L.tally || {};
@@ -850,13 +858,14 @@ const NET_EMBED = /*__NETWORK__*/null;
     $("#main").innerHTML = `<section class="view">
       ${picker}
       <div class="rhead"><div class="eyebrow">NSE: ${R.ticker} · research from filings & calls only</div><h1 class="h1">${esc(R.name)}</h1>
+        <div class="sub" style="font-size:12.5px">${provenance(R)}</div>
         <div class="kv"><span>Price <b>₹${R.price.toLocaleString("en-IN")}</b></span><span>Mcap <b>${fmtMcap(R.mcap)}</b></span><span>P/E <b>${R.pe}</b></span><span>ROCE <b>${R.roce}%</b></span>${R.shareholding ? `<span>Promoters <b>${R.shareholding.promoters}%</b></span>` : ""}</div>
         <p style="margin:4px 0 0;font-size:14.5px">${srcTag(R.snapshot)}</p></div>
       <div class="jump"><div class="chips">${[["promises", "Promised vs delivered"], ...(N && N.companies[R.ticker] ? [["call", "Who to call"]] : []), ["story", "Story vs numbers"], ["case", "Bull / bear"], ["numbers", "Numbers"], ["cash", "Cash & balance sheet"], ["watch", "Watch"], ["sources", "Sources"]].map(([id, l]) => `<button class="chip" data-jump="${id}">${l}</button>`).join("")}</div></div>
 
       <div class="sec" id="promises"><h2 class="h2">Promised vs delivered</h2>
         <div class="panel">
-          <div class="cred"><div class="big">${kept}<small> of ${L.scored}</small></div><div><div style="font-size:14px;font-weight:600">scoreable promises kept</div><div class="sub" style="font-size:12.5px">Verdicts are computed from reported numbers, not judged by a model. Promises that can't be measured stay unscored.</div>
+          <div class="cred"><div class="big">${L.scored ? kept : "—"}<small>${L.scored ? " of " + L.scored : ""}</small></div><div><div style="font-size:14px;font-weight:600">${L.scored ? "scoreable promises kept" : "No promise can be scored against reported numbers yet"}</div><div class="sub" style="font-size:12.5px">Verdicts are computed from reported numbers, not judged by a model. Promises that can't be measured stay unscored.</div>
             <div class="tally">${segs.map(([k, c]) => T[k] ? `<span style="width:${T[k] / L.scored * 100}%;background:${c}"></span>` : "").join("")}</div>
             <div class="legend">${Object.entries(T).map(([k, v]) => `<span>${VLAB[k]} <b class="num">${v}</b></span>`).join("")}</div></div></div>
           <div>${L.rows.map(r => `<div class="promise"><div class="top"><span class="pill v-${r.verdict}">${VLAB[r.verdict]}</span><span class="m">${esc(r.metric)}</span><span class="mi">said in ${esc(r.made_in)}</span></div>
@@ -888,8 +897,8 @@ const NET_EMBED = /*__NETWORK__*/null;
           ${cashBars(cq.rows)}
           <div class="verdict flag ${cq.verdict === "strong" ? "pos" : cq.verdict === "weak" ? "neg" : "neutral"}">${cq.verdict === "strong" ? "Profits are turning into cash." : cq.verdict === "weak" ? "Profits are not turning into cash. Growth is being funded from outside." : "Cash conversion is adequate, not strong."}</div></div>
         <div class="panel"><div class="tblwrap"><table class="minitbl"><thead><tr><th>Year</th><th>Debt</th><th>D/E</th><th>Debt/EBITDA</th>${wc.rows && wc.rows[0].debtor_days != null ? "<th>Debtor days</th>" : ""}${wc.rows && wc.rows[0].ccc != null ? "<th>Cash cycle</th>" : ""}</tr></thead><tbody>
-          ${bs.rows.map((b, i) => { const w = (wc.rows || [])[i] || {}; return `<tr><td>${esc(b.y)}</td><td class="num">${b.debt.toLocaleString("en-IN")}</td><td class="num">${b.de}</td><td class="num">${b.debt_to_ebitda ?? "—"}</td>${w.debtor_days != null ? `<td class="num">${w.debtor_days}</td>` : ""}${w.ccc != null ? `<td class="num">${w.ccc}</td>` : ""}</tr>`; }).join("")}</tbody></table></div>
-          <div class="sub" style="font-size:12.5px">Debt in ₹ crore. Cash cycle = debtor + inventory − payable days.</div></div></div>
+          ${bs.rows.map(b => { const w = (wc.rows || []).find(x => x.y === b.y) || {}; return `<tr><td>${esc(b.y)}</td><td class="num">${b.debt.toLocaleString("en-IN")}</td><td class="num">${b.de}</td><td class="num">${b.debt_to_ebitda ?? "—"}</td>${wc.rows && wc.rows[0].debtor_days != null ? `<td class="num">${w.debtor_days ?? "—"}</td>` : ""}${wc.rows && wc.rows[0].ccc != null ? `<td class="num">${w.ccc ?? "—"}</td>` : ""}</tr>`; }).join("")}</tbody></table></div>
+          <div class="sub" style="font-size:12.5px">Debt in ₹ crore. Cash cycle = debtor + inventory − payable days.${bs.rows.some(b => !/^FY/.test(b.y)) ? " Debt/EBITDA for a half-year column uses trailing-twelve-month EBITDA." : ""}</div></div></div>
 
       <div class="sec" id="watch"><h2 class="h2">Watch next quarter</h2><div class="panel"><ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px">${R.watch.map(w => `<li>${esc(w)}</li>`).join("")}</ul>
         ${R.pushback && R.pushback.length ? `<div class="eyebrow" style="margin-top:6px">What analysts pressed on</div><ul style="margin:0;padding-left:18px;font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:4px">${R.pushback.map(p => `<li>${esc(p)}</li>`).join("")}</ul>` : ""}
@@ -940,7 +949,7 @@ const NET_EMBED = /*__NETWORK__*/null;
         <div><b>Filings</b> · ${esc(S.meta.filings_source)}.${LIVE ? " Pulled from NSE's announcements API, falling back to BSE per stock." : " Live mode pulls NSE's announcements API, falling back to BSE."}</div>
         <div><b>Results</b> · ${LIVE ? `quarterly tables from screener.in, fetched live for ${fundLive} of ${S.portfolio.length} stocks${fundLive < S.portfolio.length ? "; the rest from the captured copy, labelled" : ""}.` : "quarterly tables standardised from company filings (screener.in). Dixon's captured page was standalone, so FINN shows only the consolidated headline from the filing rather than mix bases."} Every QoQ/YoY figure is computed in code.</div>
         <div><b>Prices & volume</b> · ${SIM ? `<span class="simtag">SIM</span> simulated in this snapshot: the build sandbox couldn't reach Yahoo Finance. Each series ends at the stock's real last price. <span class="num">python -m finn snapshot --live</span> swaps in real yfinance bars.` : `Yahoo Finance end-of-day bars via yfinance, last bar ${esc(lastBar)}.${priceMissing.length ? ` No prices for ${esc(priceMissing.join(", "))}: shown as missing, never simulated.` : ""}`}</div>
-        <div><b>Research</b> · annual-report tables and earnings-call transcripts only. No news, broker notes or outside model knowledge.</div>
+        <div><b>Research</b> · annual-report tables and earnings-call transcripts only. No news, broker notes or outside model knowledge. ${(() => { const live = Object.values(S.research).filter(r => r.mode === "live"); const demo = Object.values(S.research).filter(r => r.mode !== "live"); return (live.length ? `${esc(live.map(r => r.name).join(" and "))}: generated live, each labelled with its date, models and cost. ` : "") + (demo.length ? `${esc(demo.map(r => r.name).join(", "))}: demo research written during the build, not run live.` : ""); })()}</div>
         <div><b>People</b> · incoming-executive backgrounds from public web profiles, with links on each card.</div>
         ${N ? `<div><b>Your network</b> · <span class="syntag">SYN</span> ${N.meta.contacts} fictional contacts, labelled synthetic; no scraping. Links to real executives rest only on public career history (same employer, overlapping years) and are marked hypothetical. Real people never get a "knows" link, and board seats never count as working together. Every strength is scored in code; the "why" lines are templates. The network lives in a private per-user file, separate from the shared market snapshot, and network questions are answered on this device, never by a model. This public demo bundles that file because the people are fictional.</div>` : ""}
         <div><b>Your settings</b> · alert lines, cleared items and the time window are kept in this browser only.</div>

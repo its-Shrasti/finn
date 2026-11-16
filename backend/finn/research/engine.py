@@ -39,12 +39,18 @@ def _normalise_screener(raw: dict) -> dict:
         if lbl.upper() == "TTM":
             return "TTM"
         parts = lbl.split()
-        return f"FY{parts[-1][-2:]}" if parts and parts[-1].isdigit() else lbl
+        # Only March year-ends are fiscal years. A half-year balance sheet ("Sep 2026") keeps its own label.
+        if len(parts) == 2 and parts[0] == "Mar" and parts[1].isdigit():
+            return f"FY{parts[1][-2:]}"
+        return lbl
     for key in ("annual", "bs", "cf", "wc"):
         rows = [dict(r, y=fy(r.pop("q"))) for r in raw.get(key, []) if r.get("q")]
         raw[key] = rows[-6:] if key == "annual" else [r for r in rows if r["y"] != "TTM"][-5:]
     raw["quarters"] = raw.get("quarters", [])[-8:]
     return raw
+
+
+NS = "research"   # own cache namespace; entries carry token counts, so a re-run still reports what generating cost
 
 
 def run_live(ticker: str, n_calls: int = 4) -> dict:
@@ -62,7 +68,7 @@ def run_live(ticker: str, n_calls: int = 4) -> dict:
         ext = {"guidance": [], "reported": {}, "pushback": []}
         for chunk in documents.guidance_chunks(txt)[:3]:
             try:
-                part = llm.complete_obj("cheap", prompts.GROUNDING, prompts.MAP.format(call_id=cid, date=c["date"], text=chunk))
+                part = llm.complete_obj("cheap", prompts.GROUNDING, prompts.MAP.format(call_id=cid, date=c["date"], text=chunk), cache_ns=NS)
             except (ValueError, KeyError, TypeError) as e:   # unparseable model output: skip this chunk, say so
                 skipped.append({"call": cid, "why": f"map step output unreadable: {type(e).__name__}"})
                 continue
@@ -75,16 +81,18 @@ def run_live(ticker: str, n_calls: int = 4) -> dict:
     measured = llm.complete_obj("strong", prompts.GROUNDING, prompts.MEASURE.format(
         series_keys=series_keys,
         guidance=json.dumps([{"call": c["id"], "guidance": c["guidance"]} for c in calls], indent=1),
-        series=json.dumps([{"call": c["id"], **c["reported"]} for c in calls], indent=1)))
+        series=json.dumps([{"call": c["id"], **c["reported"]} for c in calls], indent=1)), cache_ns=NS)
     led = ledger.build(measured.get("guidance", []), calls)
     pushback = [p for c in calls for p in c["pushback"]][:10]
     notes = llm.complete_obj("strong", prompts.GROUNDING, prompts.REDUCE.format(
         name=d["name"], ticker=ticker, facts=json.dumps(facts)[:12000],
-        ledger=json.dumps(led["rows"]), pushback="\n".join(pushback)))
+        ledger=json.dumps(led["rows"]), pushback="\n".join(pushback)), cache_ns=NS)
     out = assemble(ticker, d, facts, led, notes, calls, pushback, mode="live")
     out["skipped"] = skipped
     out["generated_on"] = datetime.now().date().isoformat()
-    out["models"] = {t: llm.MODELS[t]["model"] for t in ("cheap", "strong")}
+    out["models"] = {t: ", ".join(llm.METER.models.get(t) or [llm.MODELS[t]["model"]]) for t in ("cheap", "strong")}
+    out["fallbacks"] = llm.METER.fallbacks
+    out["generated_by"] = f"{out['models']['strong']} (Gemini API, live run)"
     return out
 
 
@@ -112,5 +120,7 @@ def assemble(ticker, d, facts, led, notes, calls, pushback, mode) -> dict:
         "cost": {"calls": llm.METER.calls, "cached": llm.METER.cached, "retries": llm.METER.retries,
                  "tokens_in": llm.METER.tokens_in, "tokens_out": llm.METER.tokens_out,
                  "usd": round(llm.METER.usd, 4), "by_tier": llm.METER.by_tier,
+                 "cached_tokens_in": llm.METER.cached_tokens_in, "cached_tokens_out": llm.METER.cached_tokens_out,
+                 "usd_total": round(llm.METER.usd + llm.METER.cached_usd, 4),
                  "basis": "list price, Gemini API paid tier; billed $0 on the free tier"},
     }

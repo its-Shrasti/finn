@@ -69,15 +69,20 @@ MODELS = {
     "strong": {
         "provider": os.getenv("FINN_STRONG_PROVIDER", "gemini"),
         "model": os.getenv("FINN_STRONG_MODEL", "gemini-3.8-flash"),
+        # Used only when Google answers "high demand" (503) or quota (429) after all retries.
+        # Same list price and free tier as 3.8 Flash; the run records which model answered.
+        "fallback": os.getenv("FINN_STRONG_FALLBACK", "gemini-3.6-flash"),
     },
 }
 
 # Public list prices, USD per 1M tokens (input, output incl. thinking), Gemini API paid
 # Standard tier, checked 16 Nov 2026. The meter reports cost at these prices; on the free
-# tier Google bills $0. gemini-3.8-flash is an introductory rate through 31 Dec 2026.
+# tier Google bills $0. gemini-3.8-flash and gemini-3.6-flash are introductory rates through
+# 31 Dec 2026 ($1.50 / $7.50 from 1 Jan 2027).
 PRICES = {
     "gemini-3.5-flash-lite": (0.30, 2.50),
     "gemini-3.8-flash": (0.75, 3.75),
+    "gemini-3.6-flash": (0.75, 3.75),
     "gemini-3.1-pro-preview": (2.00, 12.00),
     "gemini-2.5-flash-lite": (0.10, 0.40),
     "gemini-2.5-flash": (0.30, 2.50),

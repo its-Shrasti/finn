@@ -1,0 +1,589 @@
+{
+ "ticker": "PIIND",
+ "name": "P I Industries Ltd",
+ "about": "PI Industries Ltd is a leading player in the agro-chemicals space having strong presence in both Domestic and Export markets. It has state-of-art facilities in Gujarat having integrated process development teams with in-house engineering capabilities. [1]",
+ "mode": "live",
+ "generated_at": "2026-11-16T13:36",
+ "price": 1684.0,
+ "mcap": 25555.0,
+ "pe": 32.2,
+ "roce": 15.0,
+ "shareholding": {
+  "q": "Sep 2026",
+  "promoters": 46.09,
+  "fii": 14.79,
+  "dii": 31.39,
+  "public": 7.6
+ },
+ "segments": [],
+ "geo": [],
+ "annual": [
+  {
+   "sales": 5300.0,
+   "ebitda": 1146.0,
+   "other_income": 105.0,
+   "interest": 16.0,
+   "dep": 202.0,
+   "pbt": 1033.0,
+   "tax_pct": 18.0,
+   "pat": 844.0,
+   "eps": 55.62,
+   "y": "FY22"
+  },
+  {
+   "sales": 6492.0,
+   "ebitda": 1544.0,
+   "other_income": 166.0,
+   "interest": 39.0,
+   "dep": 226.0,
+   "pbt": 1444.0,
+   "tax_pct": 15.0,
+   "pat": 1230.0,
+   "eps": 81.04,
+   "y": "FY23"
+  },
+  {
+   "sales": 7666.0,
+   "ebitda": 2030.0,
+   "other_income": 216.0,
+   "interest": 44.0,
+   "dep": 308.0,
+   "pbt": 1895.0,
+   "tax_pct": 11.0,
+   "pat": 1682.0,
+   "eps": 110.83,
+   "y": "FY24"
+  },
+  {
+   "sales": 7978.0,
+   "ebitda": 2206.0,
+   "other_income": 345.0,
+   "interest": 56.0,
+   "dep": 352.0,
+   "pbt": 2142.0,
+   "tax_pct": 22.0,
+   "pat": 1660.0,
+   "eps": 109.43,
+   "y": "FY25"
+  },
+  {
+   "sales": 6714.0,
+   "ebitda": 1732.0,
+   "other_income": 414.0,
+   "interest": 43.0,
+   "dep": 407.0,
+   "pbt": 1696.0,
+   "tax_pct": 22.0,
+   "pat": 1321.0,
+   "eps": 87.06,
+   "y": "FY26"
+  },
+  {
+   "sales": 6345.0,
+   "ebitda": 1239.0,
+   "other_income": 377.0,
+   "interest": 26.0,
+   "dep": 421.0,
+   "pbt": 1169.0,
+   "tax_pct": null,
+   "pat": 878.0,
+   "eps": 57.87,
+   "y": "TTM"
+  }
+ ],
+ "quarters": [
+  {
+   "q": "Dec 2024",
+   "sales": 1901.0,
+   "ebitda": 512.0,
+   "other_income": 76.0,
+   "interest": 8.0,
+   "dep": 99.0,
+   "pbt": 481.0,
+   "tax_pct": 22.0,
+   "pat": 373.0,
+   "eps": 24.57
+  },
+  {
+   "q": "Mar 2025",
+   "sales": 1787.0,
+   "ebitda": 456.0,
+   "other_income": 75.0,
+   "interest": 8.0,
+   "dep": 90.0,
+   "pbt": 432.0,
+   "tax_pct": 24.0,
+   "pat": 330.0,
+   "eps": 21.78
+  },
+  {
+   "q": "Jun 2025",
+   "sales": 1900.0,
+   "ebitda": 519.0,
+   "other_income": 89.0,
+   "interest": 4.0,
+   "dep": 96.0,
+   "pbt": 507.0,
+   "tax_pct": 21.0,
+   "pat": 400.0,
+   "eps": 26.36
+  },
+  {
+   "q": "Sep 2025",
+   "sales": 1872.0,
+   "ebitda": 541.0,
+   "other_income": 85.0,
+   "interest": 3.0,
+   "dep": 98.0,
+   "pbt": 525.0,
+   "tax_pct": 22.0,
+   "pat": 409.0,
+   "eps": 26.98
+  },
+  {
+   "q": "Dec 2025",
+   "sales": 1376.0,
+   "ebitda": 302.0,
+   "other_income": 172.0,
+   "interest": 6.0,
+   "dep": 105.0,
+   "pbt": 363.0,
+   "tax_pct": 14.0,
+   "pat": 311.0,
+   "eps": 20.52
+  },
+  {
+   "q": "Mar 2026",
+   "sales": 1565.0,
+   "ebitda": 337.0,
+   "other_income": 74.0,
+   "interest": 4.0,
+   "dep": 107.0,
+   "pbt": 300.0,
+   "tax_pct": 33.0,
+   "pat": 200.0,
+   "eps": 13.2
+  },
+  {
+   "q": "Jun 2026",
+   "sales": 1702.0,
+   "ebitda": 367.0,
+   "other_income": 66.0,
+   "interest": 8.0,
+   "dep": 104.0,
+   "pbt": 322.0,
+   "tax_pct": 24.0,
+   "pat": 244.0,
+   "eps": 16.1
+  },
+  {
+   "q": "Sep 2026",
+   "sales": 1702.0,
+   "ebitda": 233.0,
+   "other_income": 65.0,
+   "interest": 8.0,
+   "dep": 105.0,
+   "pbt": 184.0,
+   "tax_pct": 34.0,
+   "pat": 122.0,
+   "eps": 8.05
+  }
+ ],
+ "trajectory": {
+  "span": "FY22–FY26",
+  "sales_cagr": 6.1,
+  "ebitda_cagr": 10.9,
+  "pat_cagr": 11.9,
+  "margins": [
+   {
+    "y": "FY22",
+    "ebitda_margin": 21.6,
+    "pat_margin": 15.9
+   },
+   {
+    "y": "FY23",
+    "ebitda_margin": 23.8,
+    "pat_margin": 18.9
+   },
+   {
+    "y": "FY24",
+    "ebitda_margin": 26.5,
+    "pat_margin": 21.9
+   },
+   {
+    "y": "FY25",
+    "ebitda_margin": 27.7,
+    "pat_margin": 20.8
+   },
+   {
+    "y": "FY26",
+    "ebitda_margin": 25.8,
+    "pat_margin": 19.7
+   },
+   {
+    "y": "TTM",
+    "ebitda_margin": 19.5,
+    "pat_margin": 13.8
+   }
+  ],
+  "margin_change_pp": 4.2,
+  "operating_leverage": true
+ },
+ "quarterly": [
+  {
+   "q": "Dec 2024",
+   "sales": 1901.0,
+   "ebitda_margin": 26.9,
+   "pat": 373.0,
+   "sales_yoy": null
+  },
+  {
+   "q": "Mar 2025",
+   "sales": 1787.0,
+   "ebitda_margin": 25.5,
+   "pat": 330.0,
+   "sales_yoy": null
+  },
+  {
+   "q": "Jun 2025",
+   "sales": 1900.0,
+   "ebitda_margin": 27.3,
+   "pat": 400.0,
+   "sales_yoy": null
+  },
+  {
+   "q": "Sep 2025",
+   "sales": 1872.0,
+   "ebitda_margin": 28.9,
+   "pat": 409.0,
+   "sales_yoy": null
+  },
+  {
+   "q": "Dec 2025",
+   "sales": 1376.0,
+   "ebitda_margin": 21.9,
+   "pat": 311.0,
+   "sales_yoy": -27.6
+  },
+  {
+   "q": "Mar 2026",
+   "sales": 1565.0,
+   "ebitda_margin": 21.5,
+   "pat": 200.0,
+   "sales_yoy": -12.4
+  },
+  {
+   "q": "Jun 2026",
+   "sales": 1702.0,
+   "ebitda_margin": 21.6,
+   "pat": 244.0,
+   "sales_yoy": -10.4
+  },
+  {
+   "q": "Sep 2026",
+   "sales": 1702.0,
+   "ebitda_margin": 13.7,
+   "pat": 122.0,
+   "sales_yoy": -9.1
+  }
+ ],
+ "balance_sheet": {
+  "rows": [
+   {
+    "y": "FY23",
+    "debt": 46.0,
+    "equity": 7198.0,
+    "de": 0.01,
+    "debt_to_ebitda": 0.03
+   },
+   {
+    "y": "FY24",
+    "debt": 191.0,
+    "equity": 8731.0,
+    "de": 0.02,
+    "debt_to_ebitda": 0.09
+   },
+   {
+    "y": "FY25",
+    "debt": 184.0,
+    "equity": 10157.0,
+    "de": 0.02,
+    "debt_to_ebitda": 0.08
+   },
+   {
+    "y": "FY26",
+    "debt": 342.0,
+    "equity": 11230.0,
+    "de": 0.03,
+    "debt_to_ebitda": 0.2
+   },
+   {
+    "y": "Sep 2026",
+    "debt": 300.0,
+    "equity": 11457.0,
+    "de": 0.03,
+    "debt_to_ebitda": 0.24
+   }
+  ],
+  "latest_de": 0.03,
+  "latest_debt": 300.0,
+  "debt_cagr": 59.8,
+  "equity_cagr": 12.3
+ },
+ "cash": {
+  "rows": [
+   {
+    "y": "FY22",
+    "cfo": 529.0,
+    "pat": 844.0,
+    "cfo_plus_cfi": 419,
+    "cfo_to_pat": 63
+   },
+   {
+    "y": "FY23",
+    "cfo": 1501.0,
+    "pat": 1230.0,
+    "cfo_plus_cfi": 1005,
+    "cfo_to_pat": 122
+   },
+   {
+    "y": "FY24",
+    "cfo": 2036.0,
+    "pat": 1682.0,
+    "cfo_plus_cfi": 236,
+    "cfo_to_pat": 121
+   },
+   {
+    "y": "FY25",
+    "cfo": 1413.0,
+    "pat": 1660.0,
+    "cfo_plus_cfi": -8,
+    "cfo_to_pat": 85
+   },
+   {
+    "y": "FY26",
+    "cfo": 474.0,
+    "pat": 1321.0,
+    "cfo_plus_cfi": -138,
+    "cfo_to_pat": 36
+   }
+  ],
+  "cum_cfo_to_pat": 88,
+  "cum_cfo_plus_cfi": 1514,
+  "verdict": "adequate",
+  "negative_cfo_years": 0,
+  "external_funding": 0
+ },
+ "working_capital": {
+  "rows": [
+   {
+    "debtor_days": 60.0,
+    "inventory_days": 178.0,
+    "payable_days": 115.0,
+    "ccc": 122.0,
+    "wc_days": 93.0,
+    "roce": 17.0,
+    "y": "FY22"
+   },
+   {
+    "debtor_days": 43.0,
+    "inventory_days": 144.0,
+    "payable_days": 86.0,
+    "ccc": 101.0,
+    "wc_days": 70.0,
+    "roce": 22.0,
+    "y": "FY23"
+   },
+   {
+    "debtor_days": 44.0,
+    "inventory_days": 124.0,
+    "payable_days": 119.0,
+    "ccc": 49.0,
+    "wc_days": 48.0,
+    "roce": 24.0,
+    "y": "FY24"
+   },
+   {
+    "debtor_days": 64.0,
+    "inventory_days": 95.0,
+    "payable_days": 117.0,
+    "ccc": 42.0,
+    "wc_days": 67.0,
+    "roce": 23.0,
+    "y": "FY25"
+   },
+   {
+    "debtor_days": 88.0,
+    "inventory_days": 157.0,
+    "payable_days": 125.0,
+    "ccc": 119.0,
+    "wc_days": 120.0,
+    "roce": 15.0,
+    "y": "FY26"
+   }
+  ],
+  "ccc_change": -3.0,
+  "debtor_change": 28.0
+ },
+ "ledger": {
+  "rows": [
+   {
+    "id": "g1",
+    "made_in": "Feb 2026",
+    "metric": "new molecules commercialization",
+    "promise": "On track to commercialize 8 to 10 new molecules with 5 molecules already commercialized [Feb 2026].",
+    "verdict": "unscored",
+    "evidence": "In Feb 2026, the company guided to commercialize 8 to 10 new molecules in FY26 [Feb 2026]."
+   },
+   {
+    "id": "g2",
+    "made_in": "Feb 2026",
+    "metric": "quarterly revenue growth",
+    "promise": "Expect sequential improvement and volume growth in Q4 FY26 over Q3 FY26 [Feb 2026].",
+    "verdict": "unscored",
+    "evidence": "Management expected sequential revenue and volume growth starting Q4 FY26 over Q3 FY26 [Feb 2026]."
+   },
+   {
+    "id": "g3",
+    "made_in": "Feb 2026",
+    "metric": "FY27 revenue growth",
+    "promise": "Expect domestic and export growth to resume in FY27, led by recovery in exports in the second half [Feb 2026].",
+    "verdict": "unscored",
+    "evidence": "First stated in Feb 2026 [Feb 2026] and reiterated in May 2026 [May 2026] and Aug 2026 [Aug 2026] that FY27 performance will improve led by export recovery in H2."
+   },
+   {
+    "id": "g4",
+    "made_in": "May 2026",
+    "metric": "effective tax rate",
+    "promise": "Expect FY27 and thereafter ETR to inch up to around 24% [May 2026].",
+    "verdict": "unscored",
+    "evidence": "Management guided in May 2026 [May 2026] and reiterated in Aug 2026 [Aug 2026] that ETR for FY27 will be around 24%."
+   },
+   {
+    "id": "g5",
+    "made_in": "Nov 2026",
+    "metric": "new molecules global pipeline",
+    "promise": "Expecting to bring another two to three chemical and biological molecules in the global arena in the next few years [Nov 2026].",
+    "verdict": "unscored",
+    "evidence": "In Nov 2026 call, management expressed aspiration to launch 2 to 3 new molecules globally over the next few years [Nov 2026]."
+   }
+  ],
+  "tally": {
+   "unscored": 5
+  },
+  "credibility": null,
+  "scored": 0
+ },
+ "pushback": [
+  "Saurabh Jain asked whether the growth expected in the fourth quarter is sequential only or Y-o-Y, and whether it refers to volume, revenue, or value growth.",
+  "Saurabh Jain pressed on whether volume growth in Q4 is also a year-on-year volume growth.",
+  "Saurabh Jain asked if revenue growth is expected to return in FY27 and whether it will be gradual or in a big way.",
+  "Saurabh Jain questioned whether customer visibility drives the FY27 recovery optimism or internal optimism.",
+  "Saurabh Jain asked for guidance on a sustainable gross margin percentage.",
+  "Saurabh Jain questioned the capex incurred over the last three years translating to almost INR 2,600 crore without seeing proportional results.",
+  "Ankur Periwal asked for a breakdown of the 90 molecules in the new molecule pipeline across Agchem, Electronic, Pharma, and Biologicals.",
+  "Ankur Periwal questioned whether the planned launch of four to five molecules in FY27 is across Agchem only or includes Electronic Chemicals and other products.",
+  "Ankur Periwal asked whether pricing pressure in Q1 was product-specific or a general trend across products."
+ ],
+ "events": [],
+ "sources": [
+  {
+   "id": "Feb 2026",
+   "date": "Feb 2026",
+   "url": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=b8ac6417-b08f-45e6-9bc9-cef1827c6c93.pdf",
+   "kind": "concall transcript"
+  },
+  {
+   "id": "May 2026",
+   "date": "May 2026",
+   "url": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=7a49358d-c938-4581-827e-d66dcf6bb7d5.pdf",
+   "kind": "concall transcript"
+  },
+  {
+   "id": "Aug 2026",
+   "date": "Aug 2026",
+   "url": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=c6e89e11-f33d-4ab2-9db8-d4f53da649e5.pdf",
+   "kind": "concall transcript"
+  },
+  {
+   "id": "Nov 2026",
+   "date": "Nov 2026",
+   "url": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=484ab886-ee3e-47e4-b37f-df779a55297b.pdf",
+   "kind": "concall transcript"
+  },
+  {
+   "id": "screener",
+   "url": "https://www.screener.in/company/PIIND/consolidated/",
+   "kind": "AR-derived tables"
+  }
+ ],
+ "snapshot": "P I Industries Ltd is an agrochemicals and custom synthesis company operating across Agchem, Electronic Chemicals, Pharma, and Biologicals [Feb 2026 call]. Its revenue model is distributed across domestic sales and global exports through custom manufacturing and molecule commercialization [Feb 2026 call].",
+ "narrative_vs_numbers": [
+  {
+   "claim": "Management expected sequential revenue and volume improvement in Q4 FY26 over Q3 FY26 [Feb 2026 call].",
+   "numbers": "Q4 FY26 sales increased sequentially to INR 1,565.0 crore from INR 1,376.0 crore in Q3 FY26, although YoY sales remained negative at -12.4% [Feb 2026 call, Mar 2026 quarterly].",
+   "read": "agree"
+  },
+  {
+   "claim": "Management guided for export recovery in H2 FY27 and performance improvement [Feb 2026 call, Aug 2026 call].",
+   "numbers": "Q1 FY27 sales fell -10.4% YoY and Q2 FY27 sales fell -9.1% YoY, with Q2 FY27 EBITDA margin contracting sharply to 13.7% [Jun 2026 quarterly, Sep 2026 quarterly].",
+   "read": "diverge"
+  },
+  {
+   "claim": "Management stressed ongoing new molecule commercialization and global expansion [Feb 2026 call, Nov 2026 call].",
+   "numbers": "Working capital lengthened in FY26 with cash conversion cycle stretching to 119 days from 42 days in FY25, while ROCE fell to 15.0% [FY26 working capital].",
+   "read": "diverge"
+  },
+  {
+   "claim": "Operational cash generation supports corporate execution and investments [FY22–FY26 cash].",
+   "numbers": "Operating cash flow dropped to INR 474.0 crore in FY26 from INR 1,413.0 crore in FY25, lowering CFO/PAT conversion to 36% [FY26 cash].",
+   "read": "diverge"
+  }
+ ],
+ "bull": [
+  "Strong balance sheet health with a low debt-to-equity ratio of 0.03 and debt of INR 300.0 crore [Sep 2026 balance sheet].",
+  "Delivered historical growth with FY22–FY26 EBITDA CAGR of 10.9% and PAT CAGR of 11.9% [FY22–FY26 trajectory].",
+  "Management targets export recovery in H2 FY27 alongside ongoing commercialization of new molecules [Feb 2026 call, Nov 2026 call]."
+ ],
+ "bear": [
+  "Recent revenue contraction with Q2 FY27 sales down -9.1% YoY and EBITDA margins dropping to 13.7% [Sep 2026 quarterly].",
+  "Cash flow from operations declined to INR 474.0 crore in FY26, pushing CFO/PAT down to 36% [FY26 cash].",
+  "Working capital cycle stretched to 119 days in FY26 while ROCE declined from 23.0% to 15.0% [FY26 working capital]."
+ ],
+ "watch": [
+  "Quarterly EBITDA margin recovery from the Sep 2026 low of 13.7% back toward historical 25%+ levels [Sep 2026 quarterly, FY26 trajectory].",
+  "YoY sales growth trajectory turning positive after declining -9.1% in Sep 2026 [Sep 2026 quarterly].",
+  "Improvement in CFO to PAT conversion ratio from FY26's 36% toward the cumulative historical level of 88% [FY26 cash]."
+ ],
+ "generated_by": "gemini-3.6-flash (Gemini API, live run)",
+ "data_note": null,
+ "cost": {
+  "calls": 1,
+  "cached": 13,
+  "retries": 0,
+  "tokens_in": 2976,
+  "tokens_out": 3304,
+  "usd": 0.0146,
+  "by_tier": {
+   "strong": {
+    "calls": 1,
+    "tokens_in": 2976,
+    "tokens_out": 3304,
+    "usd": 0.014622
+   }
+  },
+  "cached_tokens_in": 18570,
+  "cached_tokens_out": 5350,
+  "usd_total": 0.0386,
+  "basis": "list price, Gemini API paid tier; billed $0 on the free tier"
+ },
+ "skipped": [],
+ "generated_on": "2026-11-16",
+ "models": {
+  "cheap": "gemini-3.5-flash-lite",
+  "strong": "gemini-3.6-flash"
+ },
+ "fallbacks": [
+  "gemini-3.8-flash -> gemini-3.6-flash: Gemini gemini-3.8-flash timed out: ReadTimeout"
+ ]
+}

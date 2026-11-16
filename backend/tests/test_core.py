@@ -229,3 +229,73 @@ def test_model_bio_needs_a_real_source():
     assert "bio" not in vet_bio(made_up, {"https://real.example/p"})
     ok = {**bio, "sources": ["https://real.example/p", "https://invented.example/a"]}
     assert vet_bio(ok, {"https://real.example/p"})["sources"] == ["https://real.example/p"]
+
+
+def test_busy_model_falls_back_and_meter_says_so(monkeypatch, tmp_path):
+    from finn import llm, cache
+    monkeypatch.setattr(cache, "CACHE_DIR", tmp_path)
+    monkeypatch.setitem(llm.MODELS, "strong", {"provider": "gemini", "model": "busy-model", "fallback": "spare-model"})
+    seen = []
+    def fake(provider, model, system, prompt, json_mode):
+        seen.append(model)
+        if model == "busy-model":
+            raise llm.LLMUnavailable("Gemini busy-model HTTP 503: high demand")
+        return '{"ok": 1}', 100, 20
+    monkeypatch.setattr(llm, "_dispatch", fake)
+    llm.METER.reset()
+    assert llm.complete_obj("strong", "s", "p", cache_ns="t") == {"ok": 1}
+    assert seen == ["busy-model", "spare-model"] and llm.METER.models["strong"] == ["spare-model"]
+    assert llm.METER.fallbacks and llm.METER.calls == 1
+    llm.METER.reset()                       # re-run: answered from cache, generating cost still known
+    assert llm.complete_obj("strong", "s", "p", cache_ns="t") == {"ok": 1}
+    assert llm.METER.calls == 0 and llm.METER.cached == 1 and llm.METER.cached_tokens_in == 100
+
+
+def test_non_busy_errors_do_not_fall_back(monkeypatch, tmp_path):
+    import pytest
+    from finn import llm, cache
+    monkeypatch.setattr(cache, "CACHE_DIR", tmp_path)
+    monkeypatch.setitem(llm.MODELS, "strong", {"provider": "gemini", "model": "m1", "fallback": "m2"})
+    def fake(*a):
+        raise llm.LLMUnavailable("Gemini m1 HTTP 400: bad request")
+    monkeypatch.setattr(llm, "_dispatch", fake)
+    with pytest.raises(llm.LLMUnavailable):
+        llm.complete("strong", "s", "p2")
+
+
+def test_gemini_timeout_counts_as_busy(monkeypatch):
+    import pytest, requests
+    from finn import llm
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    def slow(*a, **k):
+        raise requests.exceptions.ReadTimeout("Read timed out. (read timeout=180)")
+    monkeypatch.setattr(llm.requests, "post", slow)
+    with pytest.raises(llm.LLMUnavailable) as e:
+        llm._gemini("m", "s", "p", True)
+    assert llm._busy(e.value) and "test-key" not in str(e.value)
+
+
+def test_ledger_uses_only_figures_after_the_promise_and_knows_lower_is_better():
+    from finn.research import ledger
+    calls = [{"id": "Feb 2026", "reported": {}}, {"id": "May 2026", "reported": {"nwc_days": 74}},
+             {"id": "Aug 2026", "reported": {}}]
+    g = {"id": "g1", "made_in": "May 2026", "metric": "Net working capital days", "promise": "75-80 days",
+         "measure": {"type": "range", "lo": 75, "hi": 80, "unit": "days", "series": "nwc_days"}}
+    r = ledger.score(g, calls)
+    assert r["verdict"] == "pending" and "after May 2026" in r["evidence"]
+    calls[2]["reported"]["nwc_days"] = 72
+    r = ledger.score(g, calls)
+    assert r["verdict"] == "beat" and "72 days" in r["evidence"] and "pp" not in r["evidence"]
+    calls[2]["reported"]["nwc_days"] = 90
+    assert ledger.score(g, calls)["verdict"] == "missed"
+
+
+def test_half_year_balance_sheet_keeps_its_label_and_uses_ttm():
+    from finn.research import engine, metrics
+    raw = {"annual": [{"q": "Mar 2026", "sales": 100, "ebitda": 50}, {"q": "TTM", "sales": 120, "ebitda": 80}],
+           "bs": [{"q": "Mar 2026", "borrowings": 100, "equity": 400}, {"q": "Sep 2026", "borrowings": 80, "equity": 450}],
+           "cf": [], "wc": [], "quarters": []}
+    d = engine._normalise_screener(raw)
+    assert [b["y"] for b in d["bs"]] == ["FY26", "Sep 2026"]
+    rows = metrics.balance_sheet(d["bs"], d["annual"])["rows"]
+    assert rows[0]["debt_to_ebitda"] == 2.0 and rows[1]["debt_to_ebitda"] == 1.0

@@ -1,0 +1,615 @@
+{
+ "ticker": "NAVINFLUOR",
+ "name": "Navin Fluorine International Ltd",
+ "about": "Navin Fluorine International Ltd is primary engaged in producing refrigeration gases, inorganic fluorides, specialty organofluorines and offers contract research and manufacturing services. [1] Its portfolio includes 50+ fluorinated compounds developed over the years. [2]",
+ "mode": "live",
+ "generated_at": "2026-11-16T13:33",
+ "price": 9965.0,
+ "mcap": 51135.0,
+ "pe": 55.8,
+ "roce": 21.0,
+ "shareholding": {
+  "q": "Sep 2026",
+  "promoters": 27.07,
+  "fii": 23.38,
+  "dii": 28.71,
+  "public": 20.87
+ },
+ "segments": [],
+ "geo": [],
+ "annual": [
+  {
+   "sales": 1453.0,
+   "ebitda": 356.0,
+   "other_income": 38.0,
+   "interest": 2.0,
+   "dep": 48.0,
+   "pbt": 344.0,
+   "tax_pct": 24.0,
+   "pat": 263.0,
+   "eps": 53.09,
+   "y": "FY22"
+  },
+  {
+   "sales": 2077.0,
+   "ebitda": 550.0,
+   "other_income": 36.0,
+   "interest": 28.0,
+   "dep": 63.0,
+   "pbt": 496.0,
+   "tax_pct": 24.0,
+   "pat": 375.0,
+   "eps": 75.68,
+   "y": "FY23"
+  },
+  {
+   "sales": 2065.0,
+   "ebitda": 399.0,
+   "other_income": 107.0,
+   "interest": 75.0,
+   "dep": 96.0,
+   "pbt": 336.0,
+   "tax_pct": 19.0,
+   "pat": 270.0,
+   "eps": 54.56,
+   "y": "FY24"
+  },
+  {
+   "sales": 2349.0,
+   "ebitda": 534.0,
+   "other_income": 44.0,
+   "interest": 78.0,
+   "dep": 119.0,
+   "pbt": 380.0,
+   "tax_pct": 24.0,
+   "pat": 289.0,
+   "eps": 58.19,
+   "y": "FY25"
+  },
+  {
+   "sales": 3314.0,
+   "ebitda": 1082.0,
+   "other_income": 58.0,
+   "interest": 118.0,
+   "dep": 149.0,
+   "pbt": 873.0,
+   "tax_pct": 24.0,
+   "pat": 664.0,
+   "eps": 129.46,
+   "y": "FY26"
+  },
+  {
+   "sales": 4066.0,
+   "ebitda": 1393.0,
+   "other_income": 77.0,
+   "interest": 118.0,
+   "dep": 162.0,
+   "pbt": 1190.0,
+   "tax_pct": null,
+   "pat": 911.0,
+   "eps": 177.56,
+   "y": "TTM"
+  }
+ ],
+ "quarters": [
+  {
+   "q": "Dec 2024",
+   "sales": 606.0,
+   "ebitda": 147.0,
+   "other_income": 10.0,
+   "interest": 20.0,
+   "dep": 30.0,
+   "pbt": 108.0,
+   "tax_pct": 23.0,
+   "pat": 84.0,
+   "eps": 16.86
+  },
+  {
+   "q": "Mar 2025",
+   "sales": 701.0,
+   "ebitda": 179.0,
+   "other_income": 12.0,
+   "interest": 28.0,
+   "dep": 35.0,
+   "pbt": 127.0,
+   "tax_pct": 25.0,
+   "pat": 95.0,
+   "eps": 19.15
+  },
+  {
+   "q": "Jun 2025",
+   "sales": 725.0,
+   "ebitda": 207.0,
+   "other_income": 14.0,
+   "interest": 30.0,
+   "dep": 35.0,
+   "pbt": 155.0,
+   "tax_pct": 24.0,
+   "pat": 117.0,
+   "eps": 23.62
+  },
+  {
+   "q": "Sep 2025",
+   "sales": 758.0,
+   "ebitda": 246.0,
+   "other_income": 18.0,
+   "interest": 30.0,
+   "dep": 37.0,
+   "pbt": 198.0,
+   "tax_pct": 25.0,
+   "pat": 148.0,
+   "eps": 28.96
+  },
+  {
+   "q": "Dec 2025",
+   "sales": 892.0,
+   "ebitda": 308.0,
+   "other_income": -5.0,
+   "interest": 28.0,
+   "dep": 36.0,
+   "pbt": 238.0,
+   "tax_pct": 22.0,
+   "pat": 185.0,
+   "eps": 36.18
+  },
+  {
+   "q": "Mar 2026",
+   "sales": 938.0,
+   "ebitda": 321.0,
+   "other_income": 31.0,
+   "interest": 29.0,
+   "dep": 41.0,
+   "pbt": 282.0,
+   "tax_pct": 25.0,
+   "pat": 213.0,
+   "eps": 41.48
+  },
+  {
+   "q": "Jun 2026",
+   "sales": 1045.0,
+   "ebitda": 357.0,
+   "other_income": 35.0,
+   "interest": 32.0,
+   "dep": 42.0,
+   "pbt": 318.0,
+   "tax_pct": 24.0,
+   "pat": 243.0,
+   "eps": 47.43
+  },
+  {
+   "q": "Sep 2026",
+   "sales": 1191.0,
+   "ebitda": 407.0,
+   "other_income": 16.0,
+   "interest": 29.0,
+   "dep": 43.0,
+   "pbt": 352.0,
+   "tax_pct": 23.0,
+   "pat": 269.0,
+   "eps": 52.47
+  }
+ ],
+ "trajectory": {
+  "span": "FY22–FY26",
+  "sales_cagr": 22.9,
+  "ebitda_cagr": 32.0,
+  "pat_cagr": 26.1,
+  "margins": [
+   {
+    "y": "FY22",
+    "ebitda_margin": 24.5,
+    "pat_margin": 18.1
+   },
+   {
+    "y": "FY23",
+    "ebitda_margin": 26.5,
+    "pat_margin": 18.1
+   },
+   {
+    "y": "FY24",
+    "ebitda_margin": 19.3,
+    "pat_margin": 13.1
+   },
+   {
+    "y": "FY25",
+    "ebitda_margin": 22.7,
+    "pat_margin": 12.3
+   },
+   {
+    "y": "FY26",
+    "ebitda_margin": 32.6,
+    "pat_margin": 20.0
+   },
+   {
+    "y": "TTM",
+    "ebitda_margin": 34.3,
+    "pat_margin": 22.4
+   }
+  ],
+  "margin_change_pp": 8.1,
+  "operating_leverage": true
+ },
+ "quarterly": [
+  {
+   "q": "Dec 2024",
+   "sales": 606.0,
+   "ebitda_margin": 24.3,
+   "pat": 84.0,
+   "sales_yoy": null
+  },
+  {
+   "q": "Mar 2025",
+   "sales": 701.0,
+   "ebitda_margin": 25.5,
+   "pat": 95.0,
+   "sales_yoy": null
+  },
+  {
+   "q": "Jun 2025",
+   "sales": 725.0,
+   "ebitda_margin": 28.6,
+   "pat": 117.0,
+   "sales_yoy": null
+  },
+  {
+   "q": "Sep 2025",
+   "sales": 758.0,
+   "ebitda_margin": 32.5,
+   "pat": 148.0,
+   "sales_yoy": null
+  },
+  {
+   "q": "Dec 2025",
+   "sales": 892.0,
+   "ebitda_margin": 34.5,
+   "pat": 185.0,
+   "sales_yoy": 47.2
+  },
+  {
+   "q": "Mar 2026",
+   "sales": 938.0,
+   "ebitda_margin": 34.2,
+   "pat": 213.0,
+   "sales_yoy": 33.8
+  },
+  {
+   "q": "Jun 2026",
+   "sales": 1045.0,
+   "ebitda_margin": 34.2,
+   "pat": 243.0,
+   "sales_yoy": 44.1
+  },
+  {
+   "q": "Sep 2026",
+   "sales": 1191.0,
+   "ebitda_margin": 34.2,
+   "pat": 269.0,
+   "sales_yoy": 57.1
+  }
+ ],
+ "balance_sheet": {
+  "rows": [
+   {
+    "y": "FY23",
+    "debt": 861.0,
+    "equity": 2185.0,
+    "de": 0.39,
+    "debt_to_ebitda": 1.57
+   },
+   {
+    "y": "FY24",
+    "debt": 1368.0,
+    "equity": 2383.0,
+    "de": 0.57,
+    "debt_to_ebitda": 3.43
+   },
+   {
+    "y": "FY25",
+    "debt": 1466.0,
+    "equity": 2626.0,
+    "de": 0.56,
+    "debt_to_ebitda": 2.75
+   },
+   {
+    "y": "FY26",
+    "debt": 1272.0,
+    "equity": 3974.0,
+    "de": 0.32,
+    "debt_to_ebitda": 1.18
+   },
+   {
+    "y": "Sep 2026",
+    "debt": 1248.0,
+    "equity": 4462.0,
+    "de": 0.28,
+    "debt_to_ebitda": 0.9
+   }
+  ],
+  "latest_de": 0.28,
+  "latest_debt": 1248.0,
+  "debt_cagr": 9.7,
+  "equity_cagr": 19.5
+ },
+ "cash": {
+  "rows": [
+   {
+    "y": "FY22",
+    "cfo": 75.0,
+    "pat": 263.0,
+    "cfo_plus_cfi": -97,
+    "cfo_to_pat": 29
+   },
+   {
+    "y": "FY23",
+    "cfo": -64.0,
+    "pat": 375.0,
+    "cfo_plus_cfi": -720,
+    "cfo_to_pat": -17
+   },
+   {
+    "y": "FY24",
+    "cfo": 750.0,
+    "pat": 270.0,
+    "cfo_plus_cfi": -344,
+    "cfo_to_pat": 278
+   },
+   {
+    "y": "FY25",
+    "cfo": 571.0,
+    "pat": 289.0,
+    "cfo_plus_cfi": 60,
+    "cfo_to_pat": 198
+   },
+   {
+    "y": "FY26",
+    "cfo": 894.0,
+    "pat": 664.0,
+    "cfo_plus_cfi": -341,
+    "cfo_to_pat": 135
+   }
+  ],
+  "cum_cfo_to_pat": 120,
+  "cum_cfo_plus_cfi": -1442,
+  "verdict": "strong",
+  "negative_cfo_years": 1,
+  "external_funding": 1380
+ },
+ "working_capital": {
+  "rows": [
+   {
+    "debtor_days": 90.0,
+    "inventory_days": 149.0,
+    "payable_days": 85.0,
+    "ccc": 154.0,
+    "wc_days": 109.0,
+    "roce": 19.0,
+    "y": "FY22"
+   },
+   {
+    "debtor_days": 99.0,
+    "inventory_days": 197.0,
+    "payable_days": 103.0,
+    "ccc": 193.0,
+    "wc_days": 140.0,
+    "roce": 20.0,
+    "y": "FY23"
+   },
+   {
+    "debtor_days": 91.0,
+    "inventory_days": 150.0,
+    "payable_days": 122.0,
+    "ccc": 119.0,
+    "wc_days": 45.0,
+    "roce": 11.0,
+    "y": "FY24"
+   },
+   {
+    "debtor_days": 90.0,
+    "inventory_days": 117.0,
+    "payable_days": 118.0,
+    "ccc": 89.0,
+    "wc_days": 25.0,
+    "roce": 11.0,
+    "y": "FY25"
+   },
+   {
+    "debtor_days": 83.0,
+    "inventory_days": 121.0,
+    "payable_days": 144.0,
+    "ccc": 60.0,
+    "wc_days": 44.0,
+    "roce": 21.0,
+    "y": "FY26"
+   }
+  ],
+  "ccc_change": -94.0,
+  "debtor_change": -7.0
+ },
+ "ledger": {
+  "rows": [
+   {
+    "id": "g1",
+    "made_in": "Feb 2026",
+    "metric": "R32 incremental HFC capacity CAPEX",
+    "promise": "Commissioning of up to 15,000 MTPA R32 HFC capacity by Q3 FY27.",
+    "verdict": "delivered",
+    "evidence": "Actual 15,000 MTPA vs promised 15,000 MTPA"
+   },
+   {
+    "id": "g2",
+    "made_in": "Feb 2026",
+    "metric": "Chemours Project completion",
+    "promise": "Completion and commissioning of the Chemours Project, initially targeted for Q1 FY27, subsequently revised.",
+    "verdict": "pending",
+    "evidence": "Chemours Project is progressing well and is on track for completion in Q1 FY27 [Feb 2026 call]. Expected completion was updated to end June/early July [May 2026 call], then end of Q2 FY27 [Aug 2026 call], and Q3 FY27 [Nov 2026 call]."
+   },
+   {
+    "id": "g3",
+    "made_in": "Feb 2026",
+    "metric": "Dahej MPP capacity de-bottlenecking",
+    "promise": "De-bottlenecking of MPP capacity at Dahej facility expected to be commissioned in Q3 FY27.",
+    "verdict": "pending",
+    "evidence": "De-bottlenecking of MPP capacity at our Dahej facility is expected to be commissioned in Q3 FY27 [Feb 2026 call]. Re-confirmed in May 2026 [May 2026 call] and Aug 2026 [Aug 2026 call]."
+   },
+   {
+    "id": "g4",
+    "made_in": "May 2026",
+    "metric": "Net working capital days",
+    "promise": "Net working capital expected to be in the range of 75 to 80 days going forward.",
+    "verdict": "pending",
+    "evidence": "No figure reported after May 2026 yet (latest: 74 days in May 2026, when the promise was made)"
+   },
+   {
+    "id": "g5",
+    "made_in": "Aug 2026",
+    "metric": "CDMO Phase 2 cGMP4 capex operationalization",
+    "promise": "Phase 2 cGMP4 capex expected to operationalize by Q4 FY27.",
+    "verdict": "pending",
+    "evidence": "Phase 2 cGMP4 capex expected to operationalize by Q4 FY '27 [Aug 2026 call]. Re-confirmed for end of Q4 FY27 in Nov 2026 [Nov 2026 call]."
+   },
+   {
+    "id": "g8",
+    "made_in": "Nov 2026",
+    "metric": "Advanced material adoption capacity commissioning",
+    "promise": "Investment in advanced material adoption capacity is expected to commission by Q2 FY28.",
+    "verdict": "pending",
+    "evidence": "Investment in advanced material adoption capacity is expected to commission by Q2 FY28 [Nov 2026 call]."
+   },
+   {
+    "id": "g6",
+    "made_in": "Aug 2026",
+    "metric": "Renewable energy requirement share",
+    "promise": "Meet more than 60% of energy requirements through renewable energy sources.",
+    "verdict": "unscored",
+    "evidence": "Expected to meet more than 60% of our energy requirements through renewable sources [Aug 2026 call]. Re-confirmed in Nov 2026 [Nov 2026 call]."
+   },
+   {
+    "id": "g7",
+    "made_in": "Nov 2026",
+    "metric": "HFO supply contract revenue potential",
+    "promise": "HFO supply contract extension with Solstice Advanced Materials has an additional revenue potential of approximately USD 180 million until December 2032.",
+    "verdict": "unscored",
+    "evidence": "The HFO supply contract extension with Solstice Advanced Materials has an additional revenue potential of approximately USD180 million [Nov 2026 call]."
+   },
+   {
+    "id": "g9",
+    "made_in": "Nov 2026",
+    "metric": "CDMO FY27 target",
+    "promise": "FY27 CDMO target is well within reach, supported by encouraging business developments and healthy product pipeline.",
+    "verdict": "unscored",
+    "evidence": "FY27 target is well within reach, supported by encouraging business developments and healthy product pipeline [Nov 2026 call]."
+   }
+  ],
+  "tally": {
+   "delivered": 1,
+   "pending": 5,
+   "unscored": 3
+  },
+  "credibility": 100,
+  "scored": 1
+ },
+ "pushback": [
+  "Sanjesh Jain asked about raw material availability and inflation related to sulfur and methanol due to the Middle East situation."
+ ],
+ "events": [],
+ "sources": [
+  {
+   "id": "Feb 2026",
+   "date": "Feb 2026",
+   "url": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=45e3cf37-1db9-4a21-944f-cf829ff37c84.pdf",
+   "kind": "concall transcript"
+  },
+  {
+   "id": "May 2026",
+   "date": "May 2026",
+   "url": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=1440596d-ed29-441c-b785-0c8dbf3b5dbd.pdf",
+   "kind": "concall transcript"
+  },
+  {
+   "id": "Aug 2026",
+   "date": "Aug 2026",
+   "url": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=8efd175a-4c8d-467b-aa33-b788176175f2.pdf",
+   "kind": "concall transcript"
+  },
+  {
+   "id": "Nov 2026",
+   "date": "Nov 2026",
+   "url": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=8208e424-002b-4299-b68d-4bc45311047e.pdf",
+   "kind": "concall transcript"
+  },
+  {
+   "id": "screener",
+   "url": "https://www.screener.in/company/NAVINFLUOR/consolidated/",
+   "kind": "AR-derived tables"
+  }
+ ],
+ "snapshot": "Navin Fluorine International Ltd is a specialty fluorochemicals manufacturer operating across fluorination, CDMO, HFCs, and advanced materials [Feb 2026 call, Nov 2026 call]. Its revenue is driven by Specialty Chemicals, CDMO services, HFO/HFC fluorochemical products, and contract extensions with global partners [Feb 2026 call, Nov 2026 call].",
+ "narrative_vs_numbers": [
+  {
+   "claim": "Management promised timely commissioning of the Chemours Project by Q1 FY27 [Feb 2026 call].",
+   "numbers": "Completion target was pushed sequentially to end of June/July, end of Q2 FY27, and finally Q3 FY27 [May 2026 call, Aug 2026 call, Nov 2026 call].",
+   "read": "diverge"
+  },
+  {
+   "claim": "Management highlights operating leverage driving expanded margins across key segments [Feb 2026 call, Aug 2026 call].",
+   "numbers": "EBITDA margin expanded by 8.1 percentage points from 24.5% in FY22 to 32.6% in FY26, reaching 34.2% in Sep 2026 [Computed Facts].",
+   "read": "agree"
+  },
+  {
+   "claim": "Management promised to keep net working capital days between 75 and 80 days [May 2026 call].",
+   "numbers": "Working capital days improved significantly to 44 days in FY26 with cash conversion cycle at 60 days [Computed Facts].",
+   "read": "agree"
+  },
+  {
+   "claim": "Management targets strong CDMO performance supported by Phase 2 cGMP4 capacity [Aug 2026 call, Nov 2026 call].",
+   "numbers": "Phase 2 cGMP4 operationalization remains scheduled for Q4 FY27 [Aug 2026 call, Nov 2026 call].",
+   "read": "too early"
+  }
+ ],
+ "bull": [
+  "Sales CAGR of 22.9% and EBITDA CAGR of 32.0% (FY22–FY26) demonstrate robust top-line and operating leverage growth [Computed Facts].",
+  "Cash conversion cycle reduced by 94 days from FY22 to FY26, driving strong cumulative CFO/PAT of 120% [Computed Facts].",
+  "Successfully commissioned 15,000 MTPA R32 capacity and secured ~$180M HFO supply contract extension through 2032 [Feb 2026 call, Nov 2026 call]."
+ ],
+ "bear": [
+  "Chemours project completion has faced repeated timeline slippages from Q1 FY27 out to Q3 FY27 [Feb 2026 call, Nov 2026 call].",
+  "Input cost volatility and availability risks exist around raw materials like sulfur and methanol due to Middle East tensions [Analyst Pushback].",
+  "Cumulative CFO plus CFI remains negative at -1,442 across FY22–FY26, reflecting heavy ongoing capital expenditure [Computed Facts]."
+ ],
+ "watch": [
+  "Status of Chemours project commissioning in Q3 FY27 [Nov 2026 call]",
+  "Sustainment of EBITDA margins at or near the 34.2% level achieved in Sep 2026 [Computed Facts]",
+  "Phase 2 cGMP4 operationalization progress targeted for Q4 FY27 [Nov 2026 call]"
+ ],
+ "generated_by": "gemini-3.6-flash (Gemini API, live run)",
+ "data_note": null,
+ "cost": {
+  "calls": 1,
+  "cached": 13,
+  "retries": 2,
+  "tokens_in": 3185,
+  "tokens_out": 3016,
+  "usd": 0.0137,
+  "by_tier": {
+   "strong": {
+    "calls": 1,
+    "tokens_in": 3185,
+    "tokens_out": 3016,
+    "usd": 0.01369875
+   }
+  },
+  "cached_tokens_in": 21102,
+  "cached_tokens_out": 10103,
+  "usd_total": 0.0554,
+  "basis": "list price, Gemini API paid tier; billed $0 on the free tier"
+ },
+ "skipped": [],
+ "generated_on": "2026-11-16",
+ "models": {
+  "cheap": "gemini-3.5-flash-lite",
+  "strong": "gemini-3.6-flash"
+ },
+ "fallbacks": [
+  "gemini-3.8-flash -> gemini-3.6-flash: Gemini gemini-3.8-flash timed out: ReadTimeout"
+ ]
+}

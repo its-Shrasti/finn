@@ -34,6 +34,11 @@ class Meter:
     usd: float = 0.0
     retries: int = 0
     by_tier: dict = field(default_factory=dict)
+    models: dict = field(default_factory=dict)      # tier -> models that actually answered
+    fallbacks: list = field(default_factory=list)   # why a fallback model was used
+    cached_tokens_in: int = 0      # tokens of cached answers, as metered when they were generated
+    cached_tokens_out: int = 0
+    cached_usd: float = 0.0
 
     def reset(self):
         self.__init__()
@@ -47,6 +52,20 @@ class Meter:
         self.usd += cost
         t = self.by_tier.setdefault(tier, {"calls": 0, "tokens_in": 0, "tokens_out": 0, "usd": 0.0})
         t["calls"] += 1; t["tokens_in"] += tin; t["tokens_out"] += tout; t["usd"] += cost
+        self.used(tier, model)
+
+    def add_cached(self, tier: str, model: str, hit: dict):
+        self.cached += 1
+        self.used(tier, model)
+        tin, tout = hit.get("tin", 0), hit.get("tout", 0)
+        pin, pout = PRICES.get(model, (0, 0))
+        self.cached_tokens_in += tin; self.cached_tokens_out += tout
+        self.cached_usd += tin / 1e6 * pin + tout / 1e6 * pout
+
+    def used(self, tier: str, model: str):
+        ms = self.models.setdefault(tier, [])
+        if model not in ms:
+            ms.append(model)
 
 
 METER = Meter()
@@ -80,7 +99,13 @@ def _gemini(model: str, system: str, prompt: str, json_mode: bool) -> tuple[str,
         "generationConfig": {"temperature": 0.1, **({"responseMimeType": "application/json"} if json_mode else {})},
     }
     for attempt in range(5):
-        r = requests.post(url, json=body, timeout=180, headers={"x-goog-api-key": key})
+        try:
+            r = requests.post(url, json=body, timeout=180, headers={"x-goog-api-key": key})
+        except (requests.Timeout, requests.ConnectionError) as e:
+            # An overloaded model can hold the connection open with no answer. Don't wait
+            # another 3 minutes on it: report busy, so a tier with a fallback moves on.
+            print(f"[llm] {model} no answer ({type(e).__name__}) after 180s", file=sys.stderr)
+            raise LLMUnavailable(f"Gemini {model} timed out: {type(e).__name__}") from None
         if r.status_code in (429, 500, 503) and attempt < 4:
             wait = min(60, 8 * 2 ** attempt)
             hint = _retry_hint(r)
@@ -137,23 +162,39 @@ def _dispatch(provider: str, model: str, system: str, prompt: str, json_mode: bo
     raise LLMUnavailable(f"unknown provider {provider}")
 
 
+def _busy(e: Exception) -> bool:
+    return any(x in str(e) for x in (" HTTP 503", " HTTP 429", " HTTP 500", " timed out"))
+
+
 def complete(tier: str, system: str, prompt: str, *, json_mode: bool = False, cache_ns: str = "llm") -> str:
     """cache_ns: the shared "llm" namespace for public inputs (filings, transcripts);
-    a per-user private namespace for anything derived from the investor's network."""
+    a per-user private namespace for anything derived from the investor's network.
+    If the tier's model stays overloaded (503/429 after retries) and the tier names a
+    fallback, the fallback answers instead; the meter records which model did."""
     cfg = MODELS[tier]
-    k = cache.key(cfg["model"], system, prompt, json_mode)
-    hit = cache.get(cache_ns, k)
-    if hit is not None:
-        METER.cached += 1
-        return hit["text"]
-    text, tin, tout = _dispatch(cfg["provider"], cfg["model"], system, prompt, json_mode)
-    METER.add(tier, cfg["model"], tin, tout)
-    cache.put(cache_ns, k, {"text": text})
-    return text
+    models = [cfg["model"]] + ([cfg["fallback"]] if cfg.get("fallback") else [])
+    for m in models:   # a cached answer from either model is reused
+        hit = cache.get(cache_ns, cache.key(m, system, prompt, json_mode))
+        if hit is not None:
+            METER.add_cached(tier, m, hit)
+            return hit["text"]
+    for i, m in enumerate(models):
+        try:
+            text, tin, tout = _dispatch(cfg["provider"], m, system, prompt, json_mode)
+        except LLMUnavailable as e:
+            if i + 1 < len(models) and _busy(e):
+                METER.fallbacks.append(f"{m} -> {models[i + 1]}: {str(e)[:120]}")
+                print(f"[llm] {m} still unavailable; falling back to {models[i + 1]}", file=sys.stderr)
+                continue
+            raise
+        METER.add(tier, m, tin, tout)
+        cache.put(cache_ns, cache.key(m, system, prompt, json_mode), {"text": text, "model": m, "tin": tin, "tout": tout})
+        return text
+    raise LLMUnavailable(f"no model answered for tier {tier}")
 
 
-def complete_json(tier: str, system: str, prompt: str) -> dict | list:
-    raw = complete(tier, system, prompt, json_mode=True)
+def complete_json(tier: str, system: str, prompt: str, cache_ns: str = "llm") -> dict | list:
+    raw = complete(tier, system, prompt, json_mode=True, cache_ns=cache_ns)
     try:
         return json.loads(raw)
     except json.JSONDecodeError:
@@ -173,8 +214,8 @@ def as_obj(x) -> dict:
     return {}
 
 
-def complete_obj(tier: str, system: str, prompt: str) -> dict:
-    return as_obj(complete_json(tier, system, prompt))
+def complete_obj(tier: str, system: str, prompt: str, cache_ns: str = "llm") -> dict:
+    return as_obj(complete_json(tier, system, prompt, cache_ns))
 
 
 def available() -> bool:

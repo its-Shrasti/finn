@@ -41,6 +41,9 @@ SERIES:
 REDUCE = """Company: {name} ({ticker}).
 Computed facts (authoritative — use these numbers only):
 {facts}
+(cfo_plus_cfi = operating plus investing cash flow. Investing includes treasury investments,
+so it is not free cash flow: never call it that. A balance-sheet row labelled like "Sep 2026"
+is a half-year position, not a fiscal year.)
 
 Promise ledger (verdicts computed by code):
 {ledger}
